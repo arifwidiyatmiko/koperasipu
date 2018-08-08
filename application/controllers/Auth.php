@@ -20,10 +20,13 @@ class Auth extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('login');
 	}
 	public function signin($value='')
 	{
-		echo "string";
+		$this->load->view('header');
+		$this->load->view('sidebar');
+		$this->load->view('welcome_message');
+		$this->load->view('footer');
 	}
 }
