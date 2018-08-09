@@ -29,23 +29,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                foreach($peminjaman as $p){
+                                            ?>
                                             <tr>
-                                                <td>1</td>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>Rp. 12.000.000</td>
-                                                <td>24</td>
-                                                <td>20</td>
+                                                <td><?= $p->idPeminjaman ?></td>
+                                                <td><?= $p->idUser ?></td>
+                                                <td><?= $p->tanggal ?></td>
+                                                <td><?= $p->nominal ?></td>
+                                                <td><?= $p->jumlahBulan ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>2017-01-29 05:57</td>
-                                                <td>Rp. 6.000.000</td>
-                                                <td>24</td>
-                                                <td>20</td>
-                                                <td class="process">Lunas</td>
-                                            </tr>
                                         </tbody>
+
+                                        <?php }?>
                                     </table>
                                 </div>
                                 <!-- END DATA TABLE-->
