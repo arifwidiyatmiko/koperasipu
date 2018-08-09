@@ -24,9 +24,6 @@ class Auth extends CI_Controller {
 	}
 	public function signin($value='')
 	{
-		$this->load->view('header');
-		$this->load->view('sidebar');
-		$this->load->view('welcome_message');
-		$this->load->view('footer');
+		$data = array('no_hp' => $this->input->post('no_hp'), );
 	}
 }

@@ -40,9 +40,10 @@
                                                 <td><?= $p->jumlahBulan ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                             </tr>
+                                             <?php }?>
                                         </tbody>
 
-                                        <?php }?>
+                                       
                                     </table>
                                 </div>
                                 <!-- END DATA TABLE-->
