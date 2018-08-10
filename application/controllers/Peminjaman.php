@@ -29,8 +29,9 @@ class Peminjaman extends CI_Controller {
 	public function index()
 	{
 		$data['peminjaman'] = $this->PeminjamanModel->getPinjamanList()->result();
-		$this->load->view('peminjaman',$data);
+		
 		$this->load->view('header');
+		$this->load->view('peminjaman',$data);
 		// $this->load->view('sidebar');
 		//$this->load->view('peminjaman');
 		$this->load->view('footer');

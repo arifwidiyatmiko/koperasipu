@@ -5,9 +5,9 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
+    <meta name="description" content="Sistem Koperasi">
+    <meta name="author" content="Arif Widiyatmiko, Riffan Alfarizie">
+    <meta name="keywords" content="koperasi, sistem koperasi">
 
     <!-- Title Page-->
     <title>Dashboard</title>
@@ -135,28 +135,28 @@
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
+                                        <!-- <div class="image">
                                             <img src="<?php echo base_url();?>assets/images/icon/avatar-01.jpg" alt="John Doe" />
-                                        </div>
+                                        </div> -->
                                         <div class="content">
-                                            <a class="js-acc-btn" href="<?php echo base_url();?>assets/#">john doe</a>
+                                            <a class="js-acc-btn" href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users')->namaLengkap; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
-                                                <div class="image">
+                                                <!-- <div class="image">
                                                     <a href="<?php echo base_url();?>assets/#">
                                                         <img src="<?php echo base_url();?>assets/images/icon/avatar-01.jpg" alt="John Doe" />
                                                     </a>
-                                                </div>
+                                                </div> -->
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="<?php echo base_url();?>assets/#">john doe</a>
+                                                        <a href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users')->namaLengkap; ?></a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span class="email"><?= $this->session->userdata('users')->no_hp; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="<?php echo base_url();?>assets/#">
+                                                <a href="<?php echo base_url();?>Auth/logout">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>

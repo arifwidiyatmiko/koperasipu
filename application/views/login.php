@@ -40,6 +40,11 @@
         <div class="page-content--bge5">
             <div class="container">
                 <div class="login-wrap">
+                    <?php
+                if ($this->session->flashdata('info')) {
+                    echo $this->session->flashdata('info');
+                }
+                ?>
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="<?php echo base_url();?>assets/#">
@@ -47,10 +52,10 @@
                             </a>
                         </div>
                         <div class="login-form">
-                            <form action="" method="post">
+                            <form action="<?php echo base_url();?>Auth/signin" method="post">
                                 <div class="form-group">
                                     <label>Nomor Telepon</label>
-                                    <input class="au-input au-input--full" type="number" name="phone" placeholder="Nomor Telepon">
+                                    <input class="au-input au-input--full" type="text" name="phone" placeholder="08..." onkeypress="return isNumber(event)" >
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
@@ -72,6 +77,7 @@
         </div>
 
     </div>
+    
 
     <!-- Jquery JS-->
     <script src="<?php echo base_url();?>assets/vendor/jquery-3.2.1.min.js"></script>
@@ -93,7 +99,16 @@
     <script src="<?php echo base_url();?>assets/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendor/select2/select2.min.js">
     </script>
-
+    <script type="text/javascript">
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
     <!-- Main JS-->
     <script src="<?php echo base_url();?>assets/js/main.js"></script>
 

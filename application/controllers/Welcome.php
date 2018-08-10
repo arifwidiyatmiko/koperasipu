@@ -21,9 +21,9 @@ class Welcome extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		// if ($this->session->userdata('users')) {
-		// 	redirect('Auth','refresh');
-		// }
+		if (!$this->session->userdata('users')) {
+			redirect('Auth','refresh');
+		}
 	}
 	public function index()
 	{

@@ -41,9 +41,16 @@
                                                 <td><?= $p->jumlahBulan ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                             </tr>
+<<<<<<< HEAD
                                         
                                         </tbody>
                                         <?php }?>
+=======
+                                             <?php }?>
+                                        </tbody>
+
+                                       
+>>>>>>> fb24db9d1b6e8a157936d423d587489f1ab198e1
                                     </table>
                                 </div>
                                 <!-- END DATA TABLE-->
