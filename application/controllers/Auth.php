@@ -31,6 +31,7 @@ class Auth extends CI_Controller {
 	{
 		$data = array('no_hp' => $this->input->post('phone'),'password'=>md5($this->input->post('password')) );
 		$res['data'] = $this->UserModel->getUser($data)->result();
+		// print_r($res['data']);die();
 		if (empty($res['data'])) {
 			$info = '<div class="alert alert-danger">
 					  <strong>Coba Lagi!</strong> Kombinasi Nomor Telepon dan Password Salah.
@@ -38,8 +39,12 @@ class Auth extends CI_Controller {
 			$this->session->set_flashdata('info', $info);
 			redirect('Auth');
 		}else{
-			$this->session->set_userdata('users',$res['data'][0]);
-			redirect('welcome','refresh');
+			$this->session->set_userdata('users_koperasi',$res['data'][0]);
+			if ($res['data'][0]->role == 'ANGGOTA') {
+				redirect('welcome','refresh');
+			}elseif ($res['data'][0]->role == 'PENGURUS') {
+				redirect('pengurus','refresh');
+			}
 		}
 		
 	}
