@@ -28,10 +28,11 @@
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
+                                        <?php
                                                 foreach($peminjaman as $p){
                                             ?>
+                                        <tbody>
+                                            
                                             <tr>
                                                 <td><?= $p->idPeminjaman ?></td>
                                                 <td><?= $p->idUser ?></td>
@@ -40,8 +41,8 @@
                                                 <td><?= $p->jumlahBulan ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                             </tr>
+                                        
                                         </tbody>
-
                                         <?php }?>
                                     </table>
                                 </div>
