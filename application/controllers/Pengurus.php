@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Peminjaman extends CI_Controller {
+class Pengurus extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -21,33 +21,17 @@ class Peminjaman extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('PeminjamanModel');
 		if (!$this->session->userdata('users_koperasi')) {
 			redirect('Auth','refresh');
 		}
 	}
 	public function index()
 	{
-		$data['peminjaman'] = $this->PeminjamanModel->getPinjamanList()->result();
-		// print_r($this->session->userdata('users'));die();
 		$this->load->view('header');
-		$this->load->view('peminjaman',$data);
 		// $this->load->view('sidebar');
-		//$this->load->view('peminjaman');
+		$this->load->view('welcome_admin');
 		$this->load->view('footer');
 	}
-
-	public function pembayaran(){
-		$this->load->view('header');
-		$this->load->view('pembayaran');
-		$this->load->view('footer');
-		$id = 1;
-		$awal = $this->PeminjamanModel->getNominal($id);
-		
-
-	}
-
-
 	public function backup($value='')
 	{
 		$this->load->dbutil();

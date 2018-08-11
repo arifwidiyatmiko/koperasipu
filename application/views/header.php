@@ -56,14 +56,38 @@
             <nav class="navbar-mobile" style="width: 40%;">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="active">
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'ANGGOTA') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'WELCOME'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Welcome">
                                 <i class="fas fa-tachometer-alt"></i>Beranda</a>
                         </li>
-                        <li>
+                            <?php
+                        }else{
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PENGURUS'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Pengurus">
+                                <i class="fas fa-tachometer-alt"></i>Beranda</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
+                        
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PEMINJAMAN'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Peminjaman">
                                 <i class="fas fa-map-marker-alt"></i>Peminjaman</a>
                         </li>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'ANGGOTA'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Anggota">
+                                <i class="fas fa-users"></i>Anggota</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
                         <li class="has-sub">
                             <a class="js-arrow" href="<?php echo base_url();?>assets/#">
                                 <i class="fas fa-copy"></i>Pages</a>
@@ -95,14 +119,37 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active">
+                         <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'ANGGOTA') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'WELCOME'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Welcome">
                                 <i class="fas fa-tachometer-alt"></i>Beranda</a>
                         </li>
-                        <li>
+                            <?php
+                        }else{
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PENGURUS'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Pengurus">
+                                <i class="fas fa-tachometer-alt"></i>Beranda</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PEMINJAMAN'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Peminjaman">
                                 <i class="fas fa-map-marker-alt"></i>Peminjaman</a>
                         </li>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'ANGGOTA'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Anggota">
+                                <i class="fas fa-users"></i>Anggota</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
                         <li class="has-sub">
                             <a class="js-arrow" href="<?php echo base_url();?>assets/#">
                                 <i class="fas fa-copy"></i>Pages</a>
@@ -139,7 +186,7 @@
                                             <img src="<?php echo base_url();?>assets/images/icon/avatar-01.jpg" alt="John Doe" />
                                         </div> -->
                                         <div class="content">
-                                            <a class="js-acc-btn" href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users')->namaLengkap; ?></a>
+                                            <a class="js-acc-btn" href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users_koperasi')->namaLengkap; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -150,7 +197,7 @@
                                                 </div> -->
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users')->namaLengkap; ?></a>
+                                                        <a href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users_koperasi')->namaLengkap; ?></a>
                                                     </h5>
                                                     <span class="email"><?= $this->session->userdata('users')->no_hp; ?></span>
                                                 </div>
