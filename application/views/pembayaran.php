@@ -17,48 +17,20 @@
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
                                 <div class="table-responsive m-b-40">
-                                    <table class="table table-borderless table-data3">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>Nama</th>
-                                                <th>Tanggal</th>
-                                                <th>Jumlah Angsuran</th>
-                                                <th>Sisa Angsuran</th>
-                                                <th>Alamat</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-
-                                        <?php
-                                                foreach($peminjaman as $p){
-                                            ?>
-
-                                        <tbody>
-                                            
-                                            <tr>
-                                                <td><?= $p->idPeminjaman ?></td>
-                                                <td><?= $p->nama ?></td>
-                                                <td><?= $p->tanggalPeminjaman ?></td>
-                                                <td><?php 
-                                                function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,2,',','.');
-                                                    return $result;
-                                                }
-                                                echo rupiah($p->nominal) ?></td>
-                                                <td><?= $p->jumlahBulan ?></td>
-                                                <td><?= $p->alamat ?></td>
-                                                <td class="denied">Belum Lunas</td>
-                                            </tr>
-
-                                        
-                                        </tbody>
-                                        <?php }?>
-                                        </tbody>
-
-                                       
-
-                                    </table>
+                                   <form class="form-horizontal" action="/action_page.php">
+									    <div class="form-group">
+									      <label class="control-label col-sm-2" for="email">Jumlah pembayaran</label>
+									      <div class="col-sm-10">
+									        <input type="text" class="form-control" id="email" placeholder="Masukkan nominal" name="email">
+									      </div>
+									    </div>
+									    <div class="form-group">        
+									      <div class="col-sm-offset-2 col-sm-10">
+									        <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20">
+									        Submit</button>
+									      </div>
+									    </div>
+									  </form>
                                 </div>
                                 <!-- END DATA TABLE-->
                             </div>
@@ -519,4 +491,3 @@
             </div>
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
-       

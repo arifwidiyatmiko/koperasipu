@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <nav class="navbar-mobile">
+            <nav class="navbar-mobile" style="width: 40%;">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="active">
