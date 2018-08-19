@@ -17,13 +17,25 @@
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
                                 <div class="table-responsive m-b-40">
-                                   <form class="form-horizontal" action="/action_page.php">
+                                   <form class="form-horizontal" >
 									    <div class="form-group">
-									      <label class="control-label col-sm-2" for="email">Jumlah pembayaran</label>
+									      <label class="control-label col-sm-2" for="email">Sisa Peminjaman</label>
 									      <div class="col-sm-10">
-									        <input type="text" class="form-control" id="email" placeholder="Masukkan nominal" name="email">
+									        <input  type="text" value="<?php
+
+                                                function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,2,',','.');
+                                                    return $result;
+                                                }
+                                             echo rupiah($bayar->nominal) ?>" disabled class="form-control">
 									      </div>
 									    </div>
+                                        <div class="form-group">
+                                          <label class="control-label col-sm-2" for="email">Jumlah pembayaran</label>
+                                          <div class="col-sm-10">
+                                            <input  type="text" class="form-control" placeholder="Masukkan nominal" name="">
+                                          </div>
+                                        </div>
 									    <div class="form-group">        
 									      <div class="col-sm-offset-2 col-sm-10">
 									        <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20">

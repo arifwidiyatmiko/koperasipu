@@ -37,7 +37,11 @@
                                         <tbody>
                                             
                                             <tr>
-                                                <td><?= $p->idPeminjaman ?></td>
+                                                <td>
+                                                    <a href="<?php echo base_url()?>/Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
+                                                        <?= $p->idPeminjaman ?>
+                                                    </a>
+                                                </td>
                                                 <td><?= $p->nama ?></td>
                                                 <td><?= $p->tanggalPeminjaman ?></td>
                                                 <td><?php 

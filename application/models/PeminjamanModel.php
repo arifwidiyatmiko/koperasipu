@@ -15,14 +15,19 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql);
 	}
 
-	function getNominal()
+	function getNominal($id)
 	{
-		$sql = 'SELECT nominal FROM peminjaman WHERE idPeminjaman = "'.$id.'" ';
+		$sql = 'SELECT * FROM peminjaman WHERE idPeminjaman = "'.$id.'" ';
 		return $this->db->query($sql)->row();
 	}
 
 	function pembayaranAction($id,  $nom){
-		
+		$nominal = 'SELECT nominal FROM peminjaman WHERE idPeminjaman = "'.$id.'" ';
+		$input = (int)$nom;
+		$update = $nominal - $input;
+    	$this->db->set('nominal',$update);
+    	$this->db->where('idPeminjaman',$id);
+    	$this->db->update('peminjaman');
 	}
 
 }

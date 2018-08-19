@@ -37,12 +37,14 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function pembayaran(){
+	public function pembayaran($id){
+		$data['bayar'] = $this->PeminjamanModel->getNominal($id);
+
 		$this->load->view('header');
-		$this->load->view('pembayaran');
+		$this->load->view('pembayaran',$data);
 		$this->load->view('footer');
-		$id = 1;
-		$awal = $this->PeminjamanModel->getNominal($id);
+		
+		
 		
 
 	}
