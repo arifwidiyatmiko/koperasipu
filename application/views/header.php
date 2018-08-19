@@ -199,7 +199,7 @@
                                                     <h5 class="name">
                                                         <a href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users_koperasi')->namaLengkap; ?></a>
                                                     </h5>
-                                                    <span class="email"><?= $this->session->userdata('users')->no_hp; ?></span>
+                                                    <span class="email"><?= $this->session->userdata('users_koperasi')->no_hp; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">

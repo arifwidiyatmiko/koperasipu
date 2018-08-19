@@ -21,14 +21,16 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql)->row();
 	}
 
-	function pembayaranAction($id,  $nom){
-		$nominal = 'SELECT nominal FROM peminjaman WHERE idPeminjaman = "'.$id.'" ';
-		$input = (int)$nom;
-		$update = $nominal - $input;
-    	$this->db->set('nominal',$update);
-    	$this->db->where('idPeminjaman',$id);
-    	$this->db->update('peminjaman');
+	function InsertPembayaran($angsuran){
+		$this->db->insert('angsuran', $angsuran);
 	}
+
+	function updatePembayaran($id, $nominal){
+		$this->db->set('sisaPeminjaman',$nominal);
+		$this->db->where('idPeminjaman',$id);
+		$this->db->update('peminjaman');
+	}
+
 
 }
 

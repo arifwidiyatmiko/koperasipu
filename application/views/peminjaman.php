@@ -38,7 +38,7 @@
                                             
                                             <tr>
                                                 <td>
-                                                    <a href="<?php echo base_url()?>/Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
+                                                    <a href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
                                                         <?= $p->idPeminjaman ?>
                                                     </a>
                                                 </td>

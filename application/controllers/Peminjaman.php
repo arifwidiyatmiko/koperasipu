@@ -43,33 +43,15 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('header');
 		$this->load->view('pembayaran',$data);
 		$this->load->view('footer');
-		
-		
-		
+	}
+
+	public function submitPembayaran($id){
+		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"), 'jasa' => $this->input->post("bayar_jasa") );
+		// print_r($this->input->post("sisa_nominal")); die();
+		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
+		$this->PeminjamanModel->updatePembayaran($id,$nominal);
+		$this->PeminjamanModel->insertPembayaran($angsuran);
 
 	}
 
-
-	public function backup($value='')
-	{
-		$this->load->dbutil();
-
-		$prefs = array(     
-		    'format'      => 'zip',             
-		    'filename'    => 'my_db_backup.sql'
-		    );
-
-
-		$backup =& $this->dbutil->backup($prefs); 
-
-		$db_name = 'backup-on-'. date("Y-m-d-H-i-s") .'.zip';
-		$save = 'pathtobkfolder/'.$db_name;
-
-		$this->load->helper('file');
-		write_file($save, $backup); 
-
-
-		$this->load->helper('download');
-		force_download($db_name, $backup);# code...
-	}
 }
