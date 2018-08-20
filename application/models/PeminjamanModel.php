@@ -8,14 +8,14 @@ class PeminjamanModel extends CI_Model
 	
 	function getPinjamanList()
 	{
-		$sql = 'SELECT idPeminjaman, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman, nominal, jumlahBulan, u.namaLengkap as nama, alamat
+		$sql = 'SELECT u.*, p.*,SUM(angsuran.nominalBayar) as bayar, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
 		FROM peminjaman as p
-		LEFT JOIN user as u ON p.idUser = u.idUser
-		';
+		INNER JOIN angsuran on angsuran.idPeminjaman = p.idPeminjaman
+		LEFT JOIN user as u ON p.idUser = u.idUser';
 		return $this->db->query($sql);
 	}
 
-	function getNominal($id)
+	function getSisaPeminjaman($id)
 	{
 		$sql = 'SELECT * FROM peminjaman WHERE idPeminjaman = "'.$id.'" ';
 		return $this->db->query($sql)->row();

@@ -27,6 +27,7 @@
                                                 <th>Sisa Angsuran</th>
                                                 <th>Alamat</th>
                                                 <th>Status</th>
+                                                <th colspan="3">Action</th>
                                             </tr>
                                         </thead>
 
@@ -42,7 +43,7 @@
                                                         <?= $p->idPeminjaman ?>
                                                     </a>
                                                 </td>
-                                                <td><?= $p->nama ?></td>
+                                                <td><?= $p->namaLengkap ?></td>
                                                 <td><?= $p->tanggalPeminjaman ?></td>
                                                 <td><?php 
                                                 function rupiah($angka){
@@ -50,9 +51,20 @@
                                                     return $result;
                                                 }
                                                 echo rupiah($p->nominal) ?></td>
-                                                <td><?= $p->jumlahBulan ?></td>
+                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
                                                 <td><?= $p->alamat ?></td>
                                                 <td class="denied">Belum Lunas</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary">Detail</button>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
+                                                        Bayar
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger">Hapus</button>
+                                                </td>
                                             </tr>
 
                                         

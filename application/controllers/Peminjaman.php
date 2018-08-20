@@ -46,8 +46,7 @@ class Peminjaman extends CI_Controller {
 	}
 
 	public function pembayaran($id){
-		$data['bayar'] = $this->PeminjamanModel->getNominal($id);
-
+		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);
 		$this->load->view('header');
 		$this->load->view('pembayaran',$data);
 		$this->load->view('footer');
@@ -55,10 +54,11 @@ class Peminjaman extends CI_Controller {
 
 	public function submitPembayaran($id){
 		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"), 'jasa' => $this->input->post("bayar_jasa") );
-		// print_r($this->input->post("sisa_nominal")); die();
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
 		$this->PeminjamanModel->updatePembayaran($id,$nominal);
 		$this->PeminjamanModel->insertPembayaran($angsuran);
+		redirect('peminjaman');
+		// print_r($nominal); die();
 
 	}
 

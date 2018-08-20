@@ -28,8 +28,8 @@
                                                     return $result;
                                                 }
                                              echo rupiah($bayar->nominal) ?>" disabled class="form-control"> -->
-                                             <input type="text" name="sisa_nominal"  value="<?php echo($bayar->nominal) ?>" class="form-control" disabled="true">
-                                             <input type="text" name="sisa_nominal"  value="<?php echo($bayar->nominal) ?>" class="form-control" hidden>
+                                             <input type="text" name="sisa_nominal"  value="<?php echo($bayar->sisaPeminjaman) ?>" class="form-control" disabled="true">
+                                             <input type="text" name="sisa_nominal"  value="<?php echo($bayar->sisaPeminjaman) ?>" class="form-control" hidden>
 									      </div>
 									    </div>
                                         <div class="form-group">
