@@ -16,68 +16,50 @@
                         <div class="row m-t-25">
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
-                                <div class="table-responsive m-b-40">
-                                    <table class="table table-borderless table-data3">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>Nama</th>
-                                                <th>Tanggal</th>
-                                                <th>Jumlah Angsuran</th>
-                                                <th>Sisa Angsuran</th>
-                                                <th>Alamat</th>
-                                                <th>Status</th>
-                                                <th colspan="3">Action</th>
-                                            </tr>
-                                        </thead>
-
-                                        <?php
-                                                foreach($peminjaman as $p){
-                                            ?>
-
-                                        <tbody>
-                                            
-                                            <tr>
-                                                <td>
-                                                    <a href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
-                                                        <?= $p->idPeminjaman ?>
-                                                    </a>
-                                                </td>
-                                                <td><?= $p->namaLengkap ?></td>
-                                                <td><?= $p->tanggalPeminjaman ?></td>
-                                                <td><?php 
-                                                function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,2,',','.');
-                                                    return $result;
-                                                }
-                                                echo rupiah($p->nominal) ?></td>
-                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
-                                                <td><?= $p->alamat ?></td>
-                                                <td class="denied">Belum Lunas</td>
-                                                <td>
-                                                    
-                                                        <a class="btn btn-primary" href="<?php echo base_url()?>peminjaman/detail_peminjaman/<?=$p->idPeminjaman?>">Detail</a>
-                                                    
-                                                </td>
-                                                <td>
-                                                    <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
-                                                        Bayar
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger">Hapus</button>
-                                                </td>
-                                            </tr>
-
-                                        
-                                        </tbody>
-                                        <?php }?>
-                                        </tbody>
-
-                                       
-
-                                    </table>
+                                <div class="col-lg-3">
+                                <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+                                    <div class="au-card-inner">
+                                        <div class="table-responsive">
+                                            <table class="table table-top-countries">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>United States</td>
+                                                        <td class="text-right">$119,366.96</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Australia</td>
+                                                        <td class="text-right">$70,261.65</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>United Kingdom</td>
+                                                        <td class="text-right">$46,399.22</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Turkey</td>
+                                                        <td class="text-right">$35,364.90</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Germany</td>
+                                                        <td class="text-right">$20,366.96</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>France</td>
+                                                        <td class="text-right">$10,366.96</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Australia</td>
+                                                        <td class="text-right">$5,366.96</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Italy</td>
+                                                        <td class="text-right">$1639.32</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
                                 <!-- END DATA TABLE-->
                             </div>
                         </div>
