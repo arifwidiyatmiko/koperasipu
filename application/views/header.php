@@ -32,7 +32,8 @@
 
     <!-- Main CSS-->
     <link href="<?php echo base_url();?>assets/css/theme.css" rel="stylesheet" media="all">
-
+     <!-- Jquery JS-->
+    <script src="<?php echo base_url();?>assets/vendor/jquery-3.2.1.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -150,6 +151,16 @@
                             <?php
                         }
                         ?>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'JAMINAN'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Anggota">
+                                <i class="fas fa-users"></i>JAMINAN</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
                         <li class="has-sub">
                             <a class="js-arrow" href="<?php echo base_url();?>assets/#">
                                 <i class="fas fa-copy"></i>Pages</a>
@@ -199,7 +210,7 @@
                                                     <h5 class="name">
                                                         <a href="<?php echo base_url();?>assets/#"><?= $this->session->userdata('users_koperasi')->namaLengkap; ?></a>
                                                     </h5>
-                                                    <span class="email"><?= $this->session->userdata('users')->no_hp; ?></span>
+                                                    <span class="email"><?= $this->session->userdata('users_koperasi')->no_hp; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
@@ -214,4 +225,67 @@
                     </div>
                 </div>
             </header>
+          <?php 
+          if ($this->uri->segment(2) == strtolower('pengajuan')) {
+              # code...
+            ?>
+             <!-- modal small -->
+            <div class="modal fade" id="konfirmasiPengajuan" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="smallmodalLabel">Konfirmasi Pengajuan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Nama</span>
+                                <span class="col-sm-6"> : <?php echo $this->session->userdata('users_koperasi')->namaLengkap;?></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Jumlah Peminjaman</span>
+                                <span class="col-sm-6"> : <b id="modal_jumlahPeminjaman"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Jenis Peminjaman</span>
+                                <span class="col-sm-6"> : <b id="modal_jenisPeminjaman"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Biaya Jaminan</span>
+                                <span class="col-sm-6"> : <b id="modal_jaminanPeminjaman"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Provisi</span>
+                                <span class="col-sm-6"> : <b id="modal_provisiPeminjaman"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Pelunasan Kredit</span>
+                                <span class="col-sm-6"> : <b id="modal_pelunasanKredit"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Kekurangan Jasa</span>
+                                <span class="col-sm-6"> : <b id="modal_kekuranganJasa"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Kekurangan Jasa</span>
+                                <span class="col-sm-6"> : <b id="modal_kekuranganJasa"></b></span>
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="col-sm-6">Jumlah Angsuran</span>
+                                <input type="text" name="nominalAngsuran" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+          }
+          ?>
             <!-- HEADER DESKTOP-->
