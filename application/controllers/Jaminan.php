@@ -21,10 +21,36 @@ class Jaminan extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('UserModel');
+		
+		if (!$this->session->userdata('users_koperasi')) {
+			redirect('Auth','refresh');
+		}
+		$this->load->model('Ref_jaminanPeminjaman');
 	}
 	public function index()
 	{
-		$this->load->view('login');
+		$data['jaminan'] = $this->Ref_jaminanPeminjaman->getAll()->result();
+		$this->load->view('header');
+		// $this->load->view('sidebar');
+		$this->load->view('jaminan',$data);
+		$this->load->view('footer');
+	}
+	public function tambah()
+	{
+		// if ($this->Ref_jaminanPeminjaman->getByUmur($this->input->post('umur'))) {
+		// 	# code...
+		// }
+		$umur = array('Nama' => $this->input->post('umur') );
+		// print_r($umur);die();
+		$id_jaminan = $this->Ref_jaminanPeminjaman->insert($umur);
+		// print_r($id_jaminan);die();
+		$ref_jaminan = array(
+							array('Nama' => '10 Bulan','Persentase'=>$this->input->post('10bulan'),'idJaminan'=>$id_jaminan),
+							array('Nama' => '15 Bulan','Persentase'=>$this->input->post('15bulan'),'idJaminan'=>$id_jaminan),
+							array('Nama' => '20 Bulan','Persentase'=>$this->input->post('20bulan'),'idJaminan'=>$id_jaminan),	
+							array('Nama' => '24 Bulan','Persentase'=>$this->input->post('24bulan'),'idJaminan'=>$id_jaminan),
+						);
+		$this->Ref_jaminanPeminjaman->insert_refjaminan($ref_jaminan);
+		redirect('Jaminan','refresh');
 	}
 }

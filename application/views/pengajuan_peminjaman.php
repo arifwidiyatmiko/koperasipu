@@ -24,7 +24,7 @@
                                               <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
                                               </div>
-                                              <input type="text" class="form-control" placeholder="nominal" id="nominal" name="nominal">
+                                              <input type="text" class="form-control" placeholder="nominal" onkeypress="return isNumber(event)" id="nominal" name="nominal">
                                             </div>
                                         </div>
 
@@ -52,7 +52,7 @@
                                         </div>
 									    <div class="form-group">        
 									      <div class="col-sm-offset-2 col-sm-10">
-									        <button id="btn_konfirmasiPengajuan" type="button" class="au-btn au-btn--block au-btn--green m-b-20" data-toggle="modal" data-target="#konfirmasiPengajuan">
+									        <button id="btn_konfirmasiPengajuan" type="button" class="au-btn au-btn--block au-btn--green m-b-20" >
 									        Submit</button>
 									      </div>
 									    </div>
@@ -63,6 +63,8 @@
                         </div>
                         <script type="text/javascript">
                             $( document ).ready(function() {
+                                var umur = <?php echo date_diff(date_create($this->session->userdata('users_koperasi')->tanggal_lahir), date_create('today'))->y;?>;
+                                console.log(umur)
                                 var data_jenisPeminjaman = <?php echo json_encode($ref_peminjaman->result());?>;
                                 var jenisPeminjaman = 0;
                                 var obj_jenisPeminjaman = {};
@@ -70,7 +72,7 @@
                                    data_jenisPeminjaman.forEach((num, index) => {
                                         if(num.idJenisPeminjaman == $('#jenisPeminjaman').val()){
                                             jenisPeminjaman = parseInt(num.jumlahBulan);
-                                            data_jenisPeminjaman = num;
+                                            obj_jenisPeminjaman = num;
                                             $('#jumlahBulan').val(0);
                                         }
                                     });
@@ -82,10 +84,23 @@
                                     }
                                 });
                                 $('#btn_konfirmasiPengajuan').on('click',function() {
-                                    $('#modal_jumlahPeminjaman').append($('#nominal').val());
-                                    $('#modal_jenisPeminjaman').append("JANGKA "+obj_jenisPeminjaman.Nama+" "+$('#jumlahBulan').val()+" Bulan");
-                                    if (obj_jenisPeminjaman.idJenisPeminjaman != 1) {$('#modal_jaminanPeminjaman').append("-");}
-                                    else{$('#modal_jaminanPeminjaman').append("-");}
+                                    if ($('#nominal').val() == '') {
+                                        $('#nominal').focus();
+                                    }else if($('#jenisPeminjaman').val() == 'NULL'){
+                                        $('#jenisPeminjaman').focus();
+                                    }else if($('#jumlahBulan').val() == '' || parseInt($('#jumlahBulan').val()) == 0){
+                                        $('#jumlahBulan').focus();
+                                    }
+                                    else{
+                                        $('#konfirmasiPengajuan').modal('show');
+                                        $('#modal_jumlahPeminjaman').text($('#nominal').val());
+                                        $('#modal_jenisPeminjaman').text("JANGKA "+obj_jenisPeminjaman.Nama+" "+$('#jumlahBulan').val()+" Bulan");
+                                        if (obj_jenisPeminjaman.idJenisPeminjaman != 1) {$('#modal_jaminanPeminjaman').text("-");}
+                                        else{$('#modal_jaminanPeminjaman').text("-");}
+                                        var provisi = parseInt($('#nominal').val()) * parseFloat(1/100);
+                                        $('#modal_provisiPeminjaman').text(provisi);
+                                    }
+                                    
                                 })
                             });
                         </script>

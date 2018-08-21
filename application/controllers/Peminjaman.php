@@ -46,12 +46,14 @@ class Peminjaman extends CI_Controller {
 
 	public function pengajuan($value='')
 	{
+		$this->load->model('Ref_JenispeminjamanModel');
 		$data['ref_peminjaman'] = $this->Ref_JenispeminjamanModel->getAll();
 		// print_r($data['ref_peminjaman']->result());die();
 		$this->load->view('header');
 		$this->load->view('pengajuan_peminjaman',$data);
 		$this->load->view('footer');
 	}
+
 
 	public function pembayaran($id){
 		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);

@@ -34,6 +34,16 @@
     <link href="<?php echo base_url();?>assets/css/theme.css" rel="stylesheet" media="all">
      <!-- Jquery JS-->
     <script src="<?php echo base_url();?>assets/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        function isNumber(evt) {
+                                    evt = (evt) ? evt : window.event;
+                                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                        return false;
+                                    }
+                                    return true;
+                                }
+    </script>
 </head>
 
 <body class="animsition">
@@ -155,8 +165,8 @@
                         if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
                             ?>
                         <li class="<?php if(strtoupper($this->uri->segment(1)) == 'JAMINAN'){echo "active";}?>">
-                            <a href="<?php echo base_url();?>Anggota">
-                                <i class="fas fa-users"></i>JAMINAN</a>
+                            <a href="<?php echo base_url();?>Jaminan">
+                                <i class="fas fa-users"></i>Jaminan</a>
                         </li>
                             <?php
                         }
@@ -269,7 +279,7 @@
                                 <span class="col-sm-6"> : <b id="modal_kekuranganJasa"></b></span>
                             </div>
                             <div class="col-sm-12">
-                                <span class="col-sm-6">Kekurangan Jasa</span>
+                                <span class="col-sm-6">Uang akan Diterima</span>
                                 <span class="col-sm-6"> : <b id="modal_kekuranganJasa"></b></span>
                             </div>
                             <div class="col-sm-12">
@@ -287,5 +297,77 @@
 
             <?php
           }
+          // if ($this->uri->segment(1) == strtolower('jaminan')) {
+              # code...
+            ?>
+             <!-- modal small -->
+            <div class="modal fade" id="tambahJaminan" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="smallmodalLabel">Tambah Data Jaminan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="<?php echo base_url();?>Jaminan/tambah" method="post" class="">
+                                            <div class="form-group">
+                                                <!-- <div class="input-group"> -->
+                                                    <label>Umur : </label>
+                                                    <input type="number" id="umur" name="umur" placeholder="umur" class="form-control">
+                                                <!-- </div> -->
+                                            </div>
+                                            <div class="form-inline">
+                                                <div class="form-group col-sm-6">
+                                                    <label>10 Bulan : </label>
+                                                    <div class="input-group">
+                                                        <input type="text" id="10bulan" name="10bulan" placeholder="0.00" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            %
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>15 Bulan : </label>
+                                                    <div class="input-group">
+                                                        <input type="text" id="15bulan" name="15bulan" placeholder="0.00" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            %
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-inline">
+                                                <div class="form-group col-sm-6">
+                                                    <label>20 Bulan : </label>
+                                                    <div class="input-group">
+                                                        <input type="text" id="username" name="20bulan" placeholder="0.00" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            %
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>24 Bulan : </label>
+                                                    <div class="input-group">
+                                                        <input type="text" id="24bulan" name="24bulan" placeholder="0.00" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            %
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-actions form-group">
+                                                <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                                            </div>
+                                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+          // }
           ?>
             <!-- HEADER DESKTOP-->

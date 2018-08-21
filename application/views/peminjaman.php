@@ -51,7 +51,7 @@
                                                     return $result;
                                                 }
                                                 echo rupiah($p->nominal) ?></td>
-                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
+                                                <td><?= rupiah($p->sisaPinjaman) ?></td>
                                                 <td><?= $p->alamat ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                                 <td>
