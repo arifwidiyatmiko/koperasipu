@@ -32,6 +32,7 @@
                                         </thead>
 
                                         <?php
+                                        // print_r($peminjaman);die();
                                                 foreach($peminjaman as $p){
                                             ?>
 
@@ -51,7 +52,7 @@
                                                     return $result;
                                                 }
                                                 echo rupiah($p->nominal) ?></td>
-                                                <td><?= rupiah($p->sisaPinjaman) ?></td>
+                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
                                                 <td><?= $p->alamat ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                                 <td>
