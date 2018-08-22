@@ -14,7 +14,11 @@ class PeminjamanModel extends CI_Model
 		LEFT JOIN user as u ON p.idUser = u.idUser';
 		return $this->db->query($sql);
 	}
-
+	public function peminjamanByUser($value='')
+	{
+		$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "'.$value.'" ORDER BY sisaPeminjaman DESC';
+		return $this->db->query($sql)->result();
+	}
 	//detail per pinjaman
 	function getDetailPeminjaman($id)
 	{

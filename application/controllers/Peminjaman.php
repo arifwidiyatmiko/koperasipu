@@ -25,6 +25,7 @@ class Peminjaman extends CI_Controller {
 		if (!$this->session->userdata('users_koperasi')) {
 			redirect('Auth','refresh');
 		}
+		$this->load->model('Ref_jaminanPeminjaman');
 	}
 	public function index()
 	{
@@ -44,10 +45,39 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function cek_jaminan($umur,$bulan)
+	{
+		# code...
+		$where = array('umur' => $umur );
+		if ($bulan <= 10) {
+			$where['Nama'] = '10 Bulan';
+		}else if($bulan >= 24){
+			$where['Nama'] = '24 Bulan';
+		}else if ($bulan > 10 && $bulan <= 15) {
+			$where['Nama'] = '15 Bulan';
+		}else if ($bulan > 15 && $bulan <= 20) {
+			$where['Nama'] = '20 Bulan';
+		}
+		$data = $this->Ref_jaminanPeminjaman->cekJaminan($where);
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
+	public function cekPeminjaman($value='')
+	{
+		$jml = 0;
+		$data = $this->PeminjamanModel->peminjamanByUser($value);
+		foreach ($data as $key) {
+			$jml =+ $key->sisaPeminjaman;
+		}
+		header('Content-Type: application/json');
+		echo json_encode(array('jumlah'=>$jml,'data'=>$data));
+	}
 	public function pengajuan($value='')
 	{
 		$this->load->model('Ref_JenispeminjamanModel');
 		$data['ref_peminjaman'] = $this->Ref_JenispeminjamanModel->getAll();
+		$data['minmax'] = $this->Ref_jaminanPeminjaman->minmax()[0];
+		// print_r($data['minmax']);die();
 		// print_r($data['ref_peminjaman']->result());die();
 		$this->load->view('header');
 		$this->load->view('pengajuan_peminjaman',$data);
