@@ -62,6 +62,13 @@ class Peminjaman extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
+	public function submit()
+	{
+		// $data = $this->input->post(NULL, TRUE);
+		$data = $this->input->post();
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
 	public function cekPeminjaman($value='')
 	{
 		$jml = 0;

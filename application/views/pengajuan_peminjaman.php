@@ -64,6 +64,7 @@
                         <script type="text/javascript">
                             $( document ).ready(function() {
                                 var umur = <?php echo date_diff(date_create($this->session->userdata('users_koperasi')->tanggal_lahir), date_create('today'))->y;?>;
+                                var submitData = {};
                                 var min = <?php echo $minmax->kecil;?>;
                                 var max = <?php echo $minmax->besar;?>;
                                 var data_jenisPeminjaman = <?php echo json_encode($ref_peminjaman->result());?>;
@@ -116,6 +117,7 @@
                                                         url: '<?php echo base_url();?>Peminjaman/cek_jaminan/'+x_umur+'/'+$('#jumlahBulan').val()
                                                     })
                                                     .done(function(data){
+                                                        submitData.persentaseJaminan = data[0].persentase;
                                                         jaminan = parseInt( parseInt($('#nominal').val()) * parseFloat(data[0].persentase/100));
                                                        $('#modal_jaminanPeminjaman').text(jaminan);
                                                        if (content.jumlah == 0 ) {
@@ -132,12 +134,6 @@
                                                        }
                                                        $('#modal_kekuranganJasa').text(sisaJasa);
                                                        kekuranganJasa =  parseInt($('#nominal').val()) - jaminan - content.jumlah - sisaJasa-provisi;
-                                                       console.log( parseInt($('#nominal').val()));
-                                                       console.log(jaminan);
-                                                       console.log(content.jumlah);
-                                                       console.log(sisaJasa);
-                                                       console.log(provisi);
-                                                       console.log(kekuranganJasa);
                                                        $('#modal_uangDiterima').text(kekuranganJasa);
                                                     })
 
@@ -156,6 +152,32 @@
                                             });
                                     }
                                     
+                                })
+                                $('#btn_pengajuanPeminjaman_konfirmasi').on('click',function() {
+                                    if ($('#nominalAngsuran').val() == null || $('#nominalAngsuran').val() == '') {
+                                        $('#nominalAngsuran').focus();
+                                    }
+                                    submitData.idUser = '<?php echo $this->session->userdata('users_koperasi')->idUser;?>';
+                                    submitData.tanggal = '<?php echo date('Y-m-d H:i:s');?>';
+                                    submitData.nominal = parseInt($('#nominal').val());
+                                    submitData.jumlahBulan = $('#jumlahBulan').val();
+                                    submitData.tipePeminjaman = obj_jenisPeminjaman.Nama;
+                                    submitData.sisaPeminjaman = submitData.nominal;
+                                    submitData.status = 0;
+                                    submitData.nominalAngsuran = $('#nominalAngsuran').val();
+                                    submitData.persentasePeminjaman = obj_jenisPeminjaman.Persentase;
+                                    console.log(submitData);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '<?php echo base_url();?>Peminjaman/submit/',
+                                        date : submitData
+                                    })
+                                    .done(function(success){
+                                        console.log(success);
+                                    })
+                                   .fail(function() {
+                                        alert( "Silahkan coba beberapa saat lagi." );
+                                    });
                                 })
                             });
                         </script>

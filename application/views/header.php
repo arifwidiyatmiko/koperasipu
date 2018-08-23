@@ -284,7 +284,7 @@
                             </div>
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Jumlah Angsuran</span>
-                                <input type="text" name="nominalAngsuran" class="form-control">
+                                <input type="text" name="nominalAngsuran" id="nominalAngsuran" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
