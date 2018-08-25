@@ -16,6 +16,7 @@
                         <div class="row m-t-25">
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
+                                <?php //print_r($bayar);die();?>
                                 <div class="table-responsive m-b-40">
                                    <form class="form-horizontal" method="post" action="<?php echo base_url();?>Peminjaman/submitPembayaran/<?php echo $this->uri->segment(3);?>">
 									    <div class="form-group">
@@ -41,7 +42,7 @@
                                         <div class="form-group">
                                           <label class="control-label col-sm-4">Jumlah Pembayaran Jasa</label>
                                           <div class="col-sm-10">
-                                            <input  type="text" value="<?= $bayar->jasa?>" class="form-control" placeholder="Masukkan nominal" name="bayar_jasa" onkeypress="return isNumber(event)">
+                                            <input  type="text" value="<?= $bayar->sisaPeminjaman*$bayar->persentasePeminjaman/100?>" class="form-control" placeholder="Masukkan nominal" name="bayar_jasa" onkeypress="return isNumber(event)">
                                           </div>
                                         </div>
 									    <div class="form-group">        

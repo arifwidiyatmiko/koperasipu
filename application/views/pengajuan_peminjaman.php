@@ -64,7 +64,9 @@
                         <script type="text/javascript">
                             $( document ).ready(function() {
                                 var umur = <?php echo date_diff(date_create($this->session->userdata('users_koperasi')->tanggal_lahir), date_create('today'))->y;?>;
-                                console.log(umur)
+                                var submitData = {};
+                                var min = <?php echo $minmax->kecil;?>;
+                                var max = <?php echo $minmax->besar;?>;
                                 var data_jenisPeminjaman = <?php echo json_encode($ref_peminjaman->result());?>;
                                 var jenisPeminjaman = 0;
                                 var obj_jenisPeminjaman = {};
@@ -84,6 +86,7 @@
                                     }
                                 });
                                 $('#btn_konfirmasiPengajuan').on('click',function() {
+                                    var jaminan = 0;var sisaPelunasan=0; var sisaJasa = 0; var kekuranganJasa=0;
                                     if ($('#nominal').val() == '') {
                                         $('#nominal').focus();
                                     }else if($('#jenisPeminjaman').val() == 'NULL'){
@@ -92,15 +95,89 @@
                                         $('#jumlahBulan').focus();
                                     }
                                     else{
-                                        $('#konfirmasiPengajuan').modal('show');
-                                        $('#modal_jumlahPeminjaman').text($('#nominal').val());
-                                        $('#modal_jenisPeminjaman').text("JANGKA "+obj_jenisPeminjaman.Nama+" "+$('#jumlahBulan').val()+" Bulan");
-                                        if (obj_jenisPeminjaman.idJenisPeminjaman != 1) {$('#modal_jaminanPeminjaman').text("-");}
-                                        else{$('#modal_jaminanPeminjaman').text("-");}
-                                        var provisi = parseInt($('#nominal').val()) * parseFloat(1/100);
-                                        $('#modal_provisiPeminjaman').text(provisi);
+                                        if (umur >= min && umur <= max) {
+                                            var x_umur = umur;
+                                        }else{
+                                            if (umur < min) {var x_umur = min;}
+                                            else{var x_umur = max;}
+                                        }
+                                        $.ajax({
+                                                type: 'GET',
+                                                url: '<?php echo base_url();?>Peminjaman/cekPeminjaman/'+<?php echo $this->session->userdata('users_koperasi')->idUser;?>
+                                            })
+                                            .done(function(content){
+                                               // console.log(content);
+                                              $('#konfirmasiPengajuan').modal('show');
+                                                $('#modal_jumlahPeminjaman').text($('#nominal').val());
+                                                $('#modal_jenisPeminjaman').text(obj_jenisPeminjaman.Nama+"-"+$('#jumlahBulan').val()+" Bulan");
+                                                if (obj_jenisPeminjaman.idJenisPeminjaman == 1) {$('#modal_jaminanPeminjaman').text("-");}
+                                                else{
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '<?php echo base_url();?>Peminjaman/cek_jaminan/'+x_umur+'/'+$('#jumlahBulan').val()
+                                                    })
+                                                    .done(function(data){
+                                                        submitData.persentaseJaminan = data[0].persentase;
+                                                        jaminan = parseInt( parseInt($('#nominal').val()) * parseFloat(data[0].persentase/100));
+                                                       $('#modal_jaminanPeminjaman').text(jaminan);
+                                                       if (content.jumlah == 0 ) {
+                                                            $('#modal_pelunasanKredit').text(content.jumlah);
+                                                       }else{
+                                                            sisaPelunasan = parseInt($('#nominal').val()) - parseInt(content.jumlah);
+                                                            if (sisaPelunasan > 0) {
+                                                                $('#modal_pelunasanKredit').text(parseInt(content.jumlah));
+                                                            }else{
+                                                                $('#modal_pelunasanKredit').text(parseInt(content.jumlah));
+                                                                $('#modal_pelunasanKredit').css('color','red');
+                                                                $('#btn_pengajuanPeminjaman_konfirmasi').attr("disabled", "disabled");
+                                                            }
+                                                       }
+                                                       $('#modal_kekuranganJasa').text(sisaJasa);
+                                                       kekuranganJasa =  parseInt($('#nominal').val()) - jaminan - content.jumlah - sisaJasa-provisi;
+                                                       $('#modal_uangDiterima').text(kekuranganJasa);
+                                                    })
+
+                                                    .fail(function() {
+                                                        alert( "Silahkan coba beberapa saat lagi." );
+                                                         
+                                                    });
+                                             
+                                                }
+                                                var provisi = parseInt($('#nominal').val()) * parseFloat(1/100);
+                                                $('#modal_provisiPeminjaman').text(provisi);
+                                            })
+                                            .fail(function() {
+                                                alert( "Silahkan coba beberapa saat lagi." );
+                                                 
+                                            });
                                     }
                                     
+                                })
+                                $('#btn_pengajuanPeminjaman_konfirmasi').on('click',function() {
+                                    if ($('#nominalAngsuran').val() == null || $('#nominalAngsuran').val() == '') {
+                                        $('#nominalAngsuran').focus();
+                                    }
+                                    submitData.idUser = '<?php echo $this->session->userdata('users_koperasi')->idUser;?>';
+                                    submitData.tanggal = '<?php echo date('Y-m-d H:i:s');?>';
+                                    submitData.nominal = parseInt($('#nominal').val());
+                                    submitData.jumlahBulan = $('#jumlahBulan').val();
+                                    submitData.tipePeminjaman = obj_jenisPeminjaman.Nama;
+                                    submitData.sisaPeminjaman = submitData.nominal;
+                                    submitData.status = 0;
+                                    submitData.nominalAngsuran = $('#nominalAngsuran').val();
+                                    submitData.persentasePeminjaman = obj_jenisPeminjaman.Persentase;
+                                    console.log(submitData);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '<?php echo base_url();?>Peminjaman/submit/',
+                                        date : submitData
+                                    })
+                                    .done(function(success){
+                                        console.log(success);
+                                    })
+                                   .fail(function() {
+                                        alert( "Silahkan coba beberapa saat lagi." );
+                                    });
                                 })
                             });
                         </script>

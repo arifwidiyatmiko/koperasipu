@@ -16,6 +16,17 @@ class Ref_jaminanPeminjaman extends CI_Model
 		$this->db->where('Nama', $value);
 		return $this->db->get('jaminan')->num_rows();
 	}
+	public function minmax()
+	{
+		$sql = 'SELECT min(Nama) as kecil,max(Nama) as besar FROM jaminan';
+		return $this->db->query($sql)->result();
+	}
+
+	public function cekJaminan($value)
+	{
+		$sql = 'SELECT jaminan.Nama as umur, ref_jaminanbulan.Nama as bulan, ref_jaminanbulan.Persentase as persentase FROM `ref_jaminanbulan` INNER JOIN `jaminan` on jaminan.idJaminan = ref_jaminanbulan.idJaminan WHERE jaminan.Nama = '.$value['umur'].' AND ref_jaminanbulan.Nama = "'.$value['Nama'].'" ';
+		return $this->db->query($sql)->result();
+	}
 
 	public function insert($value='')
 	{

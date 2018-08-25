@@ -280,16 +280,16 @@
                             </div>
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Uang akan Diterima</span>
-                                <span class="col-sm-6"> : <b id="modal_kekuranganJasa"></b></span>
+                                <span class="col-sm-6"> : <b id="modal_uangDiterima"></b></span>
                             </div>
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Jumlah Angsuran</span>
-                                <input type="text" name="nominalAngsuran" class="form-control">
+                                <input type="text" name="nominalAngsuran" id="nominalAngsuran" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary">Confirm</button>
+                            <button type="button" id="btn_pengajuanPeminjaman_konfirmasi" class="btn btn-primary">Confirm</button>
                         </div>
                     </div>
                 </div>
