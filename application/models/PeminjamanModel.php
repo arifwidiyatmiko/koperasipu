@@ -36,8 +36,9 @@ class PeminjamanModel extends CI_Model
 		$this->db->insert('angsuran', $angsuran);
 	}
 
-	function updatePembayaran($id, $nominal){
+	function updatePembayaran($id, $nominal, $jasa){
 		$this->db->set('sisaPeminjaman',$nominal);
+		$this->db->set('jasa',$jasa);
 		$this->db->where('idPeminjaman',$id);
 		$this->db->update('peminjaman');
 	}

@@ -25,6 +25,8 @@
                                                 <th>Tanggal</th>
                                                 <th>Jumlah Angsuran</th>
                                                 <th>Sisa Angsuran</th>
+                                                <th>Jumlah Jasa</th>
+                                                <th>Sisa Jasa</th>
                                                 <th>Alamat</th>
                                                 <th>Status</th>
                                                 <th colspan="3">Action</th>
@@ -51,7 +53,8 @@
                                                     return $result;
                                                 }
                                                 echo rupiah($p->nominal) ?></td>
-                                                <td><?= rupiah($p->sisaPinjaman) ?></td>
+                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
+                                                <td><?= $p->?></td>
                                                 <td><?= $p->alamat ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                                 <td>

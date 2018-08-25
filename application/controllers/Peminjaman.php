@@ -65,6 +65,7 @@ class Peminjaman extends CI_Controller {
 	public function submitPembayaran($id){
 		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"), 'jasa' => $this->input->post("bayar_jasa") );
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
+		$jasa = 
 		$this->PeminjamanModel->updatePembayaran($id,$nominal);
 		$this->PeminjamanModel->insertPembayaran($angsuran);
 		redirect('peminjaman');
