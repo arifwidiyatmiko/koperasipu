@@ -170,7 +170,7 @@
                                     $.ajax({
                                         type: 'POST',
                                         url: '<?php echo base_url();?>Peminjaman/submit/',
-                                        date : submitData
+                                        data : submitData
                                     })
                                     .done(function(success){
                                         console.log(success);

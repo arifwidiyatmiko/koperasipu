@@ -64,8 +64,9 @@ class Peminjaman extends CI_Controller {
 	}
 	public function submit()
 	{
-		// $data = $this->input->post(NULL, TRUE);
-		$data = $this->input->post();
+		$data = $this->input->post(NULL, TRUE);
+		// $data = $this->input->post();
+		// $data = $_POST[];
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
