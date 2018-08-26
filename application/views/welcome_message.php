@@ -82,6 +82,66 @@
                                     </div>
                                 </div>
                             </div>
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="overview-wrap">
+                                        <h2 class="title-1">Daftar Pengajuan</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <!-- DATA TABLE-->
+                                <div class="table-responsive m-b-40">
+                                    <table class="table table-borderless table-data3">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Tanggal Pengajuan</th>
+                                                <th>Nominal</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <?php
+                                        // print_r($peminjaman);die();
+                                            $i = 1;
+                                                foreach($usulan as $p){
+                                            ?>
+
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td>
+                                                    <a href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idUsulanPeminjaman?>">
+                                                        <?= $i ?>
+                                                    </a>
+                                                </td>
+                                                <td><?= $p->tanggal ?></td>
+                                                <td><?= $p->nominal ?></td>
+                                                <td>
+                                                    <?php 
+                                                    if ($p->status == 0) {
+                                                        echo "<p class='text text-default'>Pending</p>";
+                                                    }else if($p->status == 1){
+                                                        echo "<p class='text text-success'>Disetujui</p>";
+                                                    }else{
+                                                        echo "<p class='text text-danger'>Ditolak</p>";
+                                                    }
+                                                    ?>
+                                                </td>
+                                            </tr>
+
+                                        
+                                        </tbody>
+                                        <?php }?>
+                                        </tbody>
+
+                                       
+
+                                    </table>
+                                </div>
+                                <!-- END DATA TABLE-->
+                            </div>
                         </div>
                       <!--   <div class="row">
                             <div class="col-lg-6">

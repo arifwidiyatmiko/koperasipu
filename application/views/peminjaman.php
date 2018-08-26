@@ -55,10 +55,6 @@
                                                 }
                                                 echo rupiah($p->nominal) ?></td>
                                                 <td><?= rupiah($p->sisaPeminjaman) ?></td>
-<<<<<<< HEAD
-                                                <td><?= $p->?></td>
-=======
->>>>>>> 385e9653a8480bdd739148cebaf4082505a4c2f0
                                                 <td><?= $p->alamat ?></td>
                                                 <td class="denied">Belum Lunas</td>
                                                 <td>

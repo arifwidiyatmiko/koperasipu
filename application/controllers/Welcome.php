@@ -24,12 +24,15 @@ class Welcome extends CI_Controller {
 		if (!$this->session->userdata('users_koperasi')) {
 			redirect('Auth','refresh');
 		}
+		$this->load->model('PeminjamanModel');
 	}
 	public function index()
 	{
+		$data['usulan'] = $this->PeminjamanModel->getUsulanPeminjaman($this->session->userdata('users_koperasi')->idUser)->result();
+		// print_r($data);die();
 		$this->load->view('header');
 		// $this->load->view('sidebar');
-		$this->load->view('welcome_message');
+		$this->load->view('welcome_message',$data);
 		$this->load->view('footer');
 	}
 	public function backup($value='')

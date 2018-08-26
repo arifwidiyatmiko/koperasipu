@@ -2,6 +2,16 @@
 
 /**
  * 
+	TABEL PEMINJAMAN ATRIBUT STATUS 
+	0: BELUM LUNAS
+	1 : LUNAS
+
+	TABEL USULAN PEMINJAMAN ATRIBUT STATUS
+	0 : PENDING
+	1 : APPROVED
+	2 : REJECTED
+
+
  */
 class PeminjamanModel extends CI_Model
 {
@@ -14,9 +24,13 @@ class PeminjamanModel extends CI_Model
 		LEFT JOIN user as u ON p.idUser = u.idUser';
 		return $this->db->query($sql);
 	}
-	public function peminjamanByUser($value='')
+	public function peminjamanByUser($value,$statusLunas='')
 	{
-		$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "'.$value.'" ORDER BY sisaPeminjaman DESC';
+		if ($statusLunas == '') {
+			$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "'.$value.'" ORDER BY sisaPeminjaman DESC';
+		}else{
+			$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "'.$value.'" AND status = "'.$statusLunas.'"ORDER BY sisaPeminjaman DESC';
+		}
 		return $this->db->query($sql)->result();
 	}
 	//detail per pinjaman
@@ -38,6 +52,23 @@ class PeminjamanModel extends CI_Model
 
 	function InsertPembayaran($angsuran){
 		$this->db->insert('angsuran', $angsuran);
+	}
+
+	function usulanPeminjaman($value='')
+	{
+		$this->db->insert('usulan_peminjaman',$value);
+	}
+	public function getUsulanPeminjaman($idUser)
+	{
+		return $this->db->get('usulan_peminjaman');
+	}
+
+	function lunasin($id)
+	{
+		$this->db->set('sisaPeminjaman',0);
+		$this->db->set('status',1);
+		$this->db->where('idPeminjaman', $id);
+		$this->db->update('peminjaman');
 	}
 
 	function updatePembayaran($id, $nominal, $jasa){

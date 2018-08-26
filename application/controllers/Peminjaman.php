@@ -68,12 +68,20 @@ class Peminjaman extends CI_Controller {
 		// $data = $this->input->post();
 		// $data = $_POST[];
 		header('Content-Type: application/json');
-		echo json_encode($data);
+		// print_r($data);
+		if ($data['pelunasan'] == true) {
+			# code...
+			$this->PeminjamanModel->lunasin($data['pelunasanId']);
+		}
+		unset($data['pelunasan']);
+		unset($data['pelunasanId']);
+		$this->PeminjamanModel->usulanPeminjaman($data);
+		echo json_encode(array('status'=>1));
 	}
 	public function cekPeminjaman($value='')
 	{
 		$jml = 0;
-		$data = $this->PeminjamanModel->peminjamanByUser($value);
+		$data = $this->PeminjamanModel->peminjamanByUser($value,0);
 		foreach ($data as $key) {
 			$jml =+ $key->sisaPeminjaman;
 		}

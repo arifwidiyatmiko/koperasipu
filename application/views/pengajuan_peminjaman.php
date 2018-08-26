@@ -121,8 +121,12 @@
                                                         jaminan = parseInt( parseInt($('#nominal').val()) * parseFloat(data[0].persentase/100));
                                                        $('#modal_jaminanPeminjaman').text(jaminan);
                                                        if (content.jumlah == 0 ) {
+                                                            submitData.pelunasan = false;
+                                                            submitData.pelunasanId = 0;
                                                             $('#modal_pelunasanKredit').text(content.jumlah);
                                                        }else{
+                                                            submitData.pelunasan = true;
+                                                            submitData.pelunasanId = content.data[0].idPeminjaman;
                                                             sisaPelunasan = parseInt($('#nominal').val()) - parseInt(content.jumlah);
                                                             if (sisaPelunasan > 0) {
                                                                 $('#modal_pelunasanKredit').text(parseInt(content.jumlah));
@@ -173,7 +177,10 @@
                                         data : submitData
                                     })
                                     .done(function(success){
-                                        console.log(success);
+                                        // console.log(success);
+                                        if (success.status == 1) {
+                                            window.location = "<?php echo base_url();?>Peminjaman/Welcome";
+                                        }
                                     })
                                    .fail(function() {
                                         alert( "Silahkan coba beberapa saat lagi." );
