@@ -60,7 +60,29 @@ class PeminjamanModel extends CI_Model
 	}
 	public function getUsulanPeminjaman($idUser)
 	{
+		$this->db->where('idUser', $idUser);
 		return $this->db->get('usulan_peminjaman');
+	}
+
+	function getPengajuanAll()
+	{
+		# code...
+		return $this->db->get('usulan_peminjaman');
+	}
+	public function updateStatusPengajuan($id,$status)
+	{
+		$this->db->set('status',$status);
+		$this->db->where('idUsulanPeminjaman', $id);
+		$this->db->update('usulan_peminjaman');
+	}
+	public function getUsulanPeminjamanId($id)
+	{
+		$this->db->where('idUsulanPeminjaman', $id);
+		return $this->db->get('usulan_peminjaman');
+	}
+	public function usulan_to_peminjaman($array)
+	{
+		$this->db->insert('peminjaman',$array);
 	}
 
 	function lunasin($id)
