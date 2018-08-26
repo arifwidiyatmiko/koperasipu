@@ -20,7 +20,7 @@
                                 <div class="table-responsive m-b-40">
                                    <form class="form-horizontal" method="post" action="<?php echo base_url();?>Peminjaman/submitPembayaran/<?php echo $this->uri->segment(3);?>">
 									    <div class="form-group">
-									      <label class="control-label col-sm-4" for="email">Sisa Peminjaman</label>
+									      <label class="control-label col-sm-4">Sisa Peminjaman</label>
 									      <div class="col-sm-10">
 									        <!-- <input  type="text" name="sisa_nominal" value="<?php
 
@@ -34,13 +34,13 @@
 									      </div>
 									    </div>
                                         <div class="form-group">
-                                          <label class="control-label col-sm-5" for="email" >Jumlah pembayaran Angsuran</label>
+                                          <label class="control-label col-sm-5" >Jumlah pembayaran Angsuran</label>
                                           <div class="col-sm-10">
                                             <input  type="text" value="<?= $bayar->nominalAngsuran?>" class="form-control" placeholder="Masukkan nominal" name="bayar_angsuran" onkeypress="return isNumber(event)">
                                           </div>
                                         </div>
                                         <div class="form-group">
-                                          <label class="control-label col-sm-4" for="email">Jumlah Pembayaran Jasa</label>
+                                          <label class="control-label col-sm-4">Jumlah Pembayaran Jasa</label>
                                           <div class="col-sm-10">
                                             <input  type="text" value="<?= $bayar->sisaPeminjaman*$bayar->persentasePeminjaman/100?>" class="form-control" placeholder="Masukkan nominal" name="bayar_jasa" onkeypress="return isNumber(event)">
                                           </div>
