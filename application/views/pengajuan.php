@@ -60,7 +60,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="<?php echo base_url();?>Pengajuan/status/<?php echo $p->idUsulanPeminjaman?>/1" class="btn btn-success">Terima</a>
-                                                    <a href="<?php echo base_url();?>Pengajuan/status/<?php echo $p->idUsulanPeminjaman?>/2" class="btn btn-warning">Tolak</a>
+                                                    <a href="<?php echo base_url();?>Pengajuan/status/<?php echo $p->idUsulanPeminjaman?>/2" class="btn btn-danger">Tolak</a>
 
                                                 </td>
                                             </tr>
