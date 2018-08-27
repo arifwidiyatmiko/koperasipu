@@ -46,5 +46,20 @@ class Pengajuan extends CI_Controller {
 		}
 		redirect('Pengajuan','refresh');
 	}
+
+	public function PengajuanAdmin(){
+		$data['usulan'] = $this->PeminjamanModel->getPengajuan()->result();
+		// print_r($this->session->userdata('users'));die();
+		$this->load->view('header');
+		$this->load->view('pengajuan',$data);
+		$this->load->view('footer');
+	}
+
+	public function approvePengajuan($id){
+		$pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
+		unset($pengajuan['idPeminjaman']);		
+		$data = $pengajuan;
+		$this->PeminjamanModel->InsertPeminjaman($data);
+	}
 	
 }

@@ -22,14 +22,11 @@
 									    <div class="form-group">
 									      <label class="control-label col-sm-4">Sisa Peminjaman</label>
 									      <div class="col-sm-10">
-									        <!-- <input  type="text" name="sisa_nominal" value="<?php
-
-                                                function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,2,',','.');
+									         <?php function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,0,',','.');
                                                     return $result;
-                                                }
-                                             echo rupiah($bayar->nominal) ?>" disabled class="form-control"> -->
-                                             <input type="text" name="sisa_nominal"  value="<?php echo($bayar->sisaPeminjaman) ?>" class="form-control" disabled="true">
+                                             }?>
+                                             <input type="text" name="sisa_nominal"  value="<?php echo rupiah($bayar->sisaPeminjaman) ?>" class="form-control" disabled="true">
                                              <input type="text" name="sisa_nominal"  value="<?php echo($bayar->sisaPeminjaman) ?>" class="form-control" hidden>
 									      </div>
 									    </div>

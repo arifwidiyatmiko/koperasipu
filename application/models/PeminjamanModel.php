@@ -21,7 +21,8 @@ class PeminjamanModel extends CI_Model
 		$sql = 'SELECT u.*, u.idUser as UserID, p.*,SUM(a.nominalBayar) as bayar, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
 		FROM peminjaman as p
 		INNER JOIN angsuran as a on a.idPeminjaman = p.idPeminjaman
-		LEFT JOIN user as u ON p.idUser = u.idUser';
+		LEFT JOIN user as u ON p.idUser = u.idUser
+		';
 		return $this->db->query($sql);
 	}
 	public function peminjamanByUser($value,$statusLunas='')
@@ -100,6 +101,23 @@ class PeminjamanModel extends CI_Model
 		$this->db->update('peminjaman');
 	}
 
+	function getPengajuan(){
+		$sql = 'SELECT u.*, date_format(u.tanggal, "%d-%m-%Y") as tanggal, user.*
+				FROM usulan_peminjaman as u
+				LEFT JOIN user ON u.idUser = user.idUser';
+		return $this->db->query($sql);
+	}
+
+	function getPengajuanID($id){
+		$sql = 'SELECT u.*, date_format(u.tanggal, "%d-%m-%Y") as tanggal
+				FROM usulan_peminjaman as u
+				WHERE u.idUser = "'.$id.'" ';
+		return $this->db->query($sql);
+	}
+
+	function InsertPeminjaman($data){
+		$this->db->insert('peminjaman',$data);
+	}
 
 }
 

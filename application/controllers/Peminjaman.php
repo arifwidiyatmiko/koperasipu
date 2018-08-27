@@ -100,6 +100,21 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function PengajuanAdmin(){
+		$data['pengajuan'] = $this->PeminjamanModel->getPengajuan()->result();
+		// print_r($this->session->userdata('users'));die();
+		$this->load->view('header');
+		$this->load->view('pengajuan_admin',$data);
+		$this->load->view('footer');
+	}
+
+	public function approvePengajuan($id){
+		$pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
+		unset($pengajuan['idPeminjaman']);		
+		$data = $pengajuan;
+		$this->PeminjamanModel->InsertPeminjaman($data);
+	}
+
 
 	public function pembayaran($id){
 		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);
@@ -111,8 +126,8 @@ class Peminjaman extends CI_Controller {
 	public function submitPembayaran($id){
 		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"), 'jasa' => $this->input->post("bayar_jasa") ,'tanggal'=>date('Y-m-d H:i:s'));
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
-		// $jasa = 
-		$this->PeminjamanModel->updatePembayaran($id,$nominal);
+		$jasa = $this->input->post("bayar_jasa");
+		$this->PeminjamanModel->updatePembayaran($id,$nominal,$jasa);
 		$this->PeminjamanModel->insertPembayaran($angsuran);
 		redirect('peminjaman');
 		// print_r($nominal); die();

@@ -101,7 +101,10 @@
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
-
+                                        <?php function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,0,',','.');
+                                                    return $result;
+                                             }?>
                                         <?php
                                         // print_r($peminjaman);die();
                                             $i = 1;
@@ -117,7 +120,7 @@
                                                     </a>
                                                 </td>
                                                 <td><?= $p->tanggal ?></td>
-                                                <td><?= $p->nominal ?></td>
+                                                <td><?= rupiah($p->nominal) ?></td>
                                                 <td>
                                                     <?php 
                                                     if ($p->status == 0) {
