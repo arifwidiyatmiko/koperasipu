@@ -29,8 +29,8 @@
                                                 <?php $no = 1; foreach($detail as $d) {?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
-                                                    <td><?= $d->nominalBayar?></td>
-                                                    <td><?= $d->jasa?></td>
+                                                    <td><?= $d->nominalBayar?> <?php if($d->nominalBayar == $d->tagihanBayar){echo "(Full)";}else{echo "(Belum Full)";}?> </td>
+                                                    <td><?= $d->jasa?> <?php if($d->jasa == $d->tagihanJasa){echo "(Full)";}else{echo "(Belum Full)";}?></td>
                                                     <td><?= $d->tanggalAngsuran?></td>
                                                 </tr>
                                                 <?php }?>

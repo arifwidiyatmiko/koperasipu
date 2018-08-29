@@ -37,12 +37,14 @@
                                           <label class="control-label col-sm-5" >Jumlah pembayaran Angsuran</label>
                                           <div class="col-sm-10">
                                             <input  type="text" value="<?= $bayar->nominalAngsuran?>" class="form-control" placeholder="Masukkan nominal" name="bayar_angsuran" onkeypress="return isNumber(event)">
+                                            <input  type="text" value="<?= $bayar->nominalAngsuran?>" name="tagihanBayar">
                                           </div>
                                         </div>
                                         <div class="form-group">
                                           <label class="control-label col-sm-4">Jumlah Pembayaran Jasa</label>
                                           <div class="col-sm-10">
                                             <input  type="text" value="<?= $bayar->sisaPeminjaman*$bayar->persentasePeminjaman/100?>" class="form-control" placeholder="Masukkan nominal" name="bayar_jasa" onkeypress="return isNumber(event)">
+                                            <input  type="text" value="<?= $bayar->sisaPeminjaman*$bayar->persentasePeminjaman/100?>" name="tagihanJasa">
                                           </div>
                                         </div>
 									    <div class="form-group">        

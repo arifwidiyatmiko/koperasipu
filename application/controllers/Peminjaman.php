@@ -109,7 +109,7 @@ class Peminjaman extends CI_Controller {
 	}
 
 	public function submitPembayaran($id){
-		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"), 'jasa' => $this->input->post("bayar_jasa") ,'tanggal'=>date('Y-m-d H:i:s'));
+		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
 		// $jasa = 
 		$this->PeminjamanModel->updatePembayaran($id,$nominal);
