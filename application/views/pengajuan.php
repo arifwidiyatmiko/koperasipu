@@ -27,7 +27,10 @@
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-
+                                        <?php function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,0,',','.');
+                                                    return $result;
+                                             }?>
                                         <?php
                                         // print_r($peminjaman);die();
                                             $i = 1;
@@ -43,7 +46,7 @@
                                                     </a>
                                                 </td>
                                                 <td><?= $p->tanggal ?></td>
-                                                <td><?= $p->nominal ?></td>
+                                                <td><?= rupiah($p->nominal) ?></td>
                                                 <td>
                                                     <?php 
                                                     if ($p->status == 0) {
@@ -57,7 +60,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="<?php echo base_url();?>Pengajuan/status/<?php echo $p->idUsulanPeminjaman?>/1" class="btn btn-success">Terima</a>
-                                                    <a href="<?php echo base_url();?>Pengajuan/status/<?php echo $p->idUsulanPeminjaman?>/2" class="btn btn-warning">Tolak</a>
+                                                    <a href="<?php echo base_url();?>Pengajuan/status/<?php echo $p->idUsulanPeminjaman?>/2" class="btn btn-danger">Tolak</a>
 
                                                 </td>
                                             </tr>

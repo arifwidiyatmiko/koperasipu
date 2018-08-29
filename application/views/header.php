@@ -171,6 +171,16 @@
                             <?php
                         }
                         ?>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PENGAJUAN'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Pengajuan/PengajuanAdmin">
+                                <i class="fas fa-copy"></i>Pengajuan Pinjaman</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
                         <li class="has-sub">
                             <a class="js-arrow" href="<?php echo base_url();?>assets/#">
                                 <i class="fas fa-copy"></i>Pages</a>

@@ -7,7 +7,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">Data Peminjaman</h2>
+                                    <h2 class="title-1">Data Pengajuan Peminjaman</h2>
                                     <!-- <button class="au-btn au-btn-icon au-btn--blue">
                                         <i class="zmdi zmdi-plus"></i>Ajukan Peminjaman Baru</button> -->
                                 </div>
@@ -23,22 +23,23 @@
                                                 <th>No.</th>
                                                 <th>Nama</th>
                                                 <th>Tanggal</th>
-                                                <th>Jumlah Angsuran</th>
-                                                <th>Sisa Angsuran</th>
-                                                <th>Jumlah Jasa</th>
-                                                <th>Sisa Jasa</th>
+                                                <th>Nominal Peminjaman</th>
+                                                <th>Jenis Peminjaman</th>
+                                                <th>Lama Peminjaman</th>
                                                 <th>Alamat</th>
-                                                <th>Status</th>
-                                                <th colspan="3">Action</th>
+                                                <th >Action</th>
                                             </tr>
                                         </thead>
-                                        <?php function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,0,',','.');
+                                        <?php 
+                                                function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,2,',','.');
                                                     return $result;
-                                                }?>
+                                                }
+                                        ?>
+                                        
                                         <?php
                                         // print_r($peminjaman);die();
-                                                foreach($peminjaman as $p){
+                                                foreach($pengajuan as $p){
                                             ?>
 
                                         <tbody>
@@ -50,39 +51,21 @@
                                                     </a>
                                                 </td>
                                                 <td><?= $p->namaLengkap ?></td>
-                                                <td><?= $p->tanggalPeminjaman ?></td>
+                                                <td><?= $p->tanggal ?></td>
                                                 <td><?php 
                                                 echo rupiah($p->nominal) ?></td>
-                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?= $p->tipePeminjaman ?></td>
+                                                <td><?= $p->jumlahBulan ?></td>
                                                 <td><?= $p->alamat ?></td>
-                                                <?php 
-                                                    if($p->sisaPeminjaman != 0) {
-                                                       echo  '<td class="denied">Belum Lunas</td>';
-                                                    }
-                                                    else{
-                                                        echo '<td class="confirmed"> Lunas</td>';
-                                                    }
-                                                ?>
                                                 <td>
-                                                    
-                                                        <a class="btn btn-primary" href="<?php echo base_url()?>peminjaman/detail_peminjaman/<?=$p->idPeminjaman?>">Detail</a>
-                                                <?php if($this->session->userdata('users_koperasi')->role == 'PENGURUS'){
-                                                    ?>
-                                                            <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
-                                                            Bayar
-                                                        </a>
-                                                    
-                                                        <button type="button" class="btn btn-danger">Hapus</button>
+                                                    <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/approvePengajuan/<?=$p->idUser?>">
+                                                            Setujui
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger">Hapus</button>
                                                     <?php
                                                 }?>
                                                 </td>
                                             </tr>
-
-                                        
-                                        </tbody>
-                                        <?php }?>
                                         </tbody>
 
                                        
