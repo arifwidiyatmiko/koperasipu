@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <nav class="navbar-mobile" style="width: 40%;">
+            <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <?php 
@@ -123,9 +123,7 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="<?php echo base_url();?>assets/#">
-                    <img src="<?php echo base_url();?>assets/images/icon/logo.png" alt="Cool Admin" />
-                </a>
+                <h3>Koperasi</h3>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
@@ -174,9 +172,27 @@
                         <?php 
                         if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
                             ?>
-                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PENGAJUAN'){echo "active";}?>">
-                            <a href="<?php echo base_url();?>Pengajuan/PengajuanAdmin">
-                                <i class="fas fa-copy"></i>Pengajuan Pinjaman</a>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PEMINJAMAN'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Peminjaman/PengajuanAdmin">
+                                <i class="fas fa-users"></i>Pengajuan Pinjaman</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
+                        <li class="has-sub">
+                            <a class="js-arrow <?php if(strtoupper($this->uri->segment(1)) == 'REPORT'){echo "active";}?>" href="#">
+                                <i class="fas fa-copy"></i>Report</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="<?php echo base_url();?>Report/Peminjaman">Peminjaman</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url();?>Report/Simpanan">Simpanan</a>
+                                </li>
+                            </ul>
                         </li>
                             <?php
                         }

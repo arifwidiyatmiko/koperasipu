@@ -30,13 +30,7 @@
                                                 <th >Action</th>
                                             </tr>
                                         </thead>
-                                        <?php 
-                                                function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,2,',','.');
-                                                    return $result;
-                                                }
-                                        ?>
-                                        
+
                                         <?php
                                         // print_r($peminjaman);die();
                                                 foreach($pengajuan as $p){
@@ -53,6 +47,10 @@
                                                 <td><?= $p->namaLengkap ?></td>
                                                 <td><?= $p->tanggal ?></td>
                                                 <td><?php 
+                                                function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,2,',','.');
+                                                    return $result;
+                                                }
                                                 echo rupiah($p->nominal) ?></td>
                                                 <td><?= $p->tipePeminjaman ?></td>
                                                 <td><?= $p->jumlahBulan ?></td>

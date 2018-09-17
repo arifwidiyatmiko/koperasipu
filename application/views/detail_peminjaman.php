@@ -15,7 +15,7 @@
                                 <div style="background: white">
                                     <h3 class="title-3 m-b-30">Rincian Angsuran</h3>
                                     <div class="table-responsive">
-                                       <table class="table ">
+                                        <table class="table ">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -25,16 +25,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,0,',','.');
-                                                    return $result;
-                                                }?>
+                                                
                                                 <?php $no = 1; $nom = 0; $jas = 0; foreach($detail as $d) {?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
-
-                                                    <td><?= $d->nominalBayar?> <?php if($d->nominalBayar == $d->tagihanBayar){echo "(Full)";}else{echo "(Belum Full)";}?> </td>
-                                                    <td><?= $d->jasa?> <?php if($d->jasa == $d->tagihanJasa){echo "(Full)";}else{echo "(Belum Full)";}?></td>
+                                                    <td><?= $d->nominalBayar?></td>
+                                                    <td><?= $d->jasa?></td>
                                                     <td><?= $d->tanggalAngsuran?></td>
                                                     <?php $nom = $nom + $d->nominalBayar; ?>
                                                     <?php $jas = $jas + $d->jasa; ?>
@@ -42,8 +38,8 @@
                                                 <?php }?>
                                                 <tr >
                                                     <th>Total</th>
-                                                    <th><?php echo rupiah($nom) ?></th>
-                                                    <th><?php echo rupiah($jas) ?></th>
+                                                    <th><?php echo $nom; ?></th>
+                                                    <th><?php echo $jas; ?></th>
                                                 </tr>
                                             </tbody>
                                         </table>
