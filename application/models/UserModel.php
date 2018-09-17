@@ -19,6 +19,15 @@ class UserModel extends CI_Model
 		}
 		return $this->db->get('user');
 	}
+
+	function getUserID($id)
+	{
+		$sql = 'SELECT u.*, p.namaLengkap AS namaPasangan
+		FROM user AS u
+		LEFT JOIN user_pasangan AS p ON u.idPasangan = p.idUser
+		WHERE u.idUser =  "'.$id.'"';
+		return $this->db->query($sql);
+	}	 
 }
 
 

@@ -32,7 +32,7 @@ class Peminjaman extends CI_Controller {
 		$data['peminjaman'] = $this->PeminjamanModel->getPinjamanList()->result();
 		// print_r($this->session->userdata('users'));die();
 		$this->load->view('header');
-		$this->load->view('peminjaman',$data);
+		$this->load->view('Peminjaman/peminjaman_index',$data);
 		// $this->load->view('sidebar');
 		//$this->load->view('peminjaman');
 		$this->load->view('footer');
