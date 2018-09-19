@@ -20,6 +20,34 @@
                         <div class="row m-t-25">
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
+                                <div class="table-data__tool">
+                                    <div class="table-data__tool-left">
+                                        <div class="rs-select2--light rs-select2--md">
+                                            <select class="js-select2" name="property">
+                                                <option selected="selected">Unit Kerja</option>
+                                                <option value="">Departemen A</option>
+                                                <option value="">Departemen B</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                        <div class="rs-select2--light rs-select2--sm">
+                                            <select class="js-select2" name="time">
+                                                <option selected="selected">1 Bulan</option>
+                                                <option value="">6 Bulan</option>
+                                                <option value="">1 Tahun</option>
+                                            </select>
+                                            <div class="dropDownSelect2"></div>
+                                        </div>
+                                        <button class="au-btn-filter">
+                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
+                                    </div>
+                                    <div class="table-data__tool-right">
+                                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                            <i class="zmdi zmdi-plus"></i>Tambah pinjaman</button>
+                                        <button type="button" class="btn btn-secondary">
+                                            <i class="fa fa-magic"></i>&nbsp; Export</button>
+                                    </div>
+                                </div>
                                 <div class="table-responsive m-b-40" >
                                     <table class="table table-striped table-data3" id="datatable">
                                         <thead>
@@ -31,7 +59,7 @@
                                                 <th>Sisa Angsuran</th>
                                                 <th>Jumlah Jasa</th>
                                                 <th>Sisa Jasa</th>
-                                                <th>Alamat</th>
+                                                <!-- <th>Alamat</th> -->
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -39,6 +67,11 @@
                                         <tbody>
                                             <?php
                                         // print_r($peminjaman);die();
+
+                                                function rupiah($angka){
+                                                    $result = "Rp ".number_format($angka,0,',','.');
+                                                    return $result;
+                                                }
                                             $i = 1;
                                                 foreach($peminjaman as $p){
                                             ?>
@@ -50,26 +83,29 @@
                                                 <td><?= $p->namaLengkap ?></td>
                                                 <td><?= $p->tanggalPeminjaman ?></td>
                                                 <td><?php 
-                                                function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,2,',','.');
-                                                    return $result;
-                                                }
+                                                $bayar = $p->bayar;
+                                                $nom = $p->nominal;
+                                                $sisa =  $nom - $bayar;
                                                 echo rupiah($p->nominal) ?></td>
-                                                <td><?= rupiah($p->sisaPeminjaman) ?></td>
+                                                <td><?= rupiah($sisa)?></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td><?= $p->alamat ?></td>
-                                                <td class="denied">Belum Lunas</td>
+                                                <td><?= rupiah($p->jasa) ?></td>
+                                                <!-- <td><?= $p->alamat ?></td> -->
+                                                <?php if($sisa != 0) { ?>
+                                                    <td class="denied">Belum Lunas</td>
+
+                                                <?php }?>
+                                                
                                                 <td>
                                                     
-                                                        <a class="btn btn-primary" href="<?php echo base_url()?>peminjaman/detail_peminjaman/<?=$p->idPeminjaman?>">Detail</a>
+                                                        <a class="au-btn au-btn-icon au-btn--blue au-btn--small" href="<?php echo base_url()?>peminjaman/detail_peminjaman/<?=$p->idPeminjaman?>">Detail</a>
                                                 <?php if($this->session->userdata('users_koperasi')->role == 'PENGURUS'){
                                                     ?>
-                                                            <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
+                                                            <a class="btn btn-outline-success" href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
                                                             Bayar
                                                         </a>
                                                     
-                                                        <button type="button" class="btn btn-danger">Hapus</button>
+                                                        <button type="button" class="btn btn-outline-danger">Hapus</button>
                                                     <?php
                                                 }?>
                                                 </td>

@@ -147,7 +147,7 @@
                         ?>
                         <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PEMINJAMAN'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Peminjaman">
-                                <i class="fas fa-map-marker-alt"></i>Peminjaman</a>
+                                <i class="fas fa-edit"></i>Peminjaman</a>
                         </li>
                         <?php 
                         if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
@@ -164,7 +164,7 @@
                             ?>
                         <li class="<?php if(strtoupper($this->uri->segment(1)) == 'JAMINAN'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Jaminan">
-                                <i class="fas fa-users"></i>Jaminan</a>
+                                <i class="fas fa-flag"></i>Jaminan</a>
                         </li>
                             <?php
                         }
@@ -174,7 +174,17 @@
                             ?>
                         <li class="<?php if(strtoupper($this->uri->segment(1)) == 'PEMINJAMAN'){echo "active";}?>">
                             <a href="<?php echo base_url();?>Peminjaman/PengajuanAdmin">
-                                <i class="fas fa-users"></i>Pengajuan Pinjaman</a>
+                                <i class="fas fa-handshake-o"></i>Pengajuan Pinjaman</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'SIMPANAN'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Simpanan">
+                                <i class="fas fa-bank"></i>Simpanan</a>
                         </li>
                             <?php
                         }
@@ -184,7 +194,7 @@
                             ?>
                         <li class="has-sub">
                             <a class="js-arrow <?php if(strtoupper($this->uri->segment(1)) == 'REPORT'){echo "active";}?>" href="#">
-                                <i class="fas fa-copy"></i>Report</a>
+                                <i class="fas fa-copy"></i>Laporan</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
                                     <a href="<?php echo base_url();?>Report/Peminjaman">Peminjaman</a>
@@ -197,7 +207,7 @@
                             <?php
                         }
                         ?>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="<?php echo base_url();?>assets/#">
                                 <i class="fas fa-copy"></i>Pages</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
@@ -211,7 +221,7 @@
                                     <a href="<?php echo base_url();?>assets/forget-pass.html">Forget Password</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </nav>
             </div>
