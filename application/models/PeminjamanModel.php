@@ -85,7 +85,12 @@ class PeminjamanModel extends CI_Model
 	{
 		$this->db->insert('peminjaman',$array);
 	}
-
+	public function statusPengajuan($id,$status)
+	{
+		$this->db->set('status',$status);
+		$this->db->where('idUsulanPeminjaman', $id);
+		$this->db->update('usulan_peminjaman');
+	}
 	function lunasin($id)
 	{
 		$this->db->set('sisaPeminjaman',0);
@@ -107,11 +112,26 @@ class PeminjamanModel extends CI_Model
 				LEFT JOIN user ON u.idUser = user.idUser';
 		return $this->db->query($sql);
 	}
+	public function getPengajuanAdmin()
+	{
+		$sql = 'SELECT u.*, date_format(u.tanggal, "%d-%m-%Y") as tanggal, user.*
+				FROM usulan_peminjaman as u
+				LEFT JOIN user ON u.idUser = user.idUser
+				WHERE u.status = 0';
+		return $this->db->query($sql);
+	}
 
 	function getPengajuanID($id){
 		$sql = 'SELECT u.*, date_format(u.tanggal, "%d-%m-%Y") as tanggal
 				FROM usulan_peminjaman as u
 				WHERE u.idUser = "'.$id.'" ';
+		return $this->db->query($sql);
+	}
+	public function getPengajuanIdUsulanPeminjaman($id)
+	{
+		$sql = 'SELECT u.*, date_format(u.tanggal, "%d-%m-%Y") as tanggal
+				FROM usulan_peminjaman as u
+				WHERE u.idUsulanPeminjaman = "'.$id.'" ';
 		return $this->db->query($sql);
 	}
 
