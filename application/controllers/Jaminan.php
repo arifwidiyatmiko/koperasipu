@@ -53,4 +53,17 @@ class Jaminan extends CI_Controller {
 		$this->Ref_jaminanPeminjaman->insert_refjaminan($ref_jaminan);
 		redirect('Jaminan','refresh');
 	}
+	public function getId($id)
+	{
+		$data = $this->Ref_jaminanPeminjaman->getId($id)->result();
+		// header(string)
+		echo json_encode($data);
+	}
+	public function update($id)
+	{
+		$data = array('id'=>$id,'persentase'=>$this->input->post('persentase'));
+		// print_r($data);
+		$this->Ref_jaminanPeminjaman->update($data);
+		redirect('Jaminan','refresh');
+	}
 }

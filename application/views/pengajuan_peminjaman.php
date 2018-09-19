@@ -110,6 +110,7 @@
                                               $('#konfirmasiPengajuan').modal('show');
                                                 $('#modal_jumlahPeminjaman').text($('#nominal').val());
                                                 $('#modal_jenisPeminjaman').text(obj_jenisPeminjaman.Nama+"-"+$('#jumlahBulan').val()+" Bulan");
+                                                console.log(data);
                                                 if (obj_jenisPeminjaman.idJenisPeminjaman == 1) {$('#modal_jaminanPeminjaman').text("-");}
                                                 else{
                                                     $.ajax({
