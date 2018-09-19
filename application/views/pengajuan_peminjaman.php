@@ -110,7 +110,7 @@
                                               $('#konfirmasiPengajuan').modal('show');
                                                 $('#modal_jumlahPeminjaman').text($('#nominal').val());
                                                 $('#modal_jenisPeminjaman').text(obj_jenisPeminjaman.Nama+"-"+$('#jumlahBulan').val()+" Bulan");
-                                                console.log(data);
+                                                console.log(content);
                                                 if (obj_jenisPeminjaman.idJenisPeminjaman == 1) {$('#modal_jaminanPeminjaman').text("-");}
                                                 else{
                                                     $.ajax({
@@ -167,14 +167,15 @@
                                     submitData.status = 0;
                                     submitData.nominalAngsuran = $('#nominalAngsuran').val();
                                     submitData.persentasePeminjaman = obj_jenisPeminjaman.Persentase;
-                                    console.log(submitData);
+                                    console.log('data : ',submitData);
                                     $.ajax({
                                         type: 'POST',
                                         url: '<?php echo base_url();?>Peminjaman/submit/',
-                                        date : submitData
+                                        data : submitData
                                     })
                                     .done(function(success){
                                         console.log(success);
+                                        alert(success)
                                     })
                                    .fail(function() {
                                         alert( "Silahkan coba beberapa saat lagi." );

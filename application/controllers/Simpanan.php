@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Anggota extends CI_Controller {
+class Simpanan extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -21,26 +21,16 @@ class Anggota extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('UserModel');
+		$this->load->model('ReportModel');
 		if (!$this->session->userdata('users_koperasi')) {
 			redirect('Auth','refresh');
 		}
 	}
 	public function index()
 	{
-		$data['anggota'] = $this->UserModel->getUserList('ANGGOTA')->result();
 		$this->load->view('header');
-		$this->load->view('anggota',$data);
+		$this->load->view('Simpanan/simpanan_index');
 		$this->load->view('footer');
 	}
-
-	public function editAnggota($id){
-		$data['anggota'] = $this->UserModel->getUserID($id)->result()[0];
-
-		$this->load->view('header');
-		$this->load->view('Anggota/edit_anggota',$data);
-		$this->load->view('footer');
-	}
-	
 	
 }

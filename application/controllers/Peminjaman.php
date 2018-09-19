@@ -69,12 +69,14 @@ class Peminjaman extends CI_Controller {
 		// $data = $_POST[];
 		header('Content-Type: application/json');
 		// print_r($data);
-		if ($data['pelunasan'] == true) {
+		if (array_key_exists('pelunasan',$data)) {
 			# code...
 			$this->PeminjamanModel->lunasin($data['pelunasanId']);
 		}
 		unset($data['pelunasan']);
 		unset($data['pelunasanId']);
+		unset($data['persentaseJaminan']);
+		// print_r($data);die();
 		$this->PeminjamanModel->usulanPeminjaman($data);
 		echo json_encode(array('status'=>1));
 	}
@@ -108,11 +110,15 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function approvePengajuan($id){
-		$pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
-		unset($pengajuan['idPeminjaman']);		
+	public function approvePengajuan($id,$status){
+		// $pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
+		$pengajuan = $this->PeminjamanModel->getPengajuanIdUsulanPeminjaman($id)->result_array()[0];
+
+		unset($pengajuan['idUsulanPeminjaman']);		
 		$data = $pengajuan;
 		$this->PeminjamanModel->InsertPeminjaman($data);
+		$this->PeminjamanModel->statusPengajuan($id,$status);
+		redirect('Peminjaman','refresh');
 	}
 
 
@@ -127,6 +133,7 @@ class Peminjaman extends CI_Controller {
 		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
 		$jasa = $this->input->post("bayar_jasa");
+		// print_r($angsuran);die();
 		$this->PeminjamanModel->updatePembayaran($id,$nominal,$jasa);
 		$this->PeminjamanModel->insertPembayaran($angsuran);
 		redirect('peminjaman');

@@ -30,40 +30,53 @@
                                                 <th >Action</th>
                                             </tr>
                                         </thead>
-
+                                        <tbody>
                                         <?php
                                         // print_r($peminjaman);die();
                                                 foreach($pengajuan as $p){
                                             ?>
 
-                                        <tbody>
+                                        
                                             
                                             <tr>
                                                 <td>
-                                                    <a href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
-                                                        <?= $p->idPeminjaman ?>
-                                                    </a>
+                                                <?= $p->idUsulanPeminjaman ?>
                                                 </td>
                                                 <td><?= $p->namaLengkap ?></td>
                                                 <td><?= $p->tanggal ?></td>
                                                 <td><?php 
-                                                function rupiah($angka){
-                                                    $result = "Rp ".number_format($angka,2,',','.');
-                                                    return $result;
-                                                }
-                                                echo rupiah($p->nominal) ?></td>
+                                                // function rupiah($angka){
+                                                //     $result = "Rp ".number_format($angka,2,',','.');
+                                                //     return $result;
+                                                // }
+                                                #echo rupiah($p->nominal) 
+                                                echo $p->nominal?></td>
                                                 <td><?= $p->tipePeminjaman ?></td>
                                                 <td><?= $p->jumlahBulan ?></td>
                                                 <td><?= $p->alamat ?></td>
                                                 <td>
-                                                    <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/approvePengajuan/<?=$p->idUser?>">
-                                                            Setujui
-                                                    </a>
-                                                    <button type="button" class="btn btn-danger">Hapus</button>
-                                                    <?php
-                                                }?>
+                                                    <?php if($p->status == 0){
+                                                        ?>
+                                                        <a class="btn btn-success" href="<?php echo base_url()?>Peminjaman/approvePengajuan/<?=$p->idUsulanPeminjaman?>/1">
+                                                                Setujui
+                                                        </a>
+                                                        <a class="btn btn-danger" href="<?php echo base_url()?>Peminjaman/approvePengajuan/<?=$p->idUsulanPeminjaman?>/2">
+                                                                Tolak
+                                                        </a>
+                                                        <?php
+                                                    }else{
+                                                        if ($p->status == 1) {
+                                                            echo "Pengajuan di terima";
+                                                        }else{
+                                                            echo "Pengajuan di tolak";
+                                                        }
+                                                    }?>
                                                 </td>
                                             </tr>
+                                                    <?php
+                                                }?>
+                                                
+                                            
                                         </tbody>
 
                                        
