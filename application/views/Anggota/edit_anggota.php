@@ -23,7 +23,11 @@
                 									     <div class="form-group">
                 									       <label class="control-label col-sm-4">Nama</label>
                 									       <div class="col-sm-10">
+<<<<<<< HEAD
                                             <input type="text" name="namaLengkap" value="<?= $anggota->namaLengkap?>"  class="form-control">
+=======
+                                            <input type="text" name="namaLengkap" value=""  class="form-control">
+>>>>>>> ee77149752c450e338432fde5435cdbb79534b63
                 									      </div>
                 									     
                                           <div class="form-group">
