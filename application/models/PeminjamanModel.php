@@ -15,13 +15,14 @@
  */
 class PeminjamanModel extends CI_Model
 {
-	
+
 	function getPinjamanList()
 	{
-		$sql = 'SELECT u.*, u.idUser as UserID, p.*,SUM(a.nominalBayar) as bayar, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
-		FROM peminjaman as p
-		INNER JOIN angsuran as a on a.idPeminjaman = p.idPeminjaman
-		LEFT JOIN user as u ON p.idUser = u.idUser
+		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
+		FROM angsuran as a
+		LEFT JOIN peminjaman as p on p.idPeminjaman = a.idPeminjaman
+		LEFT JOIN user as u on p.idUser = u.idUser
+		GROUP BY p.idPeminjaman
 		';
 		return $this->db->query($sql);
 	}
@@ -43,6 +44,18 @@ class PeminjamanModel extends CI_Model
 		LEFT JOIN user as u ON p.idUser = u.idUser
 		WHERE p.idPeminjaman =  "'.$id.'"';
 		return $this->db->query($sql);
+	}
+
+	public function getPeminjam($tahun, $unit_kerja)
+	{
+		$this->db->select('user.*');
+		$this->db->select('peminjaman.nominal');
+		$this->db->from('user');
+		$this->db->where('YEAR(tanggal)',$tahun);
+		$this->db->where('idPekerjaan',$unit_kerja);
+		$this->db->join('peminjaman', 'user.idUser = peminjaman.idUser', 'left');
+		$query = $this->db->get();
+        return $query->result();
 	}
 
 	function getSisaPeminjaman($id)

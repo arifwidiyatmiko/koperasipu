@@ -20,10 +20,11 @@
                         <div class="row m-t-25">
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
-                                <div class="table-data__tool">
+                                <form action="/report/peminjaman" method="POST">
+                                    <div class="table-data__tool">
                                     <div class="table-data__tool-left">
                                         <div class="rs-select2--light rs-select2--md">
-                                            <select class="js-select2" name="property">
+                                            <select class="js-select2" name="unit_kerja">
                                                 <option selected="selected">Unit Kerja</option>
                                                 <option value="">Departemen A</option>
                                                 <option value="">Departemen B</option>
@@ -31,52 +32,48 @@
                                             <div class="dropDownSelect2"></div>
                                         </div>
                                         <div class="rs-select2--light rs-select2--sm">
-                                            <select class="js-select2" name="time">
-                                                <option selected="selected">1 Bulan</option>
-                                                <option value="">6 Bulan</option>
-                                                <option value="">1 Tahun</option>
+                                            <select class="js-select2" name="tahun">
+                                                <option selected="selected">2018</option>
+                                                <option value="">2017</option>
+                                                <option value="">2016</option>
                                             </select>
                                             <div class="dropDownSelect2"></div>
                                         </div>
                                         <button class="au-btn-filter">
-                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
+                                            <i class="zmdi zmdi-filter-list"></i>filters
+                                        </button>
                                     </div>
-                                    <div class="table-data__tool-right">
-                                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="zmdi zmdi-plus"></i>add item</button>
-                                        <button type="button" class="btn btn-secondary">
-                                            <i class="fa fa-magic"></i>&nbsp; Export</button>
-                                    </div>
+                                    <a href="<?php echo site_url();?>Report/downloadExcel">
+                                        <div class="table-data__tool-right">
+                                            <button type="button" class="btn btn-secondary">
+                                                <i class="fa fa-magic"></i>&nbsp; Export</button>
+                                        </div>
+                                    </a>
                                 </div>
+                                </form>
                                 <div class="table-responsive m-b-40" >
                                     <table class="table table-striped" id="table_id">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th style="white-space: pre-line;">No Anggota</th>
+                                                <th>No Anggota</th>
                                                 <th>Nama </th>
-                                                <th style="white-space: pre-line;">Nomor Telepon</th>
+                                                <th>Nomor Telepon</th>
                                                 <th>Pinjaman</th>
-                                                <th>action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $i = 1;
-                                                //foreach($anggota as $p){
+                                                foreach($peminjaman as $p)
                                             {
                                             ?>
                                             <tr>
                                                 <td><?= $i ?></td>
-                                                <td><td>
-                                                <td style="white-space: pre-line"></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="" class="btn btn-sm btn-info">Ubah</a>
-                                                    <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                                </td>
+                                                <td><?= $p->idUser ?><td>
+                                                <td><?= $p->namaLengkap?></td>
+                                                <td><?= $p->no_hp?></td>
+                                                <td><?= $p->nominal?></td>
                                             </tr>
                                              <?php $i++;}?>
                                         </tbody>
@@ -113,6 +110,9 @@
             <script type="text/javascript">
               $(document).ready( function () {
                   $('#table_id').DataTable();
+                  $('.excel').click(function() {
+                    window.location = '<?php echo site_url();?>report/downloadExcel';
+        });
               } );
             </script>
             <!-- END MAIN CONTENT-->
