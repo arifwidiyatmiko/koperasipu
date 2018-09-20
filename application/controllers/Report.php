@@ -32,10 +32,25 @@ class Report extends CI_Controller {
 	{	
 		$tahun = '';
 		$unit_kerja = '';
-		($tahun == null) ? $tahun = 2018 : $tahun = $_POST['tahun'];
-		($unit_kerja == null) ? $unit_kerja = 0 : $tahun = $_POST['unit_kerja'];
+		//print_r( $_POST['tahun']);die();
+		// (isset($_POST['tahun'])) ? $tahun = $_POST['tahun'] : $tahun = 2018;
+		// (isset($_POST['unit_kerja'])) ? $tahun = $_POST['unit_kerja'] : $unit_kerja = 0;
 
+		if(isset($_POST['tahun'])){
+			$tahun = $_POST['tahun'];
+		}else{
+			$tahun = 2018;
+		}
+		if(isset($_POST['unit_kerja'])){
+			$unit_kerja = $_POST['unit_kerja'];
+		}else{
+			$unit_kerja = 0;
+		}
 		$data['peminjaman'] = $this->ReportModel->getPeminjam($tahun,$unit_kerja);
+		//echo $this->db->last_query();die();
+		$data['tahun'] = $tahun;
+		$data['unit_kerja'] = $unit_kerja;
+		//print_r($data);die();
 		$this->load->view('header');
 		$this->load->view('Report/peminjaman', $data);
 		$this->load->view('footer');
@@ -51,8 +66,14 @@ class Report extends CI_Controller {
 
 	public function downloadExcel()
 	{
-		$this->load->view('report_peminjaman');
-		
+		$tahun = $this->uri->segment(3);
+		$unit_kerja = $this->uri->segment(4);
+		$data['peminjaman'] = $this->ReportModel->getPeminjam($tahun,$unit_kerja);
+		//echo $this->db->last_query();die();
+		$data['tahun'] = $tahun;
+		$data['unit_kerja'] = $unit_kerja;
+		$this->load->view('report_peminjaman',$data);
+		//header('Location: '.site_url().'report/peminjaman');
 	}
 	
 	
