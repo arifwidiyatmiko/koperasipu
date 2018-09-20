@@ -46,6 +46,18 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql);
 	}
 
+	public function getPeminjam($tahun, $unit_kerja)
+	{
+		$this->db->select('user.*');
+		$this->db->select('peminjaman.nominal');
+		$this->db->from('user');
+		$this->db->where('YEAR(tanggal)',$tahun);
+		$this->db->where('idPekerjaan',$unit_kerja);
+		$this->db->join('peminjaman', 'user.idUser = peminjaman.idUser', 'left');
+		$query = $this->db->get();
+        return $query->result();
+	}
+
 	function getSisaPeminjaman($id)
 	{
 		$sql = 'SELECT * FROM peminjaman WHERE idPeminjaman = "'.$id.'" ';
