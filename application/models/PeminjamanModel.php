@@ -86,12 +86,12 @@ class PeminjamanModel extends CI_Model
 	{
 		$this->db->insert('peminjaman',$array);
 	}
-	public function updateStatusPengajuan($id,$status)
-	{
-		$this->db->set('status',$status);
-		$this->db->where('idUsulanPeminjaman', $id);
-		$this->db->update('usulan_peminjaman');
-	}
+	// public function updateStatusPengajuan($id,$status)
+	// {
+	// 	$this->db->set('status',$status);
+	// 	$this->db->where('idUsulanPeminjaman', $id);
+	// 	$this->db->update('usulan_peminjaman');
+	// }
 	function lunasin($id)
 	{
 		$this->db->set('sisaPeminjaman',0);
