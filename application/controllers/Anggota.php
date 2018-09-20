@@ -36,7 +36,11 @@ class Anggota extends CI_Controller {
 
 	public function editAnggota($id){
 		$data['anggota'] = $this->UserModel->getUserID($id)->result()[0];
+<<<<<<< HEAD
 		// print_r($data['anggota']->result());die();
+=======
+
+>>>>>>> d72c7237b52021161a6099f1d559ba8a4d1e03eb
 		$this->load->view('header');
 		$this->load->view('Anggota/edit_anggota',$data);
 		$this->load->view('footer');

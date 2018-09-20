@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <head>
     
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/vendor/bootstrap-4.1/bootstrap.min.js">
@@ -116,3 +117,5 @@
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
        
+=======
+>>>>>>> d72c7237b52021161a6099f1d559ba8a4d1e03eb

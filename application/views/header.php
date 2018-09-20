@@ -29,11 +29,13 @@
     <link href="<?php echo base_url();?>assets/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="<?php echo base_url();?>assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="<?php echo base_url();?>assets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
+    <link href="<?php echo base_url();?>assets/vendor/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" media="all">
     <!-- Main CSS-->
     <link href="<?php echo base_url();?>assets/css/theme.css" rel="stylesheet" media="all">
      <!-- Jquery JS-->
-    <script src="<?php echo base_url();?>assets/vendor/jquery-3.2.1.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
+    <script src="<?php echo base_url();?>assets/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="<?php echo base_url();?>assets/vendor/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script> -->
     <script type="text/javascript">
         function isNumber(evt) {
                                     evt = (evt) ? evt : window.event;
@@ -402,7 +404,27 @@
                     </div>
                 </div>
             </div>
-
+            <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="edit-title">Ubah Persentase : </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form method="POST" id="edit-form-peminjaman">
+                                <div class="form-group">
+                                    <label>Persentase</label>
+                                    <input type="text" name="persentase" class="form-control" required="true">
+                                </div>
+                                <input type="submit" class="btn btn-md btn-info" value="Simpan">
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
             <?php
           // }
           ?>
