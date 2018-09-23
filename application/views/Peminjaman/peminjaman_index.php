@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">Data Anggota</h2>
+                                    <h2 class="title-1">Data Peminjaman</h2>
                                     <!-- <button class="au-btn au-btn-icon au-btn--blue">
                                         <i class="zmdi zmdi-plus"></i>Ajukan Peminjaman Baru</button> -->
                                 </div>
@@ -42,7 +42,7 @@
                                             <i class="zmdi zmdi-filter-list"></i>filters</button>
                                     </div>
                                     <div class="table-data__tool-right">
-                                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <button id="showAnggota_btn" class="au-btn au-btn-icon au-btn--green au-btn--small">
                                             <i class="zmdi zmdi-plus"></i>Tambah pinjaman</button>
                                         <button type="button" class="btn btn-secondary">
                                             <i class="fa fa-magic"></i>&nbsp; Export</button>
@@ -149,7 +149,37 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="showAnggota_modal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="smallmodalLabel">Pilih Nama Pegawai</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" action="<?= base_url();?>Peminjaman/peminjamanAdmin" method="POST">
+                                <div class="col-sm-12">
+                                    <label>Nama</label>
+                                    <select name="namaAnggota" class="form-control" required="true">
+                                        <?php 
+                                        foreach ($anggota as $key) {
+                                            echo "<option value='".$key->idUser."'>".$key->idUser."-".$key->namaLengkap."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input type="submit" value="Pilih" class="btn btn-primary">
+                                </div>                                
+                            </form>
 
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
             <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -164,6 +194,9 @@
             <script type="text/javascript">
               $(document).ready( function () {
                   $('#datatable').DataTable();
+                  $('#showAnggota_btn').on('click',function(){
+                    $('#showAnggota_modal').modal('show');
+                  });
               } );
             </script>
             <!-- END MAIN CONTENT-->

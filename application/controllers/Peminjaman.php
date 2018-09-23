@@ -26,16 +26,23 @@ class Peminjaman extends CI_Controller {
 			redirect('Auth','refresh');
 		}
 		$this->load->model('Ref_jaminanPeminjaman');
+		$this->load->model('UserModel');
 	}
 	public function index()
 	{
 		$data['peminjaman'] = $this->PeminjamanModel->getPinjamanList()->result();
+		$data['anggota'] = $this->UserModel->getUserList('ANGGOTA')->result();
 		// print_r($this->session->userdata('users'));die();
 		$this->load->view('header');
 		$this->load->view('Peminjaman/peminjaman_index',$data);
 		// $this->load->view('sidebar');
 		//$this->load->view('peminjaman');
 		$this->load->view('footer');
+	}
+
+	public function tambah($value='')
+	{
+		# code...
 	}
 
 	public function detail_peminjaman($id){
@@ -89,6 +96,10 @@ class Peminjaman extends CI_Controller {
 		}
 		header('Content-Type: application/json');
 		echo json_encode(array('jumlah'=>$jml,'data'=>$data));
+	}
+	public function peminjamanAdmin($value='')
+	{
+		redirect('Peminjaman/pengajuan/'.$this->input->post('namaAnggota'),'refresh');
 	}
 	public function pengajuan($value='')
 	{
