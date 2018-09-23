@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistem Koperasi">
-    <meta name="author" content="Arif Widiyatmiko, Riffan Alfarizie">
+    <meta name="author" content="Arif Widiyatmiko, Riffan Alfarizie, Robiyatul Adawiyah">
     <meta name="keywords" content="koperasi, sistem koperasi">
 
     <!-- Title Page-->
@@ -20,7 +20,8 @@
 
     <!-- Bootstrap CSS-->
     <link href="<?php echo base_url();?>assets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
-
+    <link href="<?php echo base_url();?>assets/css/bootstrap-iso.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url();?>assets/css/bootstrap-datepicker3.css" rel="stylesheet" media="all">
     <!-- Vendor CSS-->
     <link href="<?php echo base_url();?>assets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
     <link href="<?php echo base_url();?>assets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">

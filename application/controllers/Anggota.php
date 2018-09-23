@@ -40,6 +40,23 @@ class Anggota extends CI_Controller {
 		$this->load->view('Anggota/edit_anggota',$data);
 		$this->load->view('footer');
 	}
+
+	public function update(){
+		 $data = array(
+			'namaLengkap' => $this->input->post('namaLengkap',TRUE),
+			'kelamin' => $this->input->post('kelamin',TRUE),
+			'tanggal_lahir' => $this->input->post('tanggal_lahir',TRUE),
+			'idPekerjaan' => $this->input->post('idPekerjaan',TRUE),
+			'masuk' => $this->input->post('masuk',TRUE),
+			'keluar' => $this->input->post('keluar',TRUE),
+			'ahliWaris' => $this->input->post('ahliWaris',TRUE),
+			'keteranganKeluar' => $this->input->post('keteranganKeluar',TRUE)
+		 ); 
+
+		$update = $this->UserModel->Update( $this->input->post('idUser'), $data);
+
+		redirect('anggota');
+	}
 	
 	
 }
