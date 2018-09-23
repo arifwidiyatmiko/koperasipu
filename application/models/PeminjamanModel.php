@@ -140,6 +140,14 @@ class PeminjamanModel extends CI_Model
 		$this->db->insert('peminjaman',$data);
 	}
 
+	function getKwitansi($id){
+		$sql = 'SELECT p.*,u.*, date_format(p.tanggal, "%d-%m-%Y") as tanggal
+				FROM peminjaman as p
+				LEFT JOIN user as u on p.idUser = u.idUser
+				WHERE p.idPeminjaman = "'.$id.'" ';
+		return $this->db->query($sql);
+	}
+
 }
 
 

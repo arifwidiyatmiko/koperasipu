@@ -124,6 +124,7 @@ class Peminjaman extends CI_Controller {
 
 	public function pembayaran($id){
 		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);
+		// print_r($data['bayar']);die();
 		$this->load->view('header');
 		$this->load->view('pembayaran',$data);
 		$this->load->view('footer');
@@ -141,4 +142,35 @@ class Peminjaman extends CI_Controller {
 
 	}
 
+	public function kwitansiJaminan($id){
+		$data['kwitansi'] = $this->PeminjamanModel->getKwitansi($id)->result()[0];
+		// print_r($data['kwitansi']);die();
+		$this->load->view('header');
+		$this->load->view('Report/kwitansi_jaminan',$data);
+		$this->load->view('footer');
+	}
+
+	public function kwitansiPenerimaan($id){
+		$data['kwitansi'] = $this->PeminjamanModel->getKwitansi($id)->result()[0];
+		// print_r($data['kwitansi']);die();
+		$this->load->view('header');
+		$this->load->view('Report/kwitansi_penerimaan',$data);
+		$this->load->view('footer');
+	}
+
+	public function kwitansiPelunasan($id){
+		$data['kwitansi'] = $this->PeminjamanModel->getKwitansi($id)->result()[0];
+		// print_r($data['kwitansi']);die();
+		$this->load->view('header');
+		$this->load->view('Report/kwitansi_pelunasan',$data);
+		$this->load->view('footer');
+	}
+
+	public function kwitansiTotal($id){
+		$data['kwitansi'] = $this->PeminjamanModel->getKwitansi($id)->result()[0];
+		// print_r($data['kwitansi']);die();
+		$this->load->view('header');
+		$this->load->view('Report/kwitansi_total',$data);
+		$this->load->view('footer');
+	}
 }
