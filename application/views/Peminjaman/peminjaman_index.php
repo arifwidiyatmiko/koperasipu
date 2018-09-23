@@ -62,6 +62,7 @@
                                                 <!-- <th>Alamat</th> -->
                                                 <th>Status</th>
                                                 <th>Action</th>
+                                                <th>Print</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -93,12 +94,13 @@
                                                 <!-- <td><?= $p->alamat ?></td> -->
                                                 <?php if($sisa != 0) { ?>
                                                     <td class="denied">Belum Lunas</td>
-
+                                                <?php }else{?>
+                                                    <td class="denied">Lunas</td>
                                                 <?php }?>
                                                 
                                                 <td>
                                                     
-                                                        <a class="au-btn au-btn-icon au-btn--blue au-btn--small" href="<?php echo base_url()?>peminjaman/detail_peminjaman/<?=$p->idPeminjaman?>">Detail</a>
+                                                        <a class="btn btn-outline-primary" href="<?php echo base_url()?>peminjaman/detail_peminjaman/<?=$p->idPeminjaman?>">Detail</a>
                                                 <?php if($this->session->userdata('users_koperasi')->role == 'PENGURUS'){
                                                     ?>
                                                             <a class="btn btn-outline-success" href="<?php echo base_url()?>Peminjaman/pembayaran/<?=$p->idPeminjaman?>">
@@ -108,6 +110,20 @@
                                                         <button type="button" class="btn btn-outline-danger">Hapus</button>
                                                     <?php
                                                 }?>
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown show">
+                                                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Print
+                                                      </a>
+
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiJaminan/<?=$p->idPeminjaman?>">Kwitansi Jaminan</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiPenerimaan/<?=$p->idPeminjaman?>">Kwitansi Penerimaan</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiPelunasan/<?=$p->idPeminjaman?>">Kwitansi Pelunasan</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiTotal/<?=$p->idPeminjaman?>">Kwitansi Total</a>
+                                                      </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             
