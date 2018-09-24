@@ -128,7 +128,7 @@ class Peminjaman extends CI_Controller {
 		unset($pengajuan['idUsulanPeminjaman']);		
 		$data = $pengajuan;
 		$this->PeminjamanModel->InsertPeminjaman($data);
-		$this->PeminjamanModel->statusPengajuan($id,$status);
+		$this->PeminjamanModel->updateStatusPengajuan($id,$status);
 		redirect('Peminjaman','refresh');
 	}
 

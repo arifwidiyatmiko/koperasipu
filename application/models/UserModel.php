@@ -24,7 +24,7 @@ class UserModel extends CI_Model
 	{
 		$sql = 'SELECT u.*, p.namaLengkap AS namaPasangan
 		FROM user AS u
-		LEFT JOIN user_pasangan AS p ON u.idPasangan = p.idUser
+		LEFT JOIN user AS p ON u.idPasangan = p.idUser
 		WHERE u.idUser =  "'.$id.'"';
 		return $this->db->query($sql);
 	}	 
