@@ -49,9 +49,30 @@
                             </div>
                     </div>
                     </form>
-                    <div class="table-responsive" >
-                        <table class="table table-borderless table-data3">
+                    <div class="table-responsive m-b-40" >
+                        <table class="table table-striped table-data3" id="datatable">
                             <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>No Anggota</th>
+                                <th>Nama</th>
+                                <th>No Telepon</th>
+                                <th>Besar Pinjaman</th>
+                            </tr>
+                            </thead>
+                            <?php $i = 1; foreach($peminjaman as $p){?>
+                                <tbody>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= $p->idUser?></td>
+                                <td><?= $p->namaLengkap?></td>
+                                <td><?= $p->no_hp?></td>
+                                <td><?= $p->nominal?></td>
+                            </tr>
+                            </tbody>
+                            <?php $i++; }?>
+                        </table>
+                        <!-- <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>No Anggota</th>
@@ -74,10 +95,7 @@
                                     <td><?= $p->nominal?></td>
                                 </tr>
                                  <?php $i++;}?>
-                            </tbody>
-
-                           
-                        </table>
+                            </tbody> -->
                     </div>
                     <!-- END DATA TABLE-->
                 </div>
