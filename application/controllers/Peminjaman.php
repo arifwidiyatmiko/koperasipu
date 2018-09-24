@@ -69,24 +69,68 @@ class Peminjaman extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}
-	public function submit()
+	public function submit($id='')
 	{
 		$data = $this->input->post(NULL, TRUE);
-		// $data = $this->input->post();
-		// $data = $_POST[];
+		$status = false;
 		header('Content-Type: application/json');
-		// print_r($data);
+		// print_r($data);die();
 		if (array_key_exists('pelunasan',$data)) {
 			# code...
 			$this->PeminjamanModel->lunasin($data['pelunasanId']);
 		}
+		$jasa = 0;$nominal=$data['nominal'];
+		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
+			$jasa += $nominal*$data['persentasePeminjaman']/100;
+			$nominal -= $nominal*$data['persentasePeminjaman']/100;
+		}
+		$data['jasa'] = round($jasa);
 		unset($data['pelunasan']);
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
-		$this->PeminjamanModel->usulanPeminjaman($data);
+		$idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
+
+		if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
+			# code...
+			$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
+		}
 		echo json_encode(array('status'=>1));
+		
+		
 	}
+	public function approvePengajuan($id,$status){
+		// $pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
+		$pengajuan = $this->PeminjamanModel->getPengajuanIdUsulanPeminjaman($id)->result_array()[0];
+
+		unset($pengajuan['idUsulanPeminjaman']);		
+		$data = $pengajuan;
+		$data['tanggal'] = date("Y-m-d",strtotime($data['tanggal']));
+		// print_r($data);die();
+		$this->PeminjamanModel->InsertPeminjaman($data);
+		// print_r($data);die();
+		$this->PeminjamanModel->updateStatusPengajuan($id,$status);
+		// $angsuranKosong = array('idPeminjaman' =>$id ,'nominalBayar'=>0, );
+		// $this->PeminjamanModel->InsertPembayaran($angsuranKosong);
+		redirect('Peminjaman','refresh');
+	}
+	public function approvePengajuanReturn($id,$status){
+		// $pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
+		$pengajuan = $this->PeminjamanModel->getPengajuanIdUsulanPeminjaman($id)->result_array()[0];
+
+		unset($pengajuan['idUsulanPeminjaman']);		
+		$data = $pengajuan;
+		$data['tanggal'] = date("Y-m-d",strtotime($data['tanggal']));
+		// print_r($data);die();
+		$this->PeminjamanModel->InsertPeminjaman($data);
+		// print_r($data);die();
+		$this->PeminjamanModel->updateStatusPengajuan($id,$status);
+		return true;
+		// $angsuranKosong = array('idPeminjaman' =>$id ,'nominalBayar'=>0, );
+		// $this->PeminjamanModel->InsertPembayaran($angsuranKosong);
+		// redirect('Peminjaman','refresh');
+	}
+
 	public function cekPeminjaman($value='')
 	{
 		$jml = 0;
@@ -132,17 +176,7 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function approvePengajuan($id,$status){
-		// $pengajuan = $this->PeminjamanModel->getPengajuanID($id)->result_array()[0];
-		$pengajuan = $this->PeminjamanModel->getPengajuanIdUsulanPeminjaman($id)->result_array()[0];
-
-		unset($pengajuan['idUsulanPeminjaman']);		
-		$data = $pengajuan;
-		$this->PeminjamanModel->InsertPeminjaman($data);
-		$this->PeminjamanModel->statusPengajuan($id,$status);
-		redirect('Peminjaman','refresh');
-	}
-
+	
 
 	public function pembayaran($id){
 		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);

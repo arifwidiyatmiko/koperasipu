@@ -59,6 +59,8 @@ class PeminjamanModel extends CI_Model
 	function usulanPeminjaman($value='')
 	{
 		$this->db->insert('usulan_peminjaman',$value);
+		$insert_id = $this->db->insert_id();
+		return  $insert_id;
 	}
 	public function getUsulanPeminjaman($idUser)
 	{
