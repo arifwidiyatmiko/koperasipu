@@ -104,11 +104,22 @@ class Peminjaman extends CI_Controller {
 	public function pengajuan($value='')
 	{
 		$this->load->model('Ref_JenispeminjamanModel');
+		if ($value != '') {
+			$data['anggota'] = $this->UserModel->getUser(array('idUser'=>$value));
+		}
 		$data['ref_peminjaman'] = $this->Ref_JenispeminjamanModel->getAll();
 		$data['minmax'] = $this->Ref_jaminanPeminjaman->minmax()[0];
 		// print_r($data['minmax']);die();
 		// print_r($data['ref_peminjaman']->result());die();
-		$this->load->view('header');
+		// $this->load->view('header');
+		if ($value != '') {
+			$this->load->view('header',$data);
+			// $this->load->view('Peminjaman/tambahPeminjaman_admin',$data);
+		}
+		else{
+			$this->load->view('header');
+			
+		}
 		$this->load->view('pengajuan_peminjaman',$data);
 		$this->load->view('footer');
 	}

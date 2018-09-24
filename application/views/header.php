@@ -290,7 +290,13 @@
                         <div class="modal-body">
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Nama</span>
-                                <span class="col-sm-6"> : <?php echo $this->session->userdata('users_koperasi')->namaLengkap;?></span>
+                                <?php 
+                                    if ($this->uri->segment(3) !='') {
+                                        ?><span class="col-sm-6"> : <?php echo $anggota->result()[0]->namaLengkap;?></span><?php
+                                    }else{
+                                        ?><span class="col-sm-6"> : <?php echo $this->session->userdata('users_koperasi')->namaLengkap;?></span><?php
+                                    }
+                                ?>
                             </div>
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Jumlah Peminjaman</span>

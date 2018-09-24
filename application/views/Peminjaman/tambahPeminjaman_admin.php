@@ -50,6 +50,7 @@
                                               </div>
                                             </div>
                                         </div>
+                                        <div id="keterangan_konfirmasi"></div>
 									    <div class="form-group">        
 									      <div class="col-sm-offset-2 col-sm-10">
 									        <button id="btn_konfirmasiPengajuan" type="button" class="au-btn au-btn--block au-btn--green m-b-20" >
@@ -103,7 +104,7 @@
                                         }
                                         $.ajax({
                                                 type: 'GET',
-                                                url: '<?php echo base_url();?>Peminjaman/cekPeminjaman/'+<?php echo $this->session->userdata('users_koperasi')->idUser;?>
+                                                url: '<?php echo base_url();?>Peminjaman/cekPeminjaman/'+<?php echo $this->uri->segment(3);?>
                                             })
                                             .done(function(content){
                                                // console.log(content);
@@ -131,6 +132,7 @@
                                                                 $('#modal_pelunasanKredit').text(parseInt(content.jumlah));
                                                                 $('#modal_pelunasanKredit').css('color','red');
                                                                 $('#btn_pengajuanPeminjaman_konfirmasi').attr("disabled", "disabled");
+                                                                $('#keterangan_konfirmasi').append("<p>Jumlah peminjaman tidak dapat melunasi sisa pada peminjaman sebelumnya.</p>");
                                                             }
                                                        }
                                                        $('#modal_kekuranganJasa').text(sisaJasa);
@@ -158,7 +160,7 @@
                                     if ($('#nominalAngsuran').val() == null || $('#nominalAngsuran').val() == '') {
                                         $('#nominalAngsuran').focus();
                                     }
-                                    submitData.idUser = '<?php echo $this->session->userdata('users_koperasi')->idUser;?>';
+                                    submitData.idUser = '<?php echo $this->uri->segment(3);?>';
                                     submitData.tanggal = '<?php echo date('Y-m-d H:i:s');?>';
                                     submitData.nominal = parseInt($('#nominal').val());
                                     submitData.jumlahBulan = $('#jumlahBulan').val();
