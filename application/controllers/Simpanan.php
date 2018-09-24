@@ -21,15 +21,48 @@ class Simpanan extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('ReportModel');
+		$this->load->model('SimpananModel');
 		if (!$this->session->userdata('users_koperasi')) {
 			redirect('Auth','refresh');
 		}
 	}
+	
 	public function index()
-	{
+	{	
+		$data['simpanan'] = $this->SimpananModel->getSimpanan()->result();
+		// print_r($data['peminjaman']);die();
 		$this->load->view('header');
-		$this->load->view('Simpanan/simpanan_index');
+		$this->load->view('Simpanan/simpanan_index',$data);
+		$this->load->view('footer');
+	}
+
+	public function bayarSimpanan($id)
+	{	
+		$data['simpanan'] = $this->SimpananModel->getSimpananId($id);
+		// print_r($data['peminjaman']);die();
+		$this->load->view('header');
+		$this->load->view('Simpanan/simpanan_bayar',$data);
+		$this->load->view('footer');
+	}
+
+	public function submitSimpanan($id){
+		$saldo = $this->input->post("saldo") + $this->input->post("bayar_simpanan");
+		$saldokem = $this->input->post("saldokem") + $this->input->post("bayar_kematian");
+		$simpanan = array('idSimpanan' => $id, 'nominalBayar' => $this->input->post("bayar_simpanan"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'saldoTerakhir' => $saldo, 'saldokemTerakhir' => $saldokem, 'tanggal'=>date('Y-m-d H:i:s'));
+		$tgl = date('Y-m-d H:i:s');
+		// print_r($saldokem);die();
+		$this->SimpananModel->updateSimpanan($id,$saldo,$saldokem,$tgl);
+		$this->SimpananModel->insertSimpanan($simpanan);
+		redirect('Simpanan');
+		// print_r($nominal); die();
+	}
+
+	public function detailSimpanan($id)
+	{	
+		$data['simpanan'] = $this->SimpananModel->getDetailSimpanan($id)->result();
+		// print_r($data['simpanan']);die();
+		$this->load->view('header');
+		$this->load->view('Simpanan/simpanan_detail',$data);
 		$this->load->view('footer');
 	}
 	

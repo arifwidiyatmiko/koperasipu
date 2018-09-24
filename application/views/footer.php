@@ -22,6 +22,7 @@
     <script src="<?php echo base_url();?>assets/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="<?php echo base_url();?>assets/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/bootstrap-datepicker.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendor/select2/select2.min.js">
     </script>
 

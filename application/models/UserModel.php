@@ -28,6 +28,12 @@ class UserModel extends CI_Model
 		WHERE u.idUser =  "'.$id.'"';
 		return $this->db->query($sql);
 	}	 
+
+	function update($id, $data)
+	{
+		$this->db->where('idUser', $id);
+		$this->db->update('user', $data); 
+	}
 }
 
 

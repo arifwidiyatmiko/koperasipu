@@ -47,7 +47,7 @@ class Report extends CI_Controller {
 			$unit_kerja = 0;
 		}
 		$data['peminjaman'] = $this->ReportModel->getPeminjam($tahun,$unit_kerja);
-		//echo $this->db->last_query();die();
+		// echo $this->db->last_query();die();
 		$data['tahun'] = $tahun;
 		$data['unit_kerja'] = $unit_kerja;
 		//print_r($data);die();
