@@ -32,9 +32,6 @@ class Report extends CI_Controller {
 	{	
 		$tahun = '';
 		$unit_kerja = '';
-		//print_r( $_POST['tahun']);die();
-		// (isset($_POST['tahun'])) ? $tahun = $_POST['tahun'] : $tahun = 2018;
-		// (isset($_POST['unit_kerja'])) ? $tahun = $_POST['unit_kerja'] : $unit_kerja = 0;
 
 		if(isset($_POST['tahun'])){
 			$tahun = $_POST['tahun'];
@@ -47,10 +44,9 @@ class Report extends CI_Controller {
 			$unit_kerja = 0;
 		}
 		$data['peminjaman'] = $this->ReportModel->getPeminjam($tahun,$unit_kerja);
-		// echo $this->db->last_query();die();
 		$data['tahun'] = $tahun;
 		$data['unit_kerja'] = $unit_kerja;
-		//print_r($data);die();
+
 		$this->load->view('header');
 		$this->load->view('Report/peminjaman', $data);
 		$this->load->view('footer');
@@ -68,7 +64,7 @@ class Report extends CI_Controller {
 	{
 		$tahun = $this->uri->segment(3);
 		$unit_kerja = $this->uri->segment(4);
-		$data['peminjaman'] = $this->ReportModel->getPeminjam($tahun,$unit_kerja);
+		$data['angsuran'] = $this->ReportModel->getDetailAngsuran($tahun,$unit_kerja);
 		//echo $this->db->last_query();die();
 		$data['tahun'] = $tahun;
 		$data['unit_kerja'] = $unit_kerja;
