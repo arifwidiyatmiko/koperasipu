@@ -176,7 +176,6 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	
 
 	public function pembayaran($id){
 		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);
