@@ -8,7 +8,7 @@
                             <div class="col-md-12">
                                 <div class="overview-wrap">
                                     <h2 class="title-1">overview</h2>
-                                    <a href="<?php echo base_url();?>Peminjaman/pengajuan" class="au-btn au-btn-icon au-btn--blue">
+                                    <a href="<?php echo base_url();?>Peminjaman/pengajuan/<?php echo $this->session->userdata('users_koperasi')->idUser; ?>" class="au-btn au-btn-icon au-btn--blue">
                                         <i class="zmdi zmdi-plus"></i>Ajukan Peminjaman Baru</a>
                                 </div>
                             </div>

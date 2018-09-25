@@ -63,8 +63,8 @@
                         </div>
                         <script type="text/javascript">
                             $( document ).ready(function() {
-                                var umur = <?php echo date_diff(date_create($this->session->userdata('users_koperasi')->tanggal_lahir), date_create('today'))->y;?>;
-                                var submitData = {};
+                                var umur = <?php echo date_diff(date_create($anggota->result()[0]->tanggal_lahir), date_create('today'))->y;?>;
+                                var submitData = {};var provisi = 0;var jaminan = 0;var sisaPelunasan=0; var sisaJasa = 0; var kekuranganJasa=0;
                                 var min = <?php echo $minmax->kecil;?>;
                                 var max = <?php echo $minmax->besar;?>;
                                 var data_jenisPeminjaman = <?php echo json_encode($ref_peminjaman->result());?>;
@@ -86,7 +86,7 @@
                                     }
                                 });
                                 $('#btn_konfirmasiPengajuan').on('click',function() {
-                                    var jaminan = 0;var sisaPelunasan=0; var sisaJasa = 0; var kekuranganJasa=0;
+                                    
                                     if ($('#nominal').val() == '') {
                                         $('#nominal').focus();
                                     }else if($('#jenisPeminjaman').val() == 'NULL'){
@@ -103,7 +103,7 @@
                                         }
                                         $.ajax({
                                                 type: 'GET',
-                                                url: '<?php echo base_url();?>Peminjaman/cekPeminjaman/'+<?php echo $this->session->userdata('users_koperasi')->idUser;?>
+                                                url: '<?php echo base_url();?>Peminjaman/cekPeminjaman/'+<?php echo $anggota->result()[0]->idUser;?>
                                             })
                                             .done(function(content){
                                                // console.log(content);
@@ -144,7 +144,7 @@
                                                     });
                                              
                                                 }
-                                                var provisi = parseInt($('#nominal').val()) * parseFloat(1/100);
+                                                 provisi = parseInt($('#nominal').val()) * parseFloat(1/100);
                                                 $('#modal_provisiPeminjaman').text(provisi);
                                             })
                                             .fail(function() {
@@ -158,13 +158,16 @@
                                     if ($('#nominalAngsuran').val() == null || $('#nominalAngsuran').val() == '') {
                                         $('#nominalAngsuran').focus();
                                     }
-                                    submitData.idUser = '<?php echo $this->session->userdata('users_koperasi')->idUser;?>';
+                                    submitData.idUser = '<?php echo $anggota->result()[0]->idUser;?>';
                                     submitData.tanggal = '<?php echo date('Y-m-d H:i:s');?>';
                                     submitData.nominal = parseInt($('#nominal').val());
                                     submitData.jumlahBulan = $('#jumlahBulan').val();
                                     submitData.tipePeminjaman = obj_jenisPeminjaman.Nama;
                                     submitData.sisaPeminjaman = submitData.nominal;
                                     submitData.status = 0;
+                                    submitData.jaminan = jaminan;
+                                    submitData.provisi = provisi;
+                                    submitData.total_diterima = kekuranganJasa;
                                     submitData.nominalAngsuran = $('#nominalAngsuran').val();
                                     submitData.persentasePeminjaman = obj_jenisPeminjaman.Persentase;
                                     console.log('data : ',submitData);
@@ -175,7 +178,7 @@
                                     })
                                     .done(function(success){
                                         console.log(success);
-                                        alert(success)
+                                        if (success.status == 1) {window.location.replace('<?php echo base_url();?>Peminjaman');}
                                     })
                                    .fail(function() {
                                         alert( "Silahkan coba beberapa saat lagi." );

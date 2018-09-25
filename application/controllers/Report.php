@@ -65,11 +65,9 @@ class Report extends CI_Controller {
 		$tahun = $this->uri->segment(3);
 		$unit_kerja = $this->uri->segment(4);
 		$data['angsuran'] = $this->ReportModel->getDetailAngsuran($tahun,$unit_kerja);
-		//echo $this->db->last_query();die();
 		$data['tahun'] = $tahun;
 		$data['unit_kerja'] = $unit_kerja;
 		$this->load->view('report_peminjaman',$data);
-		//header('Location: '.site_url().'report/peminjaman');
 	}
 	
 	
