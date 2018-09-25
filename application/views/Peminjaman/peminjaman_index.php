@@ -122,6 +122,7 @@
                                                         <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiPenerimaan/<?=$p->idPeminjaman?>">Kwitansi Penerimaan</a>
                                                         <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiPelunasan/<?=$p->idPeminjaman?>">Kwitansi Pelunasan</a>
                                                         <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiTotal/<?=$p->idPeminjaman?>">Kwitansi Total</a>
+                                                        <a class="dropdown-item" href="<?php echo base_url()?>Peminjaman/kwitansiBayar/<?=$p->idPeminjaman?>">Kwitansi Pembayaran</a>
                                                       </div>
                                                     </div>
                                                 </td>

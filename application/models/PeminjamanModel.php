@@ -148,6 +148,15 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql);
 	}
 
+	function getKwitansiBayar($id){
+		$sql = 'SELECT p.*,u.*, s.nominal as nominalSimpanan, date_format(p.tanggal, "%d-%m-%Y") as tanggal, count(a.idAngsuran) as ke
+				FROM peminjaman as p
+				LEFT JOIN user as u on p.idUser = u.idUser
+				LEFT JOIN simpanan as s on u.idUser = s.idUser
+				LEFT JOIN angsuran as a on p.idPeminjaman = a.idPeminjaman
+				WHERE p.idPeminjaman = "'.$id.'" ';
+		return $this->db->query($sql);
+	}
 }
 
 

@@ -120,7 +120,7 @@
                                                     })
                                                     .done(function(data){
                                                         submitData.persentaseJaminan = data[0].persentase;
-                                                        jaminan = parseInt( parseInt($('#nominal').val()) * parseFloat(data[0].persentase/100));
+                                                        jaminan = parseInt( parseInt($('#nominal').val()) * parseFloat(data[0].persentase/1));
                                                        $('#modal_jaminanPeminjaman').text(jaminan);
                                                        if (content.jumlah == 0 ) {
                                                             $('#modal_pelunasanKredit').text(content.jumlah);

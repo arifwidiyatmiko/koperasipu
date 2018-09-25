@@ -195,4 +195,12 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('Report/kwitansi_total',$data);
 		$this->load->view('footer');
 	}
+
+	public function kwitansiBayar($id){
+		$data['kwitansi'] = $this->PeminjamanModel->getKwitansiBayar($id)->result()[0];
+		// print_r($data['kwitansi']);die();
+		$this->load->view('header');
+		$this->load->view('Report/kwitansi_pembayaran',$data);
+		$this->load->view('footer');
+	}
 }
