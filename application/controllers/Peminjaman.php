@@ -89,12 +89,13 @@ class Peminjaman extends CI_Controller {
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
-		$idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
-
-		if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
-			# code...
-			$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
-		}
+		$idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
+		$arr = array('idPeminjaman' => $idPeminjaman,'nominalBayar'=>0,'tagihanBayar'=>0 ,'tanggal'=>date('Y-m-d h:i:s'),'jasa'=>0,'tagihanJasa'=>0,'sisaPeminjaman'=>0,'sisaJasa'=>0);
+		$this->PeminjamanModel->angsuranDummy($arr);
+		// if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
+		// 	# code...
+		// 	$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
+		// }
 		echo json_encode(array('status'=>1));
 		
 		

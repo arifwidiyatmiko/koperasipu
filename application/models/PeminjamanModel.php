@@ -35,6 +35,12 @@ class PeminjamanModel extends CI_Model
 		}
 		return $this->db->query($sql)->result();
 	}
+
+	public function angsuranDummy($value)
+	{
+		$this->db->insert('angsuran', $value);
+	}
+
 	//detail per pinjaman
 	function getDetailPeminjaman($id)
 	{

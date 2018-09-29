@@ -19,6 +19,20 @@
                                 <div class="table-responsive m-b-40">
                                    <form class="form-horizontal" >
                                         <div class="form-group">
+                                          <label class="control-label col-sm-4" for="email">Jenis Peminjaman Jangka</label>
+                                          <div class="col-sm-10">
+                                            <select name="jenisPeminjaman" id="jenisPeminjaman" class="form-control">
+                                                <option value="NULL"> -- Pilih Jenis Peminjaman -- </option>
+                                                <?php 
+                                                foreach ($ref_peminjaman->result() as $key) {
+                                                    ?><option value="<?php echo $key->idJenisPeminjaman;?>"><?php echo $key->Nama." - Maksimal ".$key->jumlahBulan." Bulan";?></option> <?php
+                                                }
+                                                ?>                         
+                                            </select>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
                                           <label class="control-label col-sm-4" for="email">Nominal Peminjaman</label>
                                           <div class="input-group col-sm-10">
                                               <div class="input-group-prepend">
@@ -28,19 +42,7 @@
                                             </div>
                                         </div>
 
-									    <div class="form-group">
-									      <label class="control-label col-sm-4" for="email">Jenis Peminjaman Jangka</label>
-									      <div class="col-sm-10">
-									        <select name="jenisPeminjaman" id="jenisPeminjaman" class="form-control">
-                                                <option value="NULL"> -- Pilih Jenis Peminjaman -- </option>
-                                                <?php 
-                                                foreach ($ref_peminjaman->result() as $key) {
-                                                    ?><option value="<?php echo $key->idJenisPeminjaman;?>"><?php echo $key->Nama." - Maksimal ".$key->jumlahBulan." Bulan";?></option> <?php
-                                                }
-                                                ?>                         
-                                            </select>
-									      </div>
-									    </div>
+									    
                                         <div class="form-group">
                                           <label class="control-label col-sm-4" for="email">Jumlah Bulan</label>
                                           <div class="input-group col-sm-10">
@@ -69,11 +71,16 @@
                                 var max = <?php echo $minmax->besar;?>;
                                 var data_jenisPeminjaman = <?php echo json_encode($ref_peminjaman->result());?>;
                                 var jenisPeminjaman = 0;
+                                var maksimalPeminjaman = 0;
                                 var obj_jenisPeminjaman = {};
                                 $('#jenisPeminjaman').on('change',function() {
                                    data_jenisPeminjaman.forEach((num, index) => {
                                         if(num.idJenisPeminjaman == $('#jenisPeminjaman').val()){
                                             jenisPeminjaman = parseInt(num.jumlahBulan);
+                                            if (num.jumlahBulan == 36) {maksimalPeminjaman = 50000000;}
+                                            else if (num.jumlahBulan == 6) {maksimalPeminjaman = 1500000;}
+                                            else if (num.jumlahBulan == 10) {maksimalPeminjaman = 6000000;}
+                                            else {maksimalPeminjaman = 250000;}
                                             obj_jenisPeminjaman = num;
                                             $('#jumlahBulan').val(0);
                                         }
@@ -83,6 +90,12 @@
                                     var value = $(this).val();
                                     if ((value !== '') && (value.indexOf('.') === -1)) {
                                         $(this).val(Math.max(Math.min(value,jenisPeminjaman), -Math.abs(jenisPeminjaman)));
+                                    }
+                                });
+                                $('#nominal').on('input',function(){
+                                    var value = $(this).val();
+                                    if ((value !== '') && (value.indexOf('.') === -1)) {
+                                        $(this).val(Math.max(Math.min(value,maksimalPeminjaman), -Math.abs(maksimalPeminjaman)));
                                     }
                                 });
                                 $('#btn_konfirmasiPengajuan').on('click',function() {
@@ -136,6 +149,8 @@
                                                        $('#modal_kekuranganJasa').text(sisaJasa);
                                                        kekuranganJasa =  parseInt($('#nominal').val()) - jaminan - content.jumlah - sisaJasa-provisi;
                                                        $('#modal_uangDiterima').text(kekuranganJasa);
+                                                       $('#nominalAngsuran').val($('#nominal').val()/$('#jumlahBulan').val());
+                                                       
                                                     })
 
                                                     .fail(function() {
@@ -165,7 +180,7 @@
                                     submitData.tipePeminjaman = obj_jenisPeminjaman.Nama;
                                     submitData.sisaPeminjaman = submitData.nominal;
                                     submitData.status = 0;
-                                    submitData.jaminan = jaminan;
+                                    // submitData.jaminan = jaminan;
                                     submitData.provisi = provisi;
                                     submitData.total_diterima = kekuranganJasa;
                                     submitData.nominalAngsuran = $('#nominalAngsuran').val();
@@ -174,7 +189,10 @@
                                     $.ajax({
                                         type: 'POST',
                                         url: '<?php echo base_url();?>Peminjaman/submit/',
-                                        data : submitData
+                                        data : submitData,
+                                        beforeSend: function(){
+                                            $('#btn_pengajuanPeminjaman_konfirmasi').prop("disabled",true);
+                                        },
                                     })
                                     .done(function(success){
                                         console.log(success);
