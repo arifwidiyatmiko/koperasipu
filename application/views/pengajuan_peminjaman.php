@@ -146,6 +146,7 @@
                                                                 $('#btn_pengajuanPeminjaman_konfirmasi').attr("disabled", "disabled");
                                                             }
                                                        }
+                                                       sisaJasa = parseInt(content.data[0].sisaJasa);
                                                        $('#modal_kekuranganJasa').text(sisaJasa);
                                                        kekuranganJasa =  parseInt($('#nominal').val()) - jaminan - content.jumlah - sisaJasa-provisi;
                                                        $('#modal_uangDiterima').text(kekuranganJasa);

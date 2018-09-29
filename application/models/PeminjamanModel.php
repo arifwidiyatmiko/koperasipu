@@ -18,7 +18,7 @@ class PeminjamanModel extends CI_Model
 
 	function getPinjamanList()
 	{
-		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
+		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, p.jasa as totalSisaJasa, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
 		FROM angsuran as a
 		LEFT JOIN peminjaman as p on p.idPeminjaman = a.idPeminjaman
 		LEFT JOIN user as u on p.idUser = u.idUser
@@ -40,7 +40,10 @@ class PeminjamanModel extends CI_Model
 	{
 		$this->db->insert('angsuran', $value);
 	}
-
+	function getPeminjamanId($id){
+		$this->db->where('idPeminjaman', $id);
+		return $this->db->get('peminjaman');
+	}
 	//detail per pinjaman
 	function getDetailPeminjaman($id)
 	{
@@ -110,7 +113,7 @@ class PeminjamanModel extends CI_Model
 
 	function updatePembayaran($id, $nominal, $jasa){
 		$this->db->set('sisaPeminjaman',$nominal);
-		$this->db->set('jasa',$jasa);
+		$this->db->set('sisaJasa',$jasa);
 		$this->db->where('idPeminjaman',$id);
 		$this->db->update('peminjaman');
 	}
@@ -146,6 +149,9 @@ class PeminjamanModel extends CI_Model
 
 	function InsertPeminjaman($data){
 		$this->db->insert('peminjaman',$data);
+		$insert_id = $this->db->insert_id();
+		return  $insert_id;
+
 	}
 
 	function getKwitansi($id){

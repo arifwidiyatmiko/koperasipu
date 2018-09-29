@@ -187,10 +187,14 @@ class Peminjaman extends CI_Controller {
 	}
 
 	public function submitPembayaran($id){
+
 		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
+		$data = $this->PeminjamanModel->getPeminjamanId($id)->result_array()[0];
+		// echo json_encode($data);die();
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
-		$jasa = $this->input->post("bayar_jasa");
+		$jasa = $data['jasa'] - $this->input->post("bayar_jasa");
 		// print_r($angsuran);die();
+		// echo $jasa;die();
 		$this->PeminjamanModel->updatePembayaran($id,$nominal,$jasa);
 		$this->PeminjamanModel->insertPembayaran($angsuran);
 		redirect('peminjaman');
