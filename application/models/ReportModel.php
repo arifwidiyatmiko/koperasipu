@@ -70,7 +70,7 @@ class ReportModel extends CI_Model
 				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 10 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa10,
 				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 11 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa11,
 				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 12 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa12,
-				Month(angsuran.tanggal) as bulanAngsuran, `angsuran`.* FROM `user` JOIN `peminjaman` ON `user`.`idUser` = `peminjaman`.`idUser` JOIN `angsuran` ON `angsuran`.`idpeminjaman` = `peminjaman`.`idpeminjaman` WHERE YEAR(peminjaman.tanggal) = '$tahun' AND `idPekerjaan` = '$unit_kerja'";
+				Month(angsuran.tanggal) as bulanAngsuran, `angsuran`.* FROM `user` JOIN `peminjaman` ON `user`.`idUser` = `peminjaman`.`idUser` JOIN `angsuran` ON `angsuran`.`idpeminjaman` = `peminjaman`.`idpeminjaman` WHERE YEAR(peminjaman.tanggal) = '$tahun' AND `idPekerjaan` = '$unit_kerja'  AND angsuran.statusBayar = 1 ";
 				return $this->db->query($sql)->result();
 		// $this->db->select('user.*');
 		// $this->db->select('peminjaman.nominal');
@@ -84,6 +84,37 @@ class ReportModel extends CI_Model
 		// $this->db->join('angsuran', 'angsuran.idpeminjaman = peminjaman.idpeminjaman');
 		// $query = $this->db->get();
   //       return $query->result();
+	}
+
+	public function getPeminjamanPerBulan($bulan, $tahun, $unit_kerja){
+		$this->db->select('user.*');
+		$this->db->select('peminjaman.*');
+		$this->db->select('simpanan.*');
+		$this->db->from('user');
+		$this->db->where('Month(angsuran.tanggalTagihan)', $bulan);
+		$this->db->where('Year(angsuran.tanggalTagihan)', $tahun);
+		$this->db->where('peminjaman.sisaPeminjaman > 0');
+		$this->db->where('idPekerjaan',$unit_kerja);
+		$this->db->where('statusBayar',0);
+		$this->db->join('peminjaman', 'user.idUser = peminjaman.idUser');
+		$this->db->join('simpanan', 'simpanan.idsimpanan = simpanan.idsimpanan');
+		$this->db->join('angsuran', 'angsuran.idpeminjaman = peminjaman.idpeminjaman');
+		$query = $this->db->get();
+        return $query->result();
+	}
+
+	public function getDetailTagihanPerbulan($bulan, $tahun, $unit_kerja){
+		$sql = "SELECT user.noAnggota, user.namaLengkap, simpanan.nominal as simpanan, 
+				GROUP_CONCAT((CASE peminjaman.tipePeminjaman WHEN 'Panjang' THEN `nominalBayar` ELSE NULL END)) AS pokokPanjang,
+				GROUP_CONCAT((CASE peminjaman.tipePeminjaman WHEN 'Panjang' THEN angsuran.`jasa` ELSE NULL END)) AS jasaPanjang,
+				GROUP_CONCAT((CASE peminjaman.tipePeminjaman WHEN 'Menengah' THEN `nominalBayar` ELSE NULL END)) AS pokokMenengah,
+				GROUP_CONCAT((CASE peminjaman.tipePeminjaman WHEN 'Menengah' THEN angsuran.`jasa` ELSE NULL END)) AS jasaMenengah,
+				GROUP_CONCAT((CASE peminjaman.tipePeminjaman WHEN 'Pendek' THEN `nominalBayar` ELSE NULL END)) AS pokokPendek,
+				GROUP_CONCAT((CASE peminjaman.tipePeminjaman WHEN 'Pendek' THEN angsuran.`jasa` ELSE NULL END)) AS jasaPendek
+				FROM `user` JOIN `peminjaman` ON `user`.`idUser` = `peminjaman`.`idUser` JOIN `simpanan` ON `simpanan`.`idsimpanan` = `simpanan`.`idsimpanan` JOIN angsuran ON angsuran.idPeminjaman = peminjaman.idPeminjaman
+				WHERE `peminjaman`.`sisaPeminjaman` > 0 AND `idPekerjaan` = '0' AND angsuran.statusBayar = 0 AND Month(angsuran.tanggalTagihan) = $bulan AND YEAR(angsuran.tanggalTagihan) = $tahun AND `idPekerjaan` = '$unit_kerja'";
+
+		return $this->db->query($sql)->result();
 	}
 	 
 }

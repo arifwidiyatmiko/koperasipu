@@ -203,6 +203,9 @@
                                     <a href="<?php echo base_url();?>Report/Peminjaman">Peminjaman</a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo base_url();?>Report/PeminjamanPerbulan">Peminjaman Perbulan</a>
+                                </li>
+                                <li>
                                     <a href="<?php echo base_url();?>Report/Simpanan">Simpanan</a>
                                 </li>
                             </ul>
