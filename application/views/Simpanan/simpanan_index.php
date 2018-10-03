@@ -53,6 +53,7 @@
                                         <thead>
                                              <tr>
                                                 <th>No.</th>
+                                                <th>No Anggota</th>
                                                 <th>Nama</th>
                                                 <th>Saldo</th>
                                                 <th>Tagihan Bulanan</th>
@@ -78,6 +79,7 @@
                                                 <td>
                                                     <?= $i ?>
                                                 </td>
+                                                <td><?= $s->noAnggota?></td>
                                                 <td><?= $s->namaLengkap ?></td>
                                                 <td><?php 
                                                 echo rupiah($s->saldo) ?></td>

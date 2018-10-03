@@ -31,6 +31,7 @@ class Peminjaman extends CI_Controller {
 	public function index()
 	{
 		$data['peminjaman'] = $this->PeminjamanModel->getPinjamanList()->result();
+		// print_r($data);die();
 		$data['anggota'] = $this->UserModel->getUserList('ANGGOTA')->result();
 		// print_r($this->session->userdata('users'));die();
 		$this->load->view('header');
@@ -89,12 +90,14 @@ class Peminjaman extends CI_Controller {
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
-		$idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
+		// $idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
 
-		if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
-			# code...
-			$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
-		}
+		// if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
+		// 	# code...
+		// 	$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
+		// }
+
+		$this->PeminjamanModel->InsertPeminjaman($data);
 		echo json_encode(array('status'=>1));
 		
 		

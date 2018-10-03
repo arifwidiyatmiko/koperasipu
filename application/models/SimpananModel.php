@@ -10,7 +10,7 @@ class SimpananModel extends CI_Model
 	{
 		$sql = 'SELECT u.*,s.*, date_format(s.tanggal, "%d-%m-%Y")  as tanggal
 		FROM simpanan as s 
-		LEFT JOIN user as u on s.idUser = u.idUser
+		LEFT JOIN user as u on s.idUser = u.noAnggota
 		';
 		return $this->db->query($sql);
 	}
