@@ -27,12 +27,13 @@ class Peminjaman extends CI_Controller {
 		}
 		$this->load->model('Ref_jaminanPeminjaman');
 		$this->load->model('UserModel');
+		$this->load->model('SimpananModel');
 	}
 	public function index()
 	{
 		$data['peminjaman'] = $this->PeminjamanModel->getPinjamanList()->result();
 		$data['anggota'] = $this->UserModel->getUserList('ANGGOTA')->result();
-		// print_r($this->session->userdata('users'));die();
+		// print_r($data['peminjaman']);die();
 		$this->load->view('header');
 		$this->load->view('Peminjaman/peminjaman_index',$data);
 		// $this->load->view('sidebar');
@@ -75,12 +76,34 @@ class Peminjaman extends CI_Controller {
 		$status = false;
 		header('Content-Type: application/json');
 		// print_r($data);die();
+		$simpan = $this->SimpananModel->getSimpananIdUser($data['idUser'])[0];
+		// print_r($simpan);die();
+		// if ($data['kePeminjaman'] != 0) {
+		// 	$idSimpanan = $simpan['idSimpanan'];
+		// 	$saldoBaru = $simpan['saldo'] + ($data['kePeminjaman']/2);
+		// 	if ($simpan['max_saldokem'] == NULL) {
+		// 		$simpan['max_saldokem'] = 0;
+		// 	}
+		// 	$simpanan = array('idSimpanan' => $idSimpanan, 'nominalBayar' => ($data['kePeminjaman']/2),'tagihanBayar' => ($data['kePeminjaman']/2), 'saldoTerakhir' => $saldoBaru, 'saldokemTerakhir' => $simpan['max_saldokem'], 'tanggal'=>date('Y-m-d H:i:s'));
+		// 	$this->SimpananModel->updateSimpanan($idSimpanan,$saldoBaru,$simpan['max_saldokem'],date('Y-m-d H:i:s'));
+		// 	$this->SimpananModel->insertSimpanan($simpanan);
+		// }
+		// print_r($simpanan);die();
 		if (array_key_exists('pelunasan',$data)) {
 			# code...
 			$this->PeminjamanModel->lunasin($data['pelunasanId']);
 		}
 		$jasa = 0;$nominal=$data['nominal'];
+		$angs = [];
+		// for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
+		// 	$ang = [];
+		// 	$ang['nominalBayar'] = 
+		// 	$jasa += $nominal*$data['persentasePeminjaman']/100;
+		// 	$nominal -= $nominal*$data['persentasePeminjaman']/100;
+		// }
 		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
+			$ang = [];
+			$ang['nominalBayar'] = $nominal*$data['persentasePeminjaman']/100;
 			$jasa += $nominal*$data['persentasePeminjaman']/100;
 			$nominal -= $nominal*$data['persentasePeminjaman']/100;
 		}
@@ -154,7 +177,14 @@ class Peminjaman extends CI_Controller {
 		}
 		$data['ref_peminjaman'] = $this->Ref_JenispeminjamanModel->getAll();
 		$data['minmax'] = $this->Ref_jaminanPeminjaman->minmax()[0];
-		// print_r($data['minmax']);die();
+		$data['saldo'] = $this->SimpananModel->getSimpananIdUser($value);
+		if (!empty($data['saldo'])) {
+			// echo "string";die();
+			$data['saldo'] = $data['saldo'][0]['saldo'];
+		}else{
+			$data['saldo'] = 0;
+		}
+		// print_r($data['saldo']);die();
 		// print_r($data['ref_peminjaman']->result());die();
 		// $this->load->view('header');
 		if ($value != '') {

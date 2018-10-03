@@ -326,10 +326,15 @@
                                 <span class="col-sm-6">Kekurangan Jasa</span>
                                 <span class="col-sm-6"> : <b id="modal_kekuranganJasa"></b></span>
                             </div>
+                            <div class="col-sm-12" id="keSimpanan">
+                                <span class="col-sm-6">Dimasukan ke dalam Simpanan</span>
+                                <span class="col-sm-6"> : <b id="modal_keSimpanan"></b></span>
+                            </div>
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Uang akan Diterima</span>
                                 <span class="col-sm-6"> : <b id="modal_uangDiterima"></b></span>
                             </div>
+                            
                             <div class="col-sm-12">
                                 <span class="col-sm-6">Jumlah Angsuran</span>
                                 <input type="text" name="nominalAngsuran" id="nominalAngsuran" class="form-control">

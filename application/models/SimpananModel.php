@@ -44,6 +44,12 @@ class SimpananModel extends CI_Model
 		';
 		return $this->db->query($sql);
 	}
+	public function getSimpananIdUser($iduser)
+	{
+		$sql = "SELECT simpanan.* , MAX(bayar_simpanan.saldokemTerakhir) as max_saldokem , MAX(bayar_simpanan.saldoTerakhir) as max_saldo FROM simpanan LEFT JOIN bayar_simpanan on bayar_simpanan.idSimpanan = simpanan.idSimpanan WHERE simpanan.idUser = ".$iduser." ";
+		// $this->db->where('idUser', $iduser);
+		return $this->db->query($sql)->result_array();
+	}
 
 }
 

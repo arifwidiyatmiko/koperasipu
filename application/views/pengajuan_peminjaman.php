@@ -39,6 +39,7 @@
                                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
                                               </div>
                                               <input type="text" class="form-control" placeholder="nominal" onkeypress="return isNumber(event)" id="nominal" name="nominal">
+                                              <span id="info_nominal"></span>
                                             </div>
                                         </div>
 
@@ -65,6 +66,10 @@
                         </div>
                         <script type="text/javascript">
                             $( document ).ready(function() {
+                                $('#keSimpanan').hide();
+                                var saldoAnggota = <?= $saldo;?>;
+                                var maxPeminjamanSaldo = 2*saldoAnggota;
+                                console.log(maxPeminjamanSaldo);
                                 var umur = <?php echo date_diff(date_create($anggota->result()[0]->tanggal_lahir), date_create('today'))->y;?>;
                                 var submitData = {};var provisi = 0;var jaminan = 0;var sisaPelunasan=0; var sisaJasa = 0; var kekuranganJasa=0;
                                 var min = <?php echo $minmax->kecil;?>;
@@ -73,6 +78,7 @@
                                 var jenisPeminjaman = 0;
                                 var maksimalPeminjaman = 0;
                                 var obj_jenisPeminjaman = {};
+                                var kePeminjaman = 0;
                                 $('#jenisPeminjaman').on('change',function() {
                                    data_jenisPeminjaman.forEach((num, index) => {
                                         if(num.idJenisPeminjaman == $('#jenisPeminjaman').val()){
@@ -94,9 +100,18 @@
                                 });
                                 $('#nominal').on('input',function(){
                                     var value = $(this).val();
+                                    var num=0;
                                     if ((value !== '') && (value.indexOf('.') === -1)) {
-                                        $(this).val(Math.max(Math.min(value,maksimalPeminjaman), -Math.abs(maksimalPeminjaman)));
+                                        num = Math.max(Math.min(value,maksimalPeminjaman), -Math.abs(maksimalPeminjaman))
+                                        $(this).val(num);
                                     }
+                                    if (num > maxPeminjamanSaldo) {
+                                        $('#info_nominal').html("<p class='text text-danger'>Nominal Peminjaman Melebihi Saldo Simpanan</p>");
+                                    }else{$('#info_nominal').html("<p>");}
+                                });
+                                $('#nominal').on('keypress',function() {
+                                   // console.log($(this).val());
+                                   
                                 });
                                 $('#btn_konfirmasiPengajuan').on('click',function() {
                                     
@@ -123,7 +138,7 @@
                                               $('#konfirmasiPengajuan').modal('show');
                                                 $('#modal_jumlahPeminjaman').text($('#nominal').val());
                                                 $('#modal_jenisPeminjaman').text(obj_jenisPeminjaman.Nama+"-"+$('#jumlahBulan').val()+" Bulan");
-                                                console.log(content);
+                                                // console.log(content);
                                                 if (obj_jenisPeminjaman.idJenisPeminjaman == 1) {$('#modal_jaminanPeminjaman').text("-");}
                                                 else{
                                                     $.ajax({
@@ -146,10 +161,11 @@
                                                                 $('#btn_pengajuanPeminjaman_konfirmasi').attr("disabled", "disabled");
                                                             }
                                                        }
-                                                       sisaJasa = parseInt(content.data[0].sisaJasa);
+                                                       if (content.data.length != 0) {
+                                                            sisaJasa = parseInt(content.data[0].sisaJasa);
+                                                        }
                                                        $('#modal_kekuranganJasa').text(sisaJasa);
-                                                       kekuranganJasa =  parseInt($('#nominal').val()) - jaminan - content.jumlah - sisaJasa-provisi;
-                                                       $('#modal_uangDiterima').text(kekuranganJasa);
+                                                       
                                                        $('#nominalAngsuran').val($('#nominal').val()/$('#jumlahBulan').val());
                                                        
                                                     })
@@ -160,8 +176,18 @@
                                                     });
                                              
                                                 }
+
                                                  provisi = parseInt($('#nominal').val()) * parseFloat(1/100);
                                                 $('#modal_provisiPeminjaman').text(provisi);
+                                                if (parseInt($('#nominal').val()) > maxPeminjamanSaldo) {
+                                                    $('#keSimpanan').show();
+                                                    kePeminjaman = parseInt($('#nominal').val()) - maxPeminjamanSaldo;
+                                                    console.log(kePeminjaman);
+                                                    $('#modal_keSimpanan').text(kePeminjaman)
+
+                                                }else{$('#info_nominal').html("<p>");}
+                                                kekuranganJasa =  parseInt($('#nominal').val()) - jaminan - content.jumlah - sisaJasa-provisi - kePeminjaman;
+                                                $('#modal_uangDiterima').text(kekuranganJasa);
                                             })
                                             .fail(function() {
                                                 alert( "Silahkan coba beberapa saat lagi." );
@@ -182,6 +208,7 @@
                                     submitData.sisaPeminjaman = submitData.nominal;
                                     submitData.status = 0;
                                     // submitData.jaminan = jaminan;
+                                    submitData.kePeminjaman = kePeminjaman;
                                     submitData.provisi = provisi;
                                     submitData.total_diterima = kekuranganJasa;
                                     submitData.nominalAngsuran = $('#nominalAngsuran').val();

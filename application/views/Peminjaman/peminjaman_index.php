@@ -90,7 +90,7 @@
                                                 echo rupiah($p->nominal) ?></td>
                                                 <td><?= rupiah($sisa)?></td>
                                                 <td><?= rupiah($p->totalSisaJasa)?></td>
-                                                <td><?= rupiah($p->sisaJasa) ?></td>
+                                                <td><?= rupiah($p->totalSisaJasa-$p->jasa) ?></td>
                                                 <!-- <td><?= $p->alamat ?></td> -->
                                                 <?php if($sisa != 0) { ?>
                                                     <td class="denied">Belum Lunas</td>
