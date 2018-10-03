@@ -52,6 +52,37 @@ class Report extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function PeminjamanPerbulan()
+	{	
+		$bulan = '';
+		$tahun = '';
+		$unit_kerja = '';
+
+		if(isset($_POST['bulan'])){
+			$bulan = $_POST['bulan'];
+		}else{
+			$bulan = 8;
+		}
+		if(isset($_POST['tahun'])){
+			$tahun = $_POST['tahun'];
+		}else{
+			$tahun = 2018;
+		}
+		if(isset($_POST['unit_kerja'])){
+			$unit_kerja = $_POST['unit_kerja'];
+		}else{
+			$unit_kerja = 0;
+		}
+		$data['peminjaman'] = $this->ReportModel->getPeminjamanPerBulan($bulan, $tahun, $unit_kerja);
+		$data['bulan'] = $bulan;
+		$data['tahun'] = $tahun;
+		$data['unit_kerja'] = $unit_kerja;
+
+		$this->load->view('header');
+		$this->load->view('Report/peminjaman_perbulan', $data);
+		$this->load->view('footer');
+	}
+
 	public function Simpanan()
 	{
 		
@@ -68,6 +99,17 @@ class Report extends CI_Controller {
 		$data['tahun'] = $tahun;
 		$data['unit_kerja'] = $unit_kerja;
 		$this->load->view('report_peminjaman',$data);
+	}
+
+	public function downloadExcelPerbulan()
+	{
+		$bulan = $this->uri->segment(3);
+		$tahun = $this->uri->segment(4);
+		$unit_kerja = $this->uri->segment(5);
+		$data['angsuran'] = $this->ReportModel->getDetailTagihanPerbulan($bulan, $tahun,$unit_kerja);
+		$data['tahun'] = $tahun;
+		$data['unit_kerja'] = $unit_kerja;
+		$this->load->view('Report/report_peminjaman_perbulan',$data);
 	}
 	
 	

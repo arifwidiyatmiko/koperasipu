@@ -89,8 +89,13 @@
                                                 $sisa =  $nom - $bayar;
                                                 echo rupiah($p->nominal) ?></td>
                                                 <td><?= rupiah($sisa)?></td>
+<<<<<<< HEAD
                                                 <td></td>
                                                 <td><?= rupiah($p->sisaJasa) ?></td>
+=======
+                                                <td><?= rupiah($p->totalSisaJasa)?></td>
+                                                <td><?= rupiah($p->totalSisaJasa-$p->jasa) ?></td>
+>>>>>>> 974c3474a882ac177d6d1a57d20d490fbfbcc813
                                                 <!-- <td><?= $p->alamat ?></td> -->
                                                 <?php if($sisa != 0) { ?>
                                                     <td class="denied">Belum Lunas</td>
