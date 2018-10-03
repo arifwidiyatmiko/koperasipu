@@ -78,32 +78,27 @@ class Peminjaman extends CI_Controller {
 		// print_r($data);die();
 		$simpan = $this->SimpananModel->getSimpananIdUser($data['idUser'])[0];
 		// print_r($simpan);die();
-		// if ($data['kePeminjaman'] != 0) {
-		// 	$idSimpanan = $simpan['idSimpanan'];
-		// 	$saldoBaru = $simpan['saldo'] + ($data['kePeminjaman']/2);
-		// 	if ($simpan['max_saldokem'] == NULL) {
-		// 		$simpan['max_saldokem'] = 0;
-		// 	}
-		// 	$simpanan = array('idSimpanan' => $idSimpanan, 'nominalBayar' => ($data['kePeminjaman']/2),'tagihanBayar' => ($data['kePeminjaman']/2), 'saldoTerakhir' => $saldoBaru, 'saldokemTerakhir' => $simpan['max_saldokem'], 'tanggal'=>date('Y-m-d H:i:s'));
-		// 	$this->SimpananModel->updateSimpanan($idSimpanan,$saldoBaru,$simpan['max_saldokem'],date('Y-m-d H:i:s'));
-		// 	$this->SimpananModel->insertSimpanan($simpanan);
-		// }
+		/* INI BUAT CEK SALDO. JANGAN DI HAPUS
+
+		if ($data['kePeminjaman'] != 0) {
+			$idSimpanan = $simpan['idSimpanan'];
+			$saldoBaru = $simpan['saldo'] + ($data['kePeminjaman']/2);
+			if ($simpan['max_saldokem'] == NULL) {
+				$simpan['max_saldokem'] = 0;
+			}
+			$simpanan = array('idSimpanan' => $idSimpanan, 'nominalBayar' => ($data['kePeminjaman']/2),'tagihanBayar' => ($data['kePeminjaman']/2), 'saldoTerakhir' => $saldoBaru, 'saldokemTerakhir' => $simpan['max_saldokem'], 'tanggal'=>date('Y-m-d H:i:s'));
+			$this->SimpananModel->updateSimpanan($idSimpanan,$saldoBaru,$simpan['max_saldokem'],date('Y-m-d H:i:s'));
+			$this->SimpananModel->insertSimpanan($simpanan);
+		}
+
+		*/
 		// print_r($simpanan);die();
 		if (array_key_exists('pelunasan',$data)) {
 			# code...
 			$this->PeminjamanModel->lunasin($data['pelunasanId']);
 		}
 		$jasa = 0;$nominal=$data['nominal'];
-		$angs = [];
-		// for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
-		// 	$ang = [];
-		// 	$ang['nominalBayar'] = 
-		// 	$jasa += $nominal*$data['persentasePeminjaman']/100;
-		// 	$nominal -= $nominal*$data['persentasePeminjaman']/100;
-		// }
 		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
-			$ang = [];
-			$ang['nominalBayar'] = $nominal*$data['persentasePeminjaman']/100;
 			$jasa += $nominal*$data['persentasePeminjaman']/100;
 			$nominal -= $nominal*$data['persentasePeminjaman']/100;
 		}
@@ -112,8 +107,30 @@ class Peminjaman extends CI_Controller {
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
-		$idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
+		$idPeminjaman = 1;
+		// $idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
+		$tanggalTagihan = date_create(date('Y-m-d'));
 		$arr = array('idPeminjaman' => $idPeminjaman,'nominalBayar'=>0,'tagihanBayar'=>0 ,'tanggal'=>date('Y-m-d h:i:s'),'jasa'=>0,'tagihanJasa'=>0,'sisaPeminjaman'=>0,'sisaJasa'=>0);
+
+		$arr = [];$jasa = 0;$nominal=$data['nominal'];
+		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
+			$ang['idPeminjaman'] = $idPeminjaman;
+			$ang['nominalBayar'] = 0;
+			$tagihanBayar = $nominal*$data['persentasePeminjaman']/100;
+			$nominal = $nominal-$tagihanBayar;
+			$ang['tagihanBayar'] = $tagihanBayar;
+			$ang['tanggal'] = date('Y-m-d h:i:s');
+			date_add($tanggalTagihan,date_interval_create_from_date_string("1 month"));
+			$ang['tanggalTagihan'] = $tanggalTagihan;
+			$ang['statusBayar'] = 0;
+			$ang['jasa'] = 0; //belum
+			$ang['tagihanJasa'] = 0;  //belum
+			$ang['sisaPeminjaman'] = 0;
+			$ang['sisaJasa'] =  0;
+			$ang['kodePerkiraan'] = 1024;
+			array_push($arr,$ang);
+		}
+		print_r($arr);die();
 		$this->PeminjamanModel->angsuranDummy($arr);
 		// if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
 		// 	# code...
