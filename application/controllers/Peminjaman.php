@@ -136,23 +136,8 @@ class Peminjaman extends CI_Controller {
 			$ang['kodePerkiraan'] = 1024;
 			array_push($arr,$ang);
 		}
-<<<<<<< HEAD
-		// print_r($arr);die();
 		$this->PeminjamanModel->angsuranLooping($arr);
-=======
-		print_r($arr);die();
-		$this->PeminjamanModel->angsuranDummy($arr);
->>>>>>> 974c3474a882ac177d6d1a57d20d490fbfbcc813
->>>>>>> 05b4048863b8f07b9aa8aac7f6992ad4ded7bfc0
-		// if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
-		// 	# code...
-		// 	$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
-		// }
-<<<<<<< HEAD
 
-		$this->PeminjamanModel->InsertPeminjaman($data);
-=======
->>>>>>> 974c3474a882ac177d6d1a57d20d490fbfbcc813
 		echo json_encode(array('status'=>1));
 		
 		
