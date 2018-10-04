@@ -36,8 +36,16 @@
                                         <div class="form-group">
                                           <label class="control-label col-sm-5" >Pembayaran</label>
                                           <div class="col-sm-10">
-                                            <input  type="text" value="<?= $simpanan->nominal?>" class="form-control" placeholder="Masukkan nominal" name="bayar_simpanan" onkeypress="return isNumber(event)">
-                                            <input type="hidden" name="tagihanBayar" value="<?= $simpanan->nominal?>">
+                                            <?php if(date('n') == 3 || date('n') == 4 || date('n') == 5 || date('n') == 6 || date('n') == 7 ) {
+
+                                                $bayar = ($simpanan->nominal / 5) + $simpanan->nominal;
+                                                }
+                                                else{
+                                                    $bayar = $simpanan->nominal;
+                                                }
+                                            ?>
+                                            <input  type="text" value="<?= $bayar ?>" class="form-control" placeholder="Masukkan nominal" name="bayar_simpanan" onkeypress="return isNumber(event)">
+                                            <input type="hidden" name="tagihanBayar" value="<?= $bayar?>">
                                           </div>
                                         </div>
                                         <div class="form-group">

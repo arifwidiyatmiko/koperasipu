@@ -18,7 +18,8 @@ class PeminjamanModel extends CI_Model
 
 	function getPinjamanList()
 	{
-		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, p.jasa as totalSisaJasa, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
+		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, p.jasa as sisaJasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
+
 		FROM angsuran as a
 		LEFT JOIN peminjaman as p on p.idPeminjaman = a.idPeminjaman
 		LEFT JOIN user as u on p.idUser = u.idUser
@@ -31,7 +32,7 @@ class PeminjamanModel extends CI_Model
 		if ($statusLunas == '') {
 			$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "'.$value.'" ORDER BY sisaPeminjaman DESC';
 		}else{
-			$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "'.$value.'" AND status = "'.$statusLunas.'"ORDER BY sisaPeminjaman DESC';
+			$sql = 'SELECT * FROM `peminjaman` WHERE idUser = "x'.$value.'" AND status = "'.$statusLunas.'"ORDER BY sisaPeminjaman DESC';
 		}
 		return $this->db->query($sql)->result();
 	}
