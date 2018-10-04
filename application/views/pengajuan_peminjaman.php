@@ -224,7 +224,8 @@
                                     })
                                     .done(function(success){
                                         console.log(success);
-                                        if (success.status == 1) {window.location.replace('<?php echo base_url();?>Peminjaman');}
+                                        // if (success.status == 1) {window.location.replace('<?php echo base_url();?>Peminjaman');}
+                                        window.location.replace('<?php echo base_url();?>Peminjaman');
                                     })
                                    .fail(function() {
                                         alert( "Silahkan coba beberapa saat lagi." );

@@ -40,6 +40,14 @@ class PeminjamanModel extends CI_Model
 	{
 		$this->db->insert('angsuran', $value);
 	}
+
+	public function angsuranLooping($value='')
+	{
+		foreach ($value as $key) {
+			$this->db->insert('angsuran', $key);
+		}
+	}
+
 	function getPeminjamanId($id){
 		$this->db->where('idPeminjaman', $id);
 		return $this->db->get('peminjaman');

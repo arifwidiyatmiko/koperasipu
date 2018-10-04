@@ -78,7 +78,7 @@ class Peminjaman extends CI_Controller {
 		// print_r($data);die();
 		$simpan = $this->SimpananModel->getSimpananIdUser($data['idUser'])[0];
 		// print_r($simpan);die();
-		/* INI BUAT CEK SALDO. JANGAN DI HAPUS
+		 // INI BUAT CEK SALDO. JANGAN DI HAPUS
 
 		if ($data['kePeminjaman'] != 0) {
 			$idSimpanan = $simpan['idSimpanan'];
@@ -91,7 +91,7 @@ class Peminjaman extends CI_Controller {
 			$this->SimpananModel->insertSimpanan($simpanan);
 		}
 
-		*/
+		
 		// print_r($simpanan);die();
 		if (array_key_exists('pelunasan',$data)) {
 			# code...
@@ -104,34 +104,39 @@ class Peminjaman extends CI_Controller {
 		}
 		$data['jasa'] = round($jasa);
 		unset($data['pelunasan']);
+		unset($data['kePeminjaman']);
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
-		$idPeminjaman = 1;
-		// $idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
+		// $idPeminjaman = 1;
+		$idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
 		$tanggalTagihan = date_create(date('Y-m-d'));
 		$arr = array('idPeminjaman' => $idPeminjaman,'nominalBayar'=>0,'tagihanBayar'=>0 ,'tanggal'=>date('Y-m-d h:i:s'),'jasa'=>0,'tagihanJasa'=>0,'sisaPeminjaman'=>0,'sisaJasa'=>0);
 
-		$arr = [];$jasa = 0;$nominal=$data['nominal'];
+		$arr = [];$jasa = 0;$nominal=$data['nominal'];$nom = $data['nominal'];
 		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
 			$ang['idPeminjaman'] = $idPeminjaman;
 			$ang['nominalBayar'] = 0;
+
 			$tagihanBayar = $nominal*$data['persentasePeminjaman']/100;
-			$nominal = $nominal-$tagihanBayar;
+			// $nominal = $nominal-$tagihanBayar;
 			$ang['tagihanBayar'] = $tagihanBayar;
 			$ang['tanggal'] = date('Y-m-d h:i:s');
 			date_add($tanggalTagihan,date_interval_create_from_date_string("1 month"));
-			$ang['tanggalTagihan'] = $tanggalTagihan;
+			$ang['tanggalTagihan'] = $tanggalTagihan->format('Y-m-d');
 			$ang['statusBayar'] = 0;
-			$ang['jasa'] = 0; //belum
+			$jasa = $nom*$data['persentasePeminjaman']/100;
+			$nom -= $jasa;
+			$ang['jasa'] = $jasa; //belum
+
 			$ang['tagihanJasa'] = 0;  //belum
 			$ang['sisaPeminjaman'] = 0;
 			$ang['sisaJasa'] =  0;
 			$ang['kodePerkiraan'] = 1024;
 			array_push($arr,$ang);
 		}
-		print_r($arr);die();
-		$this->PeminjamanModel->angsuranDummy($arr);
+		// print_r($arr);die();
+		$this->PeminjamanModel->angsuranLooping($arr);
 		// if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
 		// 	# code...
 		// 	$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
