@@ -228,7 +228,7 @@ class Peminjaman extends CI_Controller {
 
 
 	public function pembayaran($id){
-		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);
+		$data['bayar'] = $this->PeminjamanModel->getAngsuran($id)[0];
 		// print_r($data['bayar']);die();
 		$this->load->view('header');
 		$this->load->view('pembayaran',$data);
@@ -237,15 +237,25 @@ class Peminjaman extends CI_Controller {
 
 	public function submitPembayaran($id){
 
-		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
+		// $data['bayar'] = $this->PeminjamanModel->getAngsuran($id)[0];
+		$angsuran = array('nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
+		$where = array('idPeminjaman' => $id, 'idAngsuran'=>$this->input->post("idAngsuran"));
+		// print_r($where);die();
+		if (($this->input->post('bayar_angsuran') != $this->input->post('tagihanBayar')) || ($this->input->post('tagihanJasa') != $this->input->post('bayar_jasa'))) {
+			$angsuran['statusBayar'] = 0;
+		}else{
+			$angsuran['statusBayar'] = 1;
+		}
 		$data = $this->PeminjamanModel->getPeminjamanId($id)->result_array()[0];
 		// echo json_encode($data);die();
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
 		$jasa = $data['jasa'] - $this->input->post("bayar_jasa");
+		$angsuran['sisaPeminjaman'] = $nominal;
+		$angsuran['sisaJasa'] = $jasa;
 		// print_r($angsuran);die();
 		// echo $jasa;die();
 		$this->PeminjamanModel->updatePembayaran($id,$nominal,$jasa);
-		$this->PeminjamanModel->insertPembayaran($angsuran);
+		$this->PeminjamanModel->insertPembayaran($angsuran,$where);
 		redirect('peminjaman');
 		// print_r($nominal); die();
 

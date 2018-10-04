@@ -37,6 +37,18 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
+	public function getAngsuran($id)
+	{
+		$this->db->select('angsuran.*, peminjaman.sisaPeminjaman');
+		$this->db->join('peminjaman', 'peminjaman.idPeminjaman = angsuran.idPeminjaman', 'left');
+		$this->db->where('angsuran.idPeminjaman', $id);
+		$this->db->where('angsuran.statusBayar', 0);
+		
+		$this->db->order_by('idAngsuran', 'asc');
+		$this->db->limit(1);
+		return $this->db->get('angsuran')->result();
+	}
+
 	public function angsuranDummy($value)
 	{
 		$this->db->insert('angsuran', $value);
@@ -70,8 +82,9 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql)->row();
 	}
 
-	function InsertPembayaran($angsuran){
-		$this->db->insert('angsuran', $angsuran);
+	function InsertPembayaran($angsuran,$where){
+		$this->db->where($where);
+		$this->db->update('angsuran', $angsuran);
 	}
 
 	function usulanPeminjaman($value='')
