@@ -18,15 +18,11 @@ class PeminjamanModel extends CI_Model
 
 	function getPinjamanList()
 	{
-<<<<<<< HEAD
+
 
 		/* $sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, p.jasa as sisaJasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman */
 
 		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, p.jasa as totalSisaJasa, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
-=======
-		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, p.jasa as sisaJasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
-
->>>>>>> 924de503d83ee36372d9249ff39608f6e8717065
 		FROM angsuran as a
 		LEFT JOIN peminjaman as p on p.idPeminjaman = a.idPeminjaman
 		LEFT JOIN user as u on p.idUser = u.idUser
