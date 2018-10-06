@@ -18,10 +18,15 @@ class PeminjamanModel extends CI_Model
 
 	function getPinjamanList()
 	{
+<<<<<<< HEAD
 
 		/* $sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, p.jasa as sisaJasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman */
 
 		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, p.jasa as totalSisaJasa, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
+=======
+		$sql = 'SELECT u.*,p.*,u.namaLengkap, a.idPeminjaman, SUM(a.nominalBayar) as bayar, SUM(a.jasa) as jasa, p.jasa as sisaJasa, date_format(p.tanggal, "%d-%m-%Y")  as tanggalPeminjaman
+
+>>>>>>> 924de503d83ee36372d9249ff39608f6e8717065
 		FROM angsuran as a
 		LEFT JOIN peminjaman as p on p.idPeminjaman = a.idPeminjaman
 		LEFT JOIN user as u on p.idUser = u.idUser
@@ -39,10 +44,30 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql)->result();
 	}
 
+	public function getAngsuran($id)
+	{
+		$this->db->select('angsuran.*, peminjaman.sisaPeminjaman');
+		$this->db->join('peminjaman', 'peminjaman.idPeminjaman = angsuran.idPeminjaman', 'left');
+		$this->db->where('angsuran.idPeminjaman', $id);
+		$this->db->where('angsuran.statusBayar', 0);
+		
+		$this->db->order_by('idAngsuran', 'asc');
+		$this->db->limit(1);
+		return $this->db->get('angsuran')->result();
+	}
+
 	public function angsuranDummy($value)
 	{
 		$this->db->insert('angsuran', $value);
 	}
+
+	public function angsuranLooping($value='')
+	{
+		foreach ($value as $key) {
+			$this->db->insert('angsuran', $key);
+		}
+	}
+
 	function getPeminjamanId($id){
 		$this->db->where('idPeminjaman', $id);
 		return $this->db->get('peminjaman');
@@ -64,8 +89,9 @@ class PeminjamanModel extends CI_Model
 		return $this->db->query($sql)->row();
 	}
 
-	function InsertPembayaran($angsuran){
-		$this->db->insert('angsuran', $angsuran);
+	function InsertPembayaran($angsuran,$where){
+		$this->db->where($where);
+		$this->db->update('angsuran', $angsuran);
 	}
 
 	function usulanPeminjaman($value='')

@@ -79,7 +79,7 @@ class Peminjaman extends CI_Controller {
 		// print_r($data);die();
 		$simpan = $this->SimpananModel->getSimpananIdUser($data['idUser'])[0];
 		// print_r($simpan);die();
-		/* INI BUAT CEK SALDO. JANGAN DI HAPUS
+		 // INI BUAT CEK SALDO. JANGAN DI HAPUS
 
 		if ($data['kePeminjaman'] != 0) {
 			$idSimpanan = $simpan['idSimpanan'];
@@ -92,7 +92,7 @@ class Peminjaman extends CI_Controller {
 			$this->SimpananModel->insertSimpanan($simpanan);
 		}
 
-		*/
+		
 		// print_r($simpanan);die();
 		if (array_key_exists('pelunasan',$data)) {
 			# code...
@@ -105,34 +105,44 @@ class Peminjaman extends CI_Controller {
 		}
 		$data['jasa'] = round($jasa);
 		unset($data['pelunasan']);
+		unset($data['kePeminjaman']);
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
 
+<<<<<<< HEAD
 		// $idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
 		$idPeminjaman = 1;
 		// $idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
+=======
+		$idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
+>>>>>>> 924de503d83ee36372d9249ff39608f6e8717065
 		$tanggalTagihan = date_create(date('Y-m-d'));
 		$arr = array('idPeminjaman' => $idPeminjaman,'nominalBayar'=>0,'tagihanBayar'=>0 ,'tanggal'=>date('Y-m-d h:i:s'),'jasa'=>0,'tagihanJasa'=>0,'sisaPeminjaman'=>0,'sisaJasa'=>0);
 
-		$arr = [];$jasa = 0;$nominal=$data['nominal'];
+		$arr = [];$jasa = 0;$nominal=$data['nominal'];$nom = $data['nominal'];
 		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
 			$ang['idPeminjaman'] = $idPeminjaman;
 			$ang['nominalBayar'] = 0;
+
 			$tagihanBayar = $nominal*$data['persentasePeminjaman']/100;
-			$nominal = $nominal-$tagihanBayar;
+			// $nominal = $nominal-$tagihanBayar;
 			$ang['tagihanBayar'] = $tagihanBayar;
 			$ang['tanggal'] = date('Y-m-d h:i:s');
 			date_add($tanggalTagihan,date_interval_create_from_date_string("1 month"));
-			$ang['tanggalTagihan'] = $tanggalTagihan;
+			$ang['tanggalTagihan'] = $tanggalTagihan->format('Y-m-d');
 			$ang['statusBayar'] = 0;
-			$ang['jasa'] = 0; //belum
+			$jasa = $nom*$data['persentasePeminjaman']/100;
+			$nom -= $jasa;
+			$ang['jasa'] = $jasa; //belum
+
 			$ang['tagihanJasa'] = 0;  //belum
 			$ang['sisaPeminjaman'] = 0;
 			$ang['sisaJasa'] =  0;
 			$ang['kodePerkiraan'] = 1024;
 			array_push($arr,$ang);
 		}
+<<<<<<< HEAD
 		print_r($arr);die();
 		$this->PeminjamanModel->angsuranDummy($arr);
 
@@ -144,6 +154,10 @@ class Peminjaman extends CI_Controller {
 
 		$this->PeminjamanModel->InsertPeminjaman($data);
 
+=======
+		$this->PeminjamanModel->angsuranLooping($arr);
+
+>>>>>>> 924de503d83ee36372d9249ff39608f6e8717065
 		echo json_encode(array('status'=>1));
 		
 		
@@ -234,7 +248,7 @@ class Peminjaman extends CI_Controller {
 
 
 	public function pembayaran($id){
-		$data['bayar'] = $this->PeminjamanModel->getSisaPeminjaman($id);
+		$data['bayar'] = $this->PeminjamanModel->getAngsuran($id)[0];
 		// print_r($data['bayar']);die();
 		$this->load->view('header');
 		$this->load->view('pembayaran',$data);
@@ -243,15 +257,25 @@ class Peminjaman extends CI_Controller {
 
 	public function submitPembayaran($id){
 
-		$angsuran = array('idPeminjaman' => $id, 'nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
+		// $data['bayar'] = $this->PeminjamanModel->getAngsuran($id)[0];
+		$angsuran = array('nominalBayar' => $this->input->post("bayar_angsuran"),'tagihanBayar' => $this->input->post("tagihanBayar"), 'jasa' => $this->input->post("bayar_jasa") ,'tagihanJasa' => $this->input->post("tagihanJasa") ,'tanggal'=>date('Y-m-d H:i:s'));
+		$where = array('idPeminjaman' => $id, 'idAngsuran'=>$this->input->post("idAngsuran"));
+		// print_r($where);die();
+		if (($this->input->post('bayar_angsuran') != $this->input->post('tagihanBayar')) || ($this->input->post('tagihanJasa') != $this->input->post('bayar_jasa'))) {
+			$angsuran['statusBayar'] = 0;
+		}else{
+			$angsuran['statusBayar'] = 1;
+		}
 		$data = $this->PeminjamanModel->getPeminjamanId($id)->result_array()[0];
 		// echo json_encode($data);die();
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
 		$jasa = $data['jasa'] - $this->input->post("bayar_jasa");
+		$angsuran['sisaPeminjaman'] = $nominal;
+		$angsuran['sisaJasa'] = $jasa;
 		// print_r($angsuran);die();
 		// echo $jasa;die();
 		$this->PeminjamanModel->updatePembayaran($id,$nominal,$jasa);
-		$this->PeminjamanModel->insertPembayaran($angsuran);
+		$this->PeminjamanModel->insertPembayaran($angsuran,$where);
 		redirect('peminjaman');
 		// print_r($nominal); die();
 
