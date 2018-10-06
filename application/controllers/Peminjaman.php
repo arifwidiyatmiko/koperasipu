@@ -108,10 +108,8 @@ class Peminjaman extends CI_Controller {
 		unset($data['pelunasanId']);
 		unset($data['persentaseJaminan']);
 		// print_r($data);die();
-<<<<<<< HEAD
-		// $idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
 
-=======
+		// $idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
 		$idPeminjaman = 1;
 		// $idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
 		$tanggalTagihan = date_create(date('Y-m-d'));
@@ -137,16 +135,15 @@ class Peminjaman extends CI_Controller {
 		}
 		print_r($arr);die();
 		$this->PeminjamanModel->angsuranDummy($arr);
->>>>>>> 974c3474a882ac177d6d1a57d20d490fbfbcc813
+
 		// if ($this->session->userdata('users_koperasi')->role != 'ANGGOTA') {
 		// 	# code...
 		// 	$status = $this->approvePengajuanReturn($idUsulanPeminjaman,1);
 		// }
-<<<<<<< HEAD
+
 
 		$this->PeminjamanModel->InsertPeminjaman($data);
-=======
->>>>>>> 974c3474a882ac177d6d1a57d20d490fbfbcc813
+
 		echo json_encode(array('status'=>1));
 		
 		
