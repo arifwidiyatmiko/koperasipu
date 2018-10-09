@@ -234,6 +234,7 @@ class Peminjaman extends CI_Controller {
 			$this->load->view('header');
 			
 		}
+		// var_dump($data['saldo']);die();
 		$this->load->view('pengajuan_peminjaman',$data);
 		$this->load->view('footer');
 	}
