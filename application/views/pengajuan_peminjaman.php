@@ -67,7 +67,7 @@
                         <script type="text/javascript">
                             $( document ).ready(function() {
                                 $('#keSimpanan').hide();
-                                var saldoAnggota = <?= $saldo;?>;
+                                var saldoAnggota = <?php if($saldo == NULL){echo 0;} else{$saldo;}?>;
                                 var maxPeminjamanSaldo = 2*saldoAnggota;
                                 console.log(maxPeminjamanSaldo);
                                 var umur = <?php echo date_diff(date_create($anggota->result()[0]->tanggal_lahir), date_create('today'))->y;?>;
