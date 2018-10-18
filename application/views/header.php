@@ -195,6 +195,16 @@
                         <?php 
                         if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
                             ?>
+                        <li class="<?php if(strtoupper($this->uri->segment(1)) == 'KAS'){echo "active";}?>">
+                            <a href="<?php echo base_url();?>Kas">
+                                <i class="fas fa-edit"></i>Kas</a>
+                        </li>
+                            <?php
+                        }
+                        ?>
+                        <?php 
+                        if ($this->session->userdata('users_koperasi')->role == 'PENGURUS') {
+                            ?>
                         <li class="has-sub">
                             <a class="js-arrow <?php if(strtoupper($this->uri->segment(1)) == 'REPORT'){echo "active";}?>" href="#">
                                 <i class="fas fa-copy"></i>Laporan</a>
