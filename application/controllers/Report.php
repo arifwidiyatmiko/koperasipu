@@ -36,7 +36,7 @@ class Report extends CI_Controller {
 		if(isset($_POST['tahun'])){
 			$tahun = $_POST['tahun'];
 		}else{
-			$tahun = 2018;
+			$tahun = date("Y");
 		}
 		if(isset($_POST['unit_kerja'])){
 			$unit_kerja = $_POST['unit_kerja'];
@@ -61,12 +61,12 @@ class Report extends CI_Controller {
 		if(isset($_POST['bulan'])){
 			$bulan = $_POST['bulan'];
 		}else{
-			$bulan = 8;
+			$bulan = date("n");
 		}
 		if(isset($_POST['tahun'])){
 			$tahun = $_POST['tahun'];
 		}else{
-			$tahun = 2018;
+			$tahun = date("Y");
 		}
 		if(isset($_POST['unit_kerja'])){
 			$unit_kerja = $_POST['unit_kerja'];
@@ -74,6 +74,7 @@ class Report extends CI_Controller {
 			$unit_kerja = 0;
 		}
 		$data['peminjaman'] = $this->ReportModel->getPeminjamanPerBulan($bulan, $tahun, $unit_kerja);
+		;
 		$data['bulan'] = $bulan;
 		$data['tahun'] = $tahun;
 		$data['unit_kerja'] = $unit_kerja;

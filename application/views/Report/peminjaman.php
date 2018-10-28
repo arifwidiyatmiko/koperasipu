@@ -126,6 +126,11 @@
 <script type="text/javascript">
   $(document).ready( function () {
       $('#table_id').DataTable();
+     $('.yearselect').yearselect({
+  end: 2016
+
+});
+
       $('#excel').click(function() {
             window.location = '<?php echo site_url();?>Report/downloadExcel/<?= $tahun?>/<?= $unit_kerja?>';
         });;
