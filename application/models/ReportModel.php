@@ -89,7 +89,6 @@ class ReportModel extends CI_Model
 	public function getPeminjamanPerBulan($bulan, $tahun, $unit_kerja){
 		$this->db->select('user.*');
 		$this->db->select('peminjaman.*');
-		$this->db->select('simpanan.*');
 		$this->db->from('user');
 		$this->db->where('Month(angsuran.tanggalTagihan)', $bulan);
 		$this->db->where('Year(angsuran.tanggalTagihan)', $tahun);
@@ -98,7 +97,6 @@ class ReportModel extends CI_Model
 		$this->db->where('statusBayar',0);
 		$this->db->group_by('user.idUser'); 
 		$this->db->join('peminjaman', 'user.idUser = peminjaman.idUser');
-		$this->db->join('simpanan', 'simpanan.idsimpanan = simpanan.idsimpanan');
 		$this->db->join('angsuran', 'angsuran.idpeminjaman = peminjaman.idpeminjaman');
 		$query = $this->db->get();
         return $query->result();
