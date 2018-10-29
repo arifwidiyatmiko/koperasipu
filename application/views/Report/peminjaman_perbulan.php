@@ -50,6 +50,9 @@
                             </div>
                             <div class="rs-select2--light rs-select2--sm">
                                 <select class="js-select2" name="tahun">
+                                    <option value="2021" <?= ($tahun == 2021) ? 'selected' : ''?>>2021</option>
+                                    <option value="2020" <?= ($tahun == 2020) ? 'selected' : ''?>>2020</option>
+                                    <option value="2019" <?= ($tahun == 2019) ? 'selected' : ''?>>2019</option>
                                     <option value="2018" <?= ($tahun == 2018) ? 'selected' : ''?>>2018</option>
                                     <option value="2017" <?= ($tahun == 2017) ? 'selected' : ''?>>2017</option>
                                     <option value="2016" <?= ($tahun == 2016) ? 'selected' : ''?>>2016</option>
@@ -81,7 +84,7 @@
                             <tbody>
                                 <tr>
                                     <td><?= $i ?></td>
-                                    <td><?= $p->idUser?></td>
+                                    <td><?= $p->noAnggota?></td>
                                     <td><?= $p->namaLengkap?></td>
                                     <td><?= $p->no_hp?></td>
                                     <td><?= $p->nominal?></td>

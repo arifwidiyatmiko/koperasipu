@@ -28,66 +28,28 @@
     </thead>
     <tbody>
         <?php
-            // $i = 1;
-            // foreach ($angsuran as $key) {
+            $i = 1;
+            foreach ($angsuran as $key) {
         ?>
-            <!-- <tr>
+            <tr>
                 <td><?= $i?></td>
-                <td><?= $key->idUser?></td>
+                <td><?= $key->noAnggota?></td>
                 <td><?= $key->namaLengkap?></td>
-                <td><?= $key->sisaTotalPeminjaman?></td>
-                <td><?= $key->angsuran1 ?></td>
-                <td><?= $key->sisaPeminjaman1 ?></td>
-                <td><?= $key->jasa1 ?></td>
-                <td><?= $key->sisaJasa1 ?></td>
-                <td><?= $key->angsuran2 ?></td>
-                <td><?= $key->sisaPeminjaman2 ?></td>
-                <td><?= $key->jasa2 ?></td>
-                <td><?= $key->sisaJasa2 ?></td>
-                <td><?= $key->angsuran3 ?></td>
-                <td><?= $key->sisaPeminjaman3 ?></td>
-                <td><?= $key->jasa3 ?></td>
-                <td><?= $key->sisaJasa3 ?></td>
-                <td><?= $key->angsuran4 ?></td>
-                <td><?= $key->sisaPeminjaman4 ?></td>
-                <td><?= $key->jasa4 ?></td>
-                <td><?= $key->sisaJasa4 ?></td>
-                <td><?= $key->angsuran5 ?></td>
-                <td><?= $key->sisaPeminjaman5 ?></td>
-                <td><?= $key->jasa5 ?></td>
-                <td><?= $key->sisaJasa5 ?></td>
-                <td><?= $key->angsuran6 ?></td>
-                <td><?= $key->sisaPeminjaman6 ?></td>
-                <td><?= $key->jasa6 ?></td>
-                <td><?= $key->sisaJasa6 ?></td>
-                <td><?= $key->angsuran7 ?></td>
-                <td><?= $key->sisaPeminjaman7 ?></td>
-                <td><?= $key->jasa7 ?></td>
-                <td><?= $key->sisaJasa7 ?></td>
-                <td><?= $key->angsuran8 ?></td>
-                <td><?= $key->sisaPeminjaman8 ?></td>
-                <td><?= $key->jasa8 ?></td>
-                <td><?= $key->sisaJasa8 ?></td>
-                <td><?= $key->angsuran9 ?></td>
-                <td><?= $key->sisaPeminjaman9 ?></td>
-                <td><?= $key->jasa9 ?></td>
-                <td><?= $key->sisaJasa9 ?></td>
-                <td><?= $key->angsuran10 ?></td>
-                <td><?= $key->sisaPeminjaman10 ?></td>
-                <td><?= $key->jasa10 ?></td>
-                <td><?= $key->sisaJasa10 ?></td>
-                <td><?= $key->angsuran11 ?></td>
-                <td><?= $key->sisaPeminjaman11 ?></td>
-                <td><?= $key->jasa11 ?></td>
-                <td><?= $key->sisaJasa11 ?></td>
-                <td><?= $key->angsuran12 ?></td>
-                <td><?= $key->sisaPeminjaman12 ?></td>
-                <td><?= $key->jasa12 ?></td>
-                <td><?= $key->sisaJasa12 ?></td>
-            </tr> -->
+                <td><?= $key->simpanan?></td>
+                <td><?= 5000 ?></td>
+                <td colspan="2"><?= $key->pokokPanjang ?></td>
+                <td colspan="2"><?= $key->jasaPanjang ?></td>
+                <td colspan="2"><?= $key->pokokMenengah ?></td>
+                <td colspan="2"><?= $key->jasaMenengah ?></td>
+                <td colspan="2"><?= $key->pokokPendek ?></td>
+                <td colspan="2"><?= $key->jasaPendek ?></td>
+                <td colspan="2"><?= $key->pokokPendidikan ?></td>
+                <td colspan="2"><?= $key->jasaPendidikan ?></td>
+                <td><?= $key->simpanan + 5000 + $key->pokokPanjang + $key->jasaPanjang + $key->pokokMenengah + $key->jasaMenengah + $key->pokokPendek + $key->jasaPendek ?></td>
+            </tr>
         <?php
-        // $i++;
-        //     }
+        $i++;
+            }
         ?>
     </tbody>
 </table>
