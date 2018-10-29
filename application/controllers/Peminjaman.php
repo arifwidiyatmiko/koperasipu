@@ -78,7 +78,7 @@ class Peminjaman extends CI_Controller {
 		header('Content-Type: application/json');
 		
 		$simpan = $this->SimpananModel->getSimpananIdUser($data['idUser'])[0];
-		print_r($data);die();
+		// print_r($data);die();
 		 // INI BUAT CEK SALDO. JANGAN DI HAPUS
 
 		if ($data['kePeminjaman'] != 0) {
@@ -109,6 +109,7 @@ class Peminjaman extends CI_Controller {
 		// }
 		$tagihanJasa = ($data['nominal']*($data['persentasePeminjaman']/100) + $data['persentasePeminjaman']/100 * $data['nominalAngsuran'])/2; 
 		$data['jasa'] = round($tagihanJasa * $data['jumlahBulan']);
+		$data['sisaJasa'] = $data['jasa'];
 		unset($data['pelunasan']);
 		unset($data['kePeminjaman']);
 		unset($data['pelunasanId']);
