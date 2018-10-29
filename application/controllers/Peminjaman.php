@@ -237,6 +237,7 @@ class Peminjaman extends CI_Controller {
 
 
 	public function pembayaran($id){
+		$data['peminjaman'] = $this->PeminjamanModel->getPeminjamanId($id)->result();
 		$data['bayar'] = $this->PeminjamanModel->getAngsuran($id)[0];
 		// print_r($data['bayar']);die();
 		$this->load->view('header');

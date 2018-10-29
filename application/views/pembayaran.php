@@ -16,7 +16,13 @@
                         <div class="row m-t-25">
                            <div class="col-md-12">
                                 <!-- DATA TABLE-->
-                                <?php //print_r($bayar);die();?>
+                                <?php 
+                                $tagihanJasa = (($peminjaman[0]->nominal * $peminjaman[0]->persentasePeminjaman/100) + ($peminjaman[0]->nominalAngsuran * $peminjaman[0]->persentasePeminjaman/100))/2;
+                                // echo "tagihan anda ".$tagihanJasa."<br/>";
+
+                                // print_r($peminjaman);die();
+
+                                ?>
                                 <div class="table-responsive m-b-40">
                                    <form class="form-horizontal" method="post" action="<?php echo base_url();?>Peminjaman/submitPembayaran/<?php echo $this->uri->segment(3);?>">
 									    <div class="form-group">
@@ -43,8 +49,8 @@
                                         <div class="form-group">
                                           <label class="control-label col-sm-4">Jumlah Pembayaran Jasa</label>
                                           <div class="col-sm-10">
-                                            <input  type="text" value="<?= $bayar->jasa?>" class="form-control" placeholder="Masukkan nominal" name="bayar_jasa" onkeypress="return isNumber(event)">
-                                            <input type="hidden" name="tagihanJasa" value="<?= $bayar->jasa?>" >
+                                            <input  type="text" value="<?= $tagihanJasa?>" class="form-control" placeholder="Masukkan nominal" name="bayar_jasa" onkeypress="return isNumber(event)">
+                                            <input type="hidden" name="tagihanJasa" value="<?= $tagihanJasa?>" >
                                             <input type="hidden" name="idAngsuran" value="<?= $bayar->idAngsuran?>" >
                                           </div>
                                         </div>
