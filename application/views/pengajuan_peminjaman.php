@@ -163,6 +163,7 @@
                                                        }
                                                        if (content.data.length != 0) {
                                                             sisaJasa = parseInt(content.data[0].sisaJasa);
+                                                            console.log('sisaJasa : ',content);
                                                         }
                                                        $('#modal_kekuranganJasa').text(sisaJasa);
                                                        

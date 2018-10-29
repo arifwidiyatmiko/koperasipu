@@ -76,9 +76,9 @@ class Peminjaman extends CI_Controller {
 		$data = $this->input->post(NULL, TRUE);
 		$status = false;
 		header('Content-Type: application/json');
-		// print_r($data);die();
+		
 		$simpan = $this->SimpananModel->getSimpananIdUser($data['idUser'])[0];
-		// print_r($simpan);die();
+		print_r($data);die();
 		 // INI BUAT CEK SALDO. JANGAN DI HAPUS
 
 		if ($data['kePeminjaman'] != 0) {
@@ -99,11 +99,16 @@ class Peminjaman extends CI_Controller {
 			$this->PeminjamanModel->lunasin($data['pelunasanId']);
 		}
 		$jasa = 0;$nominal=$data['nominal'];
-		for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
-			$jasa += $nominal*$data['persentasePeminjaman']/100;
-			$nominal -= $nominal*$data['persentasePeminjaman']/100;
-		}
-		$data['jasa'] = round($jasa);
+		// $tagihanJasa = ($tagihanBayar + $data['persentasePeminjaman']/100 * $data['nominalAngsuran'])/2; 
+
+		// for ($i=0; $i < $data['jumlahBulan'] ; $i++) { 
+		// 	// $jasa += $nominal*$data['persentasePeminjaman']/100;
+		// 	// $nominal -= $nominal*$data['persentasePeminjaman']/100;
+		// 	$tagihanJasa = ($tagihanBayar + $data['persentasePeminjaman']/100 * $data['nominalAngsuran'])/2; 
+		// 	$jasa += $tagihanJasa;
+		// }
+		$tagihanJasa = ($data['nominal']*($data['persentasePeminjaman']/100) + $data['persentasePeminjaman']/100 * $data['nominalAngsuran'])/2; 
+		$data['jasa'] = round($tagihanJasa * $data['jumlahBulan']);
 		unset($data['pelunasan']);
 		unset($data['kePeminjaman']);
 		unset($data['pelunasanId']);
@@ -114,7 +119,7 @@ class Peminjaman extends CI_Controller {
 		// $idUsulanPeminjaman = $this->PeminjamanModel->usulanPeminjaman($data);
 		// $idPeminjaman = 1;
 		// $idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
-
+		// print_r($data);die();
 		$idPeminjaman = $this->PeminjamanModel->InsertPeminjaman($data);
 
 		$tanggalTagihan = date_create(date('Y-m-d'));
@@ -127,14 +132,12 @@ class Peminjaman extends CI_Controller {
 
 			$tagihanBayar = $nominal*$data['persentasePeminjaman']/100;
 			// $nominal = $nominal-$tagihanBayar;
-			$ang['tagihanBayar'] = $tagihanBayar;
+			$ang['tagihanBayar'] = $data['jasa'];
 			$ang['tanggal'] = date('Y-m-d h:i:s');
 			date_add($tanggalTagihan,date_interval_create_from_date_string("1 month"));
 			$ang['tanggalTagihan'] = $tanggalTagihan->format('Y-m-d');
 			$ang['statusBayar'] = 0;
-			$jasa = $nom*$data['persentasePeminjaman']/100;
-			$nom -= $jasa;
-			$ang['jasa'] = $jasa; //belum
+			$ang['jasa'] = $tagihanJasa; //belum
 
 			$ang['tagihanJasa'] = 0;  //belum
 			$ang['sisaPeminjaman'] = 0;
@@ -259,10 +262,10 @@ class Peminjaman extends CI_Controller {
 		$data = $this->PeminjamanModel->getPeminjamanId($id)->result_array()[0];
 		// echo json_encode($data);die();
 		$nominal = $this->input->post("sisa_nominal") - $this->input->post("bayar_angsuran");
-		$jasa = $data['jasa'] - $this->input->post("bayar_jasa");
+		$jasa = $data['sisaJasa'] - $this->input->post("bayar_jasa");
 		$angsuran['sisaPeminjaman'] = $nominal;
 		$angsuran['sisaJasa'] = $jasa;
-		// print_r($angsuran);die();
+		// print_r($data['sisaJasa']);die();
 		// echo $jasa;die();
 		$this->PeminjamanModel->updatePembayaran($id,$nominal,$jasa);
 		$this->PeminjamanModel->insertPembayaran($angsuran,$where);

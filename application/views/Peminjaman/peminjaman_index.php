@@ -74,6 +74,7 @@
                                                     return $result;
                                                 }
                                             $i = 1;
+                                            // print_r($peminjaman);die();
                                                 foreach($peminjaman as $p){
                                             ?>
 
@@ -92,7 +93,7 @@
                                                 <td><?= rupiah($p->totalSisaJasa)?></td>
                                                 <td><?= rupiah($p->totalSisaJasa-$p->jasa) ?></td> -->
                                                 <td><?= rupiah($p->totalSisaJasa)?></td>
-                                                <td><?= rupiah($p->totalSisaJasa-$p->jasa) ?></td>
+                                                <td><?= rupiah($p->sisaJasa) ?></td>
                                                 <!-- <td><?= $p->alamat ?></td> -->
                                                 <?php if($sisa != 0) { ?>
                                                     <td class="denied">Belum Lunas</td>
