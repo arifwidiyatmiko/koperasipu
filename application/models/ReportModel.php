@@ -13,6 +13,7 @@ class ReportModel extends CI_Model
 		$this->db->from('user');
 		$this->db->where('YEAR(tanggal)',$tahun);
 		$this->db->where('idPekerjaan',$unit_kerja);
+		$this->db->group_by('user.idUser');
 		$this->db->join('peminjaman', 'user.idUser = peminjaman.idUser');
 		$query = $this->db->get();
         return $query->result();
@@ -58,18 +59,18 @@ class ReportModel extends CI_Model
 				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 10 THEN angsuran.`jasa` ELSE NULL END)) AS jasa10,
 				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 11 THEN angsuran.`jasa` ELSE NULL END)) AS jasa11,
 				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 12 THEN angsuran.`jasa` ELSE NULL END)) AS jasa12,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 1 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa1,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 2 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa2,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 3 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa3,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 4 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa4,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 5 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa5,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 6 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa6,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 7 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa7,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 8 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa8,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 9 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa9,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 10 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa10,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 11 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa11,
-				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 12 THEN angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa12,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 1 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa1,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 2 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa2,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 3 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa3,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 4 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa4,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 5 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa5,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 6 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa6,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 7 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa7,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 8 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa8,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 9 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa9,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 10 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa10,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 11 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa11,
+				GROUP_CONCAT((CASE Month(angsuran.tanggal) WHEN 12 THEN peminjaman.jasa-angsuran.`sisaJasa` ELSE NULL END)) AS sisaJasa12,
 				Month(angsuran.tanggal) as bulanAngsuran, `angsuran`.* FROM `user` JOIN `peminjaman` ON `user`.`idUser` = `peminjaman`.`idUser` JOIN `angsuran` ON `angsuran`.`idpeminjaman` = `peminjaman`.`idpeminjaman` WHERE YEAR(peminjaman.tanggal) = '$tahun' AND `idPekerjaan` = '$unit_kerja'  AND angsuran.statusBayar = 1  Group by user.idUser ";
 				return $this->db->query($sql)->result();
 		// $this->db->select('user.*');
